@@ -1,3 +1,4 @@
+
 package sample;
 
 import javafx.scene.control.Button;
@@ -53,7 +54,7 @@ public class MyController {
     private void play() {
         System.out.println("Play button clicked");
         Label newLabel = new Label();
-        newLabel.setLayoutX(GRID_WIDTH / 4);
+        newLabel.setLayoutX(GRID_WIDTH / 4 );
         newLabel.setLayoutY(GRID_WIDTH / 4);
         newLabel.setMinWidth(GRID_WIDTH / 2);
         newLabel.setMaxWidth(GRID_WIDTH / 2);
@@ -61,8 +62,8 @@ public class MyController {
         newLabel.setMaxHeight(GRID_WIDTH / 2);
         newLabel.setStyle("-fx-border-color: black;");
         newLabel.setText("*");
-        newLabel.setBackground(new Background(new BackgroundFill(Color.YELLOW,
-        CornerRadii.EMPTY, Insets.EMPTY)));
+        newLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN,
+       CornerRadii.EMPTY, Insets.EMPTY)));
         paneArena.getChildren().addAll(newLabel);
     }
 
@@ -92,6 +93,7 @@ public class MyController {
                 grids[i][j] = newLabel;
                 paneArena.getChildren().addAll(newLabel);
             }
+      
 //        New Label
         Label newLabel = new Label();
         newLabel.setLayoutX(GRID_WIDTH / 4);
@@ -211,3 +213,4 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> {
 
     }
 }
+
