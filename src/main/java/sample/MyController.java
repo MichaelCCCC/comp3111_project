@@ -74,9 +74,11 @@ public class MyController {
     public void createArena() {
         if (grids[0][0] != null)
             return; //created already
+        
         for (int i = 0; i < MAX_V_NUM_GRID; i++)
             for (int j = 0; j < MAX_H_NUM_GRID; j++) {
                 Label newLabel = new Label();
+                
                 if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1))
                     newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 else
@@ -91,20 +93,22 @@ public class MyController {
                 grids[i][j] = newLabel;
                 paneArena.getChildren().addAll(newLabel);
             }
-        
-        Label newLabel1 = new Label();
-        newLabel1.setLayoutX(GRID_WIDTH / 4 + 3 * GRID_WIDTH);
-        newLabel1.setLayoutY(GRID_WIDTH / 4 + 4 * GRID_HEIGHT);
-        newLabel1.setMinWidth(GRID_WIDTH / 2);
-        newLabel1.setMaxWidth(GRID_WIDTH / 2);
-        newLabel1.setMinHeight(GRID_WIDTH / 2);
-        newLabel1.setMaxHeight(GRID_WIDTH / 2);
-        newLabel1.setStyle("-fx-border-color: black;");
-        newLabel1.setText("*");
-        newLabel1.setBackground(new Background(new BackgroundFill(Color.BLACK,
+      
+//        New Label
+        Label newLabel = new Label();
+        newLabel.setLayoutX(GRID_WIDTH / 4);
+        newLabel.setLayoutY(GRID_WIDTH / 4);
+        newLabel.setMinWidth(GRID_WIDTH / 2);
+        newLabel.setMaxWidth(GRID_WIDTH / 2);
+        newLabel.setMinHeight(GRID_WIDTH / 2);
+        newLabel.setMaxHeight(GRID_WIDTH / 2);
+        newLabel.setStyle("-fx-border-color: black;");
+        newLabel.setText("*");
+        newLabel.setBackground(new Background(new BackgroundFill(Color.RED,
        CornerRadii.EMPTY, Insets.EMPTY)));
-        paneArena.getChildren().addAll(newLabel1);
+        paneArena.getChildren().addAll(newLabel);
 
+        
         setDragAndDrop();
     }
 
