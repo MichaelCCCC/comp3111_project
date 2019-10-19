@@ -93,22 +93,6 @@ public class MyController {
                 grids[i][j] = newLabel;
                 paneArena.getChildren().addAll(newLabel);
             }
-      
-//        New Label
-        Label newLabel = new Label();
-        newLabel.setLayoutX(GRID_WIDTH / 4+GRID_WIDTH *4);
-        newLabel.setLayoutY(GRID_WIDTH / 4+ GRID_WIDTH *4);
-        newLabel.setMinWidth(GRID_WIDTH / 2);
-        newLabel.setMaxWidth(GRID_WIDTH / 2);
-        newLabel.setMinHeight(GRID_WIDTH / 2);
-        newLabel.setMaxHeight(GRID_WIDTH / 2);
-        newLabel.setStyle("-fx-border-color: black;");
-        newLabel.setText("*");
-        newLabel.setBackground(new Background(new BackgroundFill(Color.RED,
-       CornerRadii.EMPTY, Insets.EMPTY)));
-        paneArena.getChildren().addAll(newLabel);
-
-        
         setDragAndDrop();
     }
 
