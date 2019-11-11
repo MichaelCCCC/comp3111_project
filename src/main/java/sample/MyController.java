@@ -1,6 +1,8 @@
 
 package sample;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
@@ -235,12 +237,27 @@ public class MyController {
         				
         				 
         				if((String)cd.getResult() == choices[0]) 
-        					GreenBoxes.targetDestroyTower(event.getTarget()) ; 
+        					GreenBoxes.targetDestroyTower(target) ; 
         					//target.setGraphic(null);
             			
             			
-            			if((String)cd.getResult() == choices[1]) {
-            				
+            			if((String)cd.getResult() == choices[1] ) {
+            				if (money >= UPGRADE_COST) {
+            					//tower upgrade
+            					money -= UPGRADE_COST ; 
+            					setLabelMoney(money) ;
+            					System.out.print(target.getId() + " is being upgraded");
+            					Alert alert = new Alert (AlertType.INFORMATION, target.getId() + " is being upgraded") ; 
+        	            			alert.showAndWait() ;
+            				}
+            				else 
+            				{
+            					System.out.println("not enough resource to upgrade " + target.getId() + "tower") ; 
+            					Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
+            	            		alert.showAndWait() ;
+            					
+            				}
+            					
             			}
         			}
         			
@@ -318,6 +335,8 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
             else
             {
             	//alert
+            	Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
+            	alert.showAndWait() ; 
             	success = false ; 
             }
             
