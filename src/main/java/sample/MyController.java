@@ -2,9 +2,9 @@
 package sample;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.event.*;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
-import java.util.* ; 
 
 public class MyController {
     @FXML
@@ -56,6 +55,7 @@ public class MyController {
     static final int COST_ICE_TOWER = 2 ; 
     static final int COST_CATAPULT = 2 ; 
     static final int COST_LASER_TOWER = 3 ; 
+    static final int UPGRADE_COST = 3 ; 
     
     static final Image BTimage = new Image("/basicTower.png") ;  
     static final Image ITimage = new Image("/iceTower.png") ; 
@@ -122,6 +122,8 @@ public class MyController {
         
         for(int i = 0 ; i < GreenBoxes.gbs.size() ; i++ )
         		setDragAndDrop(GreenBoxes.gbs.get(i).v , GreenBoxes.gbs.get(i).h);
+        
+        setDragAndDrop2() ; 
     }
 
     @FXML
@@ -146,15 +148,8 @@ public class MyController {
     	labelMoney.setText(money.toString());
     }
     
-    /**
-     * A function that demo how drag and drop works
-     */
-    private void setDragAndDrop(int v, int h) {
-    		Label target = grids[v][h] ; 
-   
-        target.setText("");
-        
-        Label source1 = labelBasicTower;
+    private void setDragAndDrop2() { 
+    		Label source1 = labelBasicTower;
         Label source2 = labelIceTower;
         Label source3 = labelCatapult; 
         Label source4 = labelLaserTower ; 
@@ -166,6 +161,17 @@ public class MyController {
         	source3.setOnDragDetected(new DragEventHandler(source3));
        
         	source4.setOnDragDetected(new DragEventHandler(source4));
+    }
+    
+    /**
+     * A function that demo how drag and drop works
+     */
+    private void setDragAndDrop(int v, int h) {
+    		Label target = grids[v][h] ; 
+   
+        target.setText("");
+        
+        
         //target.setOnDragDetected(new DragEventHandler(target)) ; 
 
         target.setOnDragDropped(new DragDroppedEventHandler());
@@ -185,9 +191,9 @@ public class MyController {
                 if (event.getGestureSource() != target &&
                         event.getDragboard().hasString()) {
                 	
-                	if(GreenBoxes.targetHasTower(target) == false)
+                		if(GreenBoxes.targetHasTower(target) == false)
                     /* allow for both copying and moving, whatever user chooses */
-                	event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                			event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
                 }
 
                 event.consume();
@@ -216,7 +222,33 @@ public class MyController {
             System.out.println("Exit");
             setLabelMoney(money) ; //change the labelmoney after buying
             event.consume();
-    });
+        });
+        
+        
+        String choices [] = {"destroy" , "upgrade" } ; 
+		ChoiceDialog<String> cd = new ChoiceDialog<String>(choices[0],  choices) ;
+        target.setOnMouseClicked(new EventHandler <MouseEvent>() {
+        		public void handle (MouseEvent event) {
+        			if(GreenBoxes.targetHasTower(target)) {
+        				//target.setGraphic(null);
+        				cd.showAndWait();
+        				
+        				 
+        				if((String)cd.getResult() == choices[0]) 
+        					GreenBoxes.targetDestroyTower(event.getTarget()) ; 
+        					//target.setGraphic(null);
+            			
+            			
+            			if((String)cd.getResult() == choices[1]) {
+            				
+            			}
+        			}
+        			
+        			
+        		} 
+        }) ; 
+        
+        
         
         
     }
@@ -276,7 +308,7 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
             }
             if(MyController.money >= moneyDeducted && GreenBoxes.targetHasTower(event.getGestureTarget()) == false)
             {
-            	MyController.greenboxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
+            	GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
                 //((Label)event.getGestureTarget()).setText(moneyDeducted.toString());
         		MyController.money -= moneyDeducted;  
         		

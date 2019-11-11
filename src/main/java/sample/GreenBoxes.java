@@ -37,7 +37,7 @@ class GreenBoxes {
 		return -1 ;
 	}
 	
-	Image idReturnImage(String id) {
+	static Image idReturnImage(String id) {
 		switch(id)
 		{
 			case "Basic Tower" : 
@@ -49,24 +49,43 @@ class GreenBoxes {
 		case "Laser Tower":
 				return LTimage ;
 		default : 
-				assert false : "no such tower." ;  
+				return null;  
 		}
-		return null ; 
 	}
 	
-	boolean targetBuildTower(Object target, String id) {
-		assert targetHasTower(target) == false : "It has Tower, new tower cannot be built" ; 
+	static boolean targetDestroyTower(Object target) {
+		assert targetHasTower(target) == true : "It has no Tower, no tower can be destroyed"  ;
+		for(int i = 0 ; i < gbs.size() ; i++) 
+			if(gbs.get(i).label.equals((Label)target))
+			{
+				
+				
+				gbs.get(i).haveTower = false ; 
+				((Label)target).setGraphic(null);
+				//((Label)target).setText("destroyed") ; 
+				((Label)target).setId("");
+				return true ;
+			}
+		return false ; 
+	}
+	
+	static boolean targetBuildTower(Object target, String id) {
+		//assert targetHasTower(target) == false : "It has Tower, new tower cannot be built" ; 
 		for (int i = 0 ; i < gbs.size()  ; i++)
 			if(gbs.get(i).label.equals((Label)target))
 			{
-				ImageView iv = new ImageView(idReturnImage(id)) ; 
-                iv.setFitWidth(40) ; 
-        		iv.setPreserveRatio(true) ;
-        		iv.setSmooth(true);
-                iv.setCache(true);
-				gbs.get(i).label.setGraphic(iv);
-				gbs.get(i).label.setId(id) ; 
-				gbs.get(i).haveTower = true;  
+				ImageView iv = new ImageView((id == null) ? null: idReturnImage(id)) ; 
+				if(id != null) {
+					iv.setFitWidth(40) ; 
+	        		iv.setPreserveRatio(true) ;
+	        		iv.setSmooth(true);
+	                iv.setCache(true);
+				}
+                ((Label)target).setGraphic(iv);
+                ((Label)target).setId(id) ; 
+                
+                gbs.get(i).haveTower = (id != null) ? true : false;  
+                	
 				return true;  
 			}
 		return false; 
