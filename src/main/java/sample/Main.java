@@ -1,4 +1,4 @@
-package game;
+package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
+       // System.out.println(getClass().getResource("/sample.fxml")) ;  //it can find the file
         Parent root = loader.load();
         primaryStage.setTitle("Tower Defence");
         primaryStage.setScene(new Scene(root, 600, 480));
