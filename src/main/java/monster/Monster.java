@@ -7,7 +7,6 @@ public class Monster {
 	static final int DEFAULT_Y = 0;
 	
 	//private data member
-	private String type;
 	private int HP;
 	private int speed;
 	private int x;
@@ -19,9 +18,7 @@ public class Monster {
 		x = DEFAULT_X;
 		y = DEFAULT_Y;
 	}
-	public String getType() {
-		return type;
-	}
+
 	public int getHP() {
 		return HP;
 	}

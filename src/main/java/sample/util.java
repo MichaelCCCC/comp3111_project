@@ -18,7 +18,7 @@ class util {
 			Circle circle = new Circle () ; 
 			circle.setCenterX(MyController.GRID_WIDTH * ((double)GreenBoxes.targetV(target) + 0.5) );
 			circle.setCenterY(MyController.GRID_WIDTH * ((double)GreenBoxes.targetH(target) + 0.5));
-			circle.setRadius(GreenBoxes.targetGetTower(target).getShootingRange());
+//			circle.setRadius(GreenBoxes.targetGetTower(target).getShootingRange());
 			circle.setStyle("-fx-border-color: rgba(0,0,0,0.3); -fx-border-width: 3");
 			break ; 
 		case "Catapult" : 
