@@ -1,21 +1,10 @@
-package sample;
+package tower;
 import java.lang.Math; 
 import java.util.List;
-import java.util.ArrayList;
 
-class TowerInformation {
-	public int attack_power;
-	public int building_cost;
-	public int upgrade_cost;
-	private double shooting_range;
-	
-	TowerInformation(int attack_power, int building_cost, int upgrade_cost, double shooting_range) {
-		this.attack_power = attack_power;
-		this.building_cost = building_cost;
-		this.upgrade_cost = upgrade_cost;
-		this.shooting_range = shooting_range;
-	}
-}
+import monster.Monster;
+
+import java.util.ArrayList;
 
 public class Tower {
 	List<Monster> enemyList = new ArrayList<Monster>();
@@ -47,6 +36,10 @@ public class Tower {
 		this.shooting_range = shooting_range;
 	}
 	
+	public Tower() {
+		// TODO Auto-generated constructor stub
+	}
+
 	//	Get Tower Coordinate
 	int getX() {
 		return x;

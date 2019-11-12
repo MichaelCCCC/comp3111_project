@@ -4,6 +4,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import tower.BasicTower;
+import tower.Catapult;
+import tower.IceTower;
+import tower.LaserTower;
+import tower.Tower;
 
 class GreenBox{ 
 	Label label ; 
@@ -36,9 +41,9 @@ class GreenBox{
 	        
 	        switch(id)
 			{
-				case "Basic Tower" : 
-					tower = new BasicTower() ; 
-					break  ; 
+			case "Basic Tower" : 
+				tower = new Tower() ; 
+				break  ; 
 			case "Ice Tower" :
 				tower = new IceTower() ; 
 					break ;

@@ -1,6 +1,6 @@
-package sample;
+package tower;
 
-class BasicTower extends Tower{
+public class BasicTower extends Tower{
 	
 	/*
 	 * initial information of basic tower
@@ -18,7 +18,7 @@ class BasicTower extends Tower{
 	
 	
 	
-	BasicTower(){
+	public BasicTower(){
 		super(initName,initShootingRange, initAttackPower,initBuildingCost,initTier,initUpgradeCost,initUpgradeDiff,initNote) ; 
 		
 	}
