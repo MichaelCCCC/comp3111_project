@@ -44,6 +44,15 @@ public class MyController {
     private Label labelLaserTower;
     
     @FXML
+    private Label Fox;
+    
+    @FXML
+    private Label Penguin;
+    
+    @FXML
+    private Label Unicorn;
+
+    @FXML
 	//static
     private Label labelMoney; //<- label cannot be static
 
@@ -67,6 +76,8 @@ public class MyController {
     
     static Integer money = 10 ; 
     
+    int num_frame = 0;
+    
     String towerInformation[][] = Tower.getTowerInitInformation()  ; // get tower information
     //get tower information
     
@@ -79,19 +90,20 @@ public class MyController {
      */
     @FXML
     private void play() {
-        System.out.println("Play button clicked");
-        Label newLabel = new Label();
-        newLabel.setLayoutX(GRID_WIDTH / 4 );
-        newLabel.setLayoutY(GRID_WIDTH / 4);
-        newLabel.setMinWidth(GRID_WIDTH / 2);
-        newLabel.setMaxWidth(GRID_WIDTH / 2);
-        newLabel.setMinHeight(GRID_WIDTH / 2);
-        newLabel.setMaxHeight(GRID_WIDTH / 2);
-        newLabel.setStyle("-fx-border-color: black;");
-        newLabel.setText("*");
-        newLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN,
-       CornerRadii.EMPTY, Insets.EMPTY)));
-        paneArena.getChildren().addAll(newLabel);
+//        System.out.println("Play button clicked");
+//        Label newLabel = new Label();
+//        newLabel.setLayoutX(GRID_WIDTH / 4 );
+//        newLabel.setLayoutY(GRID_WIDTH / 4);
+//        newLabel.setMinWidth(GRID_WIDTH / 2);
+//        newLabel.setMaxWidth(GRID_WIDTH / 2);
+//        newLabel.setMinHeight(GRID_WIDTH / 2);
+//        newLabel.setMaxHeight(GRID_WIDTH / 2);
+//        newLabel.setStyle("-fx-border-color: black;");
+//        newLabel.setText("*");
+//        newLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN,
+//       CornerRadii.EMPTY, Insets.EMPTY)));
+//        paneArena.getChildren().addAll(newLabel);
+        
         
     }
 
@@ -107,9 +119,11 @@ public class MyController {
             for (int j = 0; j < MAX_H_NUM_GRID; j++) {
                 Label newLabel = new Label();
                 
-                if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1))
+                if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1)) {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-                else 
+                	WhiteBoxes.wbs.add(new WhiteBox(newLabel,i,j));
+                }
+                	else 
                 {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
                     GreenBoxes.gbs.add(new GreenBox(newLabel,i,j))  ; 
@@ -138,15 +152,24 @@ public class MyController {
 
     @FXML
     private void nextFrame() {
-        if (x == -1) {
-            grids[0][0].setText("M");
-            x = 0;
-            return;
-        }
-        if (y == MAX_V_NUM_GRID - 1)
-            return;
-        grids[y++][x].setText("");
-        grids[y][x].setText("M");
+    	
+    	System.out.println(num_frame+" frame");
+    	if(num_frame%5 == 0) {
+    		WhiteBoxes.targetGenerateMonster("Fox");
+    	}
+//    	WhiteBoxes.moveMonsters();
+    	num_frame ++;
+    	
+//        if (x == -1) {
+//            grids[0][0].setText("M");
+//            x = 0;
+//            return;
+//        }
+//        if (y == MAX_V_NUM_GRID - 1)
+//            return;
+//        grids[y++][x].setText("");
+//        grids[y][x].setText("M");
+
     }
     
     int getLabelMoney() {

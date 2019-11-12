@@ -5,7 +5,7 @@ public class Penguin extends Monster {
 	public static final int DEFAULT_PENGUIN_SPEED = 10;
 	
 	public Penguin() {
-		super(DEFAULT_PENGUIN_HP,DEFAULT_PENGUIN_HP);
+		super("Penguin",DEFAULT_PENGUIN_HP,DEFAULT_PENGUIN_HP);
 	}
 	
 }
