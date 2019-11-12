@@ -352,10 +352,10 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
             switch(db.getString())
             {
             	case "Basic Tower" : 
-            		moneyDeducted = MyController.COST_BASIC_TOWER ; 
+            		moneyDeducted = BasicTower.initBuildingCost ; 
             		break ; 
             	case "Ice Tower" : 
-            		moneyDeducted = MyController.COST_ICE_TOWER ; 
+            		moneyDeducted = MyController.COST_ICE_TOWER ; //change
             		break ; 
             	case "Catapult" : 
             		moneyDeducted = MyController.COST_CATAPULT  ; 

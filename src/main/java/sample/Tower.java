@@ -54,14 +54,14 @@ abstract class Tower {
 	static String[][] getTowerInitInformation() {
 		String towerInformation[][] = new String [NUM_TOWER_TYPE][NUM_INIT_INFORMATION_LINE]  ;
 		//todo 
-		towerInformation[0][0] = BasicTower.INIT_NAME ; 
-		towerInformation[0][1] = BasicTower.INIT_SHOOTING_RANGE.toString() ; 
-		towerInformation[0][2] = BasicTower.INIT_ATTACK_POWER.toString() ; 
-		towerInformation[0][3] = BasicTower.INIT_BUILDING_COST.toString() ; 
-		towerInformation[0][4] = BasicTower.INIT_TIER.toString() ; 
-		towerInformation[0][5] = BasicTower.INIT_UPGRADE_COST.toString() ; 
-		towerInformation[0][6] = BasicTower.INIT_UPGRADE_DIFF ; 
-		towerInformation[0][7] = BasicTower.INIT_NOTE ; 
+		towerInformation[0][0] = BasicTower.initName ; 
+		towerInformation[0][1] = BasicTower.initShootingRange.toString() ; 
+		towerInformation[0][2] = BasicTower.initAttackPower.toString() ; 
+		towerInformation[0][3] = BasicTower.initBuildingCost.toString() ; 
+		towerInformation[0][4] = BasicTower.initTier.toString() ; 
+		towerInformation[0][5] = BasicTower.initUpgradeCost.toString() ; 
+		towerInformation[0][6] = BasicTower.initUpgradeDiff ; 
+		towerInformation[0][7] = BasicTower.initNote ; 
 		return towerInformation ; 
 	}
 }
