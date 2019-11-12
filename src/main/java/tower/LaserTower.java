@@ -39,12 +39,12 @@ public class LaserTower extends Tower{
 	}
 	
 	void shoot() {
-		for(int i=0; i<enemyList.size(); ++i) {
-			Monster currentEnemy = enemyList.get(i);
-			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
-				currentEnemy.damage(attack_power);
-			}
-		}
+//		for(int i=0; i<enemyList.size(); ++i) {
+//			Monster currentEnemy = enemyList.get(i);
+//			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
+//				currentEnemy.damage(attack_power);
+//			}
+//		}
 	}
 	
 	void upgrade() {

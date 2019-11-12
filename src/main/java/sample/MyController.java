@@ -16,7 +16,11 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
+
+import tower.Tower;
+import tower.TowerInformation;
 import javafx.scene.shape.Circle;
+
 
 public class MyController {
     @FXML
@@ -44,6 +48,15 @@ public class MyController {
     private Label labelLaserTower;
     
     @FXML
+    private Label Fox;
+    
+    @FXML
+    private Label Penguin;
+    
+    @FXML
+    private Label Unicorn;
+
+    @FXML
 	//static
     private Label labelMoney; //<- label cannot be static
 
@@ -61,7 +74,12 @@ public class MyController {
     
     static Integer money = 10 ; 
     
-    String towerInitInformation[][] = tower.TowerInformation.getTowerInitInformation()  ; // get tower information
+
+    int num_frame = 0;
+    
+    //String towerInformation[][] = Tower.getTowerInitInformation()  ; // get tower information
+
+//    String towerInitInformation[][] = tower.TowerInformation.getTowerInitInformation()  ; // get tower information
     //get tower information
     
 
@@ -73,19 +91,20 @@ public class MyController {
      */
     @FXML
     private void play() {
-        System.out.println("Play button clicked");
-        Label newLabel = new Label();
-        newLabel.setLayoutX(GRID_WIDTH / 4 );
-        newLabel.setLayoutY(GRID_WIDTH / 4);
-        newLabel.setMinWidth(GRID_WIDTH / 2);
-        newLabel.setMaxWidth(GRID_WIDTH / 2);
-        newLabel.setMinHeight(GRID_WIDTH / 2);
-        newLabel.setMaxHeight(GRID_WIDTH / 2);
-        newLabel.setStyle("-fx-border-color: black;");
-        newLabel.setText("*");
-        newLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN,
-       CornerRadii.EMPTY, Insets.EMPTY)));
-        paneArena.getChildren().addAll(newLabel);
+//        System.out.println("Play button clicked");
+//        Label newLabel = new Label();
+//        newLabel.setLayoutX(GRID_WIDTH / 4 );
+//        newLabel.setLayoutY(GRID_WIDTH / 4);
+//        newLabel.setMinWidth(GRID_WIDTH / 2);
+//        newLabel.setMaxWidth(GRID_WIDTH / 2);
+//        newLabel.setMinHeight(GRID_WIDTH / 2);
+//        newLabel.setMaxHeight(GRID_WIDTH / 2);
+//        newLabel.setStyle("-fx-border-color: black;");
+//        newLabel.setText("*");
+//        newLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN,
+//       CornerRadii.EMPTY, Insets.EMPTY)));
+//        paneArena.getChildren().addAll(newLabel);
+        
         
     }
 
@@ -101,9 +120,11 @@ public class MyController {
             for (int j = 0; j < MAX_H_NUM_GRID; j++) {
                 Label newLabel = new Label();
                 
-                if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1))
+                if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1)) {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-                else 
+                	WhiteBoxes.wbs.add(new WhiteBox(newLabel,i,j));
+                }
+                	else 
                 {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
                     GreenBoxes.gbs.add(new GreenBox(newLabel,i,j))  ; 
@@ -132,15 +153,24 @@ public class MyController {
 
     @FXML
     private void nextFrame() {
-        if (x == -1) {
-            grids[0][0].setText("M");
-            x = 0;
-            return;
-        }
-        if (y == MAX_V_NUM_GRID - 1)
-            return;
-        grids[y++][x].setText("");
-        grids[y][x].setText("M");
+    	
+    	System.out.println(num_frame+" frame");
+    	if(num_frame%5 == 0) {
+    		WhiteBoxes.targetGenerateMonster("Fox");
+    	}
+//    	WhiteBoxes.moveMonsters();
+    	num_frame ++;
+    	
+//        if (x == -1) {
+//            grids[0][0].setText("M");
+//            x = 0;
+//            return;
+//        }
+//        if (y == MAX_V_NUM_GRID - 1)
+//            return;
+//        grids[y++][x].setText("");
+//        grids[y][x].setText("M");
+
     }
     
     int getLabelMoney() {
@@ -153,27 +183,29 @@ public class MyController {
     }
     
     private String getInitTooltip(Label label) {
-		String result = "";
-		int towerType = -1 ; 
-		if(label.equals(labelBasicTower)) towerType = 0 ; 
-		if(label.equals(labelIceTower)) towerType = 1 ; 
-		if(label.equals(labelCatapult)) towerType=2 ;
-		if(label.equals(labelLaserTower)) towerType = 3 ; 
-		
-		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
-		
-		if(initInformationLineId.length != towerInitInformation[towerType].length) {
-			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
-			alert.showAndWait() ; 
-		}
-		if(towerInitInformation[towerType][0] != null )
-			result += towerInitInformation[towerType][0] ; 
-		for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
-			if(towerInitInformation[towerType][i] != null )
-				result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
-		
-		return result ; 
-}
+      
+    		String result = "";
+//    		int towerType = -1 ; 
+//    		if(label.equals(labelBasicTower)) towerType = 0 ; 
+//    		if(label.equals(labelIceTower)) towerType = 1 ; 
+//    		if(label.equals(labelCatapult)) towerType=2 ;
+//    		if(label.equals(labelLaserTower)) towerType = 3 ; 
+//    		
+//    		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
+//    		
+//    		if(initInformationLineId.length != towerInitInformation[towerType].length) {
+//    			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
+//    			alert.showAndWait() ; 
+//    		}
+//    		if(towerInitInformation[towerType][0] != null )
+//				result += towerInitInformation[towerType][0] ; 
+//			for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
+//				if(towerInitInformation[towerType][i] != null )
+//					result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
+    		
+    		return result ; 
+    }
+
     
     private void setDragAndDrop2() { 
     		Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
@@ -348,58 +380,60 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
 	
 	@Override
     public void handle(DragEvent event) {
-        System.out.println("xx");
-        Dragboard db = event.getDragboard();
-        boolean success = false;
-        System.out.println(db.getString());
-        
-        
-        if (db.hasString() || db.hasImage()) { //db is the button being dragged
-            
-        	
-        	//((Label)event.getGestureTarget()).setText(db.getString()); //set the target to tower
-            
-        	
-        	//set image 
-            Integer moneyDeducted = 0 ; 
-            switch(db.getString())
-            {
-            	case "Basic Tower" : 
-            		moneyDeducted = tower.TowerInformation.getBuildingCost("Basic Tower") ; 
-            		break ; 
-            	case "Ice Tower" : 
-            		moneyDeducted = tower.TowerInformation.getBuildingCost("Ice Tower") ; //change
-            		break ; 
-            	case "Catapult" : 
-            		moneyDeducted = tower.TowerInformation.getBuildingCost("Catapult")  ; 
-            		break ; 
-            	case "Laser Tower" : 
-            		moneyDeducted = tower.TowerInformation.getBuildingCost("Laser Tower")  ;
-            		break ; 
-            	default :
-            		assert false : "invalid tower" ; 
-            }
-            if(MyController.money >= moneyDeducted && GreenBoxes.targetHasTower(event.getGestureTarget()) == false)
-            {
-            	GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
-                //((Label)event.getGestureTarget()).setText(moneyDeducted.toString());
-        		MyController.money -= moneyDeducted;  
-        		
-                
-                success = true;
-            }
-            else
-            {
-            	//alert
-            	Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
-            	alert.showAndWait() ; 
-            	success = false ; 
-            }
-            
-        }
-        event.setDropCompleted(success);
-        event.consume();
-        
+
+//        System.out.println("xx");
+//        Dragboard db = event.getDragboard();
+//        boolean success = false;
+//        System.out.println(db.getString());
+//        
+//        
+//        if (db.hasString() || db.hasImage()) { //db is the button being dragged
+//            
+//        	
+//        	//((Label)event.getGestureTarget()).setText(db.getString()); //set the target to tower
+//            
+//        	
+//        	//set image 
+//            Integer moneyDeducted = 0 ; 
+//            switch(db.getString())
+//            {
+//            	case "Basic Tower" : 
+//            		moneyDeducted = tower.TowerInformation.getCost("Basic Tower") ; 
+//            		break ; 
+//            	case "Ice Tower" : 
+//            		moneyDeducted = tower.TowerInformation.getCost("Ice Tower") ; //change
+//            		break ; 
+//            	case "Catapult" : 
+//            		moneyDeducted = tower.TowerInformation.getCost("Catapult")  ; 
+//            		break ; 
+//            	case "Laser Tower" : 
+//            		moneyDeducted = tower.TowerInformation.getCost("LaserTower")  ;
+//            		break ; 
+//            	default :
+//            		assert false : "invalid tower" ; 
+//            }
+//            if(MyController.money >= moneyDeducted && GreenBoxes.targetHasTower(event.getGestureTarget()) == false)
+//            {
+//            	GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
+//                //((Label)event.getGestureTarget()).setText(moneyDeducted.toString());
+//        		MyController.money -= moneyDeducted;  
+//        		
+//                
+//                success = true;
+//            }
+//            else
+//            {
+//            	//alert
+//            	Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
+//            	alert.showAndWait() ; 
+//            	success = false ; 
+//            }
+//            
+//        }
+//        event.setDropCompleted(success);
+//        event.consume();
+//        
+
     }
 
 }

@@ -1,13 +1,17 @@
 package monster;
 
+
 public class Monster {
+	//constant
+	static final int DEFAULT_X = -1;
+	static final int DEFAULT_Y = 0;
+	
+	//private data member
+	private String type;
 	private int HP;
 	private int speed;
 	private int x;
 	private int y;
-	
-	public static final int DEFAULT_X = 10;
-	public static final int DEFAULT_Y = 10;
 	
 	public Monster(int _HP, int _speed) {
 		HP = _HP;
@@ -15,8 +19,27 @@ public class Monster {
 		x = DEFAULT_X;
 		y = DEFAULT_Y;
 	}
+	public String getType() {
+		return type;
+	}
 	public int getHP() {
 		return HP;
 	}
+	public int getSpeed() {
+		return speed;
+	}
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void damage(int damage) {
+		HP -= damage;
+	}
+	public void slow_down(int offset) {
+		speed -= offset;
+	}
 	
 }
+
