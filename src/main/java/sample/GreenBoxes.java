@@ -2,59 +2,77 @@ package sample;
 import java.util.* ;
 
 import javafx.scene.control.Label;
+import tower.Tower;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 class GreenBoxes {
 	
     
 	static List<GreenBox> gbs = new ArrayList<>(); 
 	
+	static Integer targetGetIndex(Object target) {
+		for(int i = 0 ;  i < gbs.size() ; i++)
+			if(gbs.get(i).label.equals((Label)target))
+				return i ; 
+		return null ; 
+	}
+	
 	static boolean targetHasTower(Object target) {
-    	for(int i = 0 ; i < gbs.size() ; i++ ) {
-    		if(gbs.get(i).label.equals((Label)target))
-    			if(gbs.get(i).tower != null)
-    				return true  ; 
-    	
-    	}
+    	if(gbs.get(targetGetIndex(target)).tower != null)
+    		return true  ; 
     	return false ; 
     }
 	
-	int targetV(Object target) {
-		for(int i = 0 ; i < gbs.size() ; i++ )
-			if(gbs.get(i).label.equals((Label)target))
-				return gbs.get(i).v ; 
-		return -1 ; 
+	static int targetV(Object target) {
+		return gbs.get(targetGetIndex(target)).v ; 
 	}
 	
-	int targetH(Object target) {
-		for(int i = 0 ; i < gbs.size() ; i++)
-			if(gbs.get(i).label.equals((Label)target))
-				return gbs.get(i).h ; 
-		return -1 ;
+	static int targetH(Object target) {
+		return gbs.get(targetGetIndex(target)).h ;
 	}
 	
 	
 	static boolean targetDestroyTower(Object target) {
-		assert targetHasTower(target) == true : "It has no Tower, no tower can be destroyed"  ;
-		for(int i = 0 ; i < gbs.size() ; i++) 
-			if(gbs.get(i).label.equals((Label)target))
-			{
-				gbs.get(i).destroyTower() ; 
-				return true ;
-			}
-		return false ; 
+		if(targetHasTower(target) != true ) {
+			Alert alert = new Alert ( AlertType.ERROR,"It has no Tower, no tower can be destroyed" ) ; 
+			alert.showAndWait()  ; 
+			return false ; 
+		} 
+		gbs.get(targetGetIndex(target)).destroyTower() ; 
+		return true ;
 	}
 	
 	
 	static boolean targetBuildTower(Object target, String id) {
-		assert targetHasTower(target) == false : "It has Tower, new tower cannot be built" ; 
-		for (int i = 0 ; i < gbs.size()  ; i++)
-			if(gbs.get(i).label.equals((Label)target))
-			{
-				gbs.get(i).buildTower(id);
-				return true;  
-			}
-		return false; 
+		if(targetHasTower(target) != false ) {
+			Alert alert = new Alert ( AlertType.ERROR, "It has Tower, new tower cannot be built") ; 
+			alert.showAndWait()  ; 
+			return false ; 
+		} 
+		gbs.get(targetGetIndex(target)).buildTower(id);
+		return true;  
 		
+	}
+	
+	static boolean targetUpgradeTower(Object target) { 
+		if(targetHasTower(target) != true ) {
+			Alert alert = new Alert ( AlertType.ERROR, "no target for upgrade") ; 
+			alert.showAndWait()  ; 
+			return false; 
+		}
+		gbs.get(targetGetIndex(target)).tower.upgrade() ; 
+		return true ; 
+		 
+	}
+	
+	static Tower targetGetTower(Object target) {
+		if(targetHasTower(target) == false ) {
+			Alert alert = new Alert ( AlertType.ERROR, "target has no tower") ; 
+			alert.showAndWait()  ; 
+			return null;
+		}
+		return gbs.get(targetGetIndex(target)).tower ; 
 	}
 	
 }

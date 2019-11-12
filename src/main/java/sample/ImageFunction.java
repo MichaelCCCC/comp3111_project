@@ -9,6 +9,10 @@ class ImageFunction {
     static final Image ITimage = new Image("/iceTower.png") ; 
     static final Image Cimage = new Image("/catapult.png")  ;
     static final Image LTimage = new Image( "/laserTower.png") ; 
+    static final Image FOXimage = new Image("/fox.png");
+    static final Image PENGUINimage = new Image ("/penguin.png");
+    static final Image UNICORNimage = new Image ("/unicorn.png");
+    static final Image COLLISIONimage = new Image ("/collision.png");
     static final int IMAGE_WIDTH = 30; 
     static final int BOX_WIDTH = 40 ; 
     
@@ -23,6 +27,14 @@ class ImageFunction {
 				return Cimage; 
 		case "Laser Tower":
 				return LTimage ;
+		case "Fox":
+				return FOXimage;
+		case "Penguin":
+				return PENGUINimage;
+		case "Unicorn":
+				return UNICORNimage;
+		case "Collision":
+				return COLLISIONimage;
 		default : 
 				return null;  
 		}

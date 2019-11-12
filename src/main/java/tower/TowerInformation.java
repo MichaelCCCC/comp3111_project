@@ -12,4 +12,24 @@ public class TowerInformation {
 		this.upgrade_cost = upgrade_cost;
 		this.shooting_range = shooting_range;
 	}
+
+	public static String[][] getTowerInitInformation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String[] getInitInformationLineId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static int getUpgradeCost(String id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public static Integer getBuildingCost(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
