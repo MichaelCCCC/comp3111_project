@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
        // System.out.println(getClass().getResource("/sample.fxml")) ;  //it can find the file
