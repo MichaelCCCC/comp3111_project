@@ -61,7 +61,7 @@ class GreenBoxes {
 			alert.showAndWait()  ; 
 			return false; 
 		}
-		gbs.get(targetGetIndex(target)).tower.upgrade() ; 
+//		gbs.get(targetGetIndex(target)).tower.upgrade() ; 
 		return true ; 
 		 
 	}
