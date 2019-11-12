@@ -98,6 +98,10 @@ public class Tower {
 		this.shooting_range = shooting_range;
 	}
 	
+	private double distance(Monster enemy) {
+		return Math.sqrt(Math.pow(enemy.getX() - x, 2) + Math.pow(enemy.getY() - y, 2));
+	}
+	
 	protected Monster findClosestEnemy() {
 		Monster closestEnemy;
 		double closestEnemyDistance = Double.MAX_VALUE;
@@ -108,6 +112,8 @@ public class Tower {
 			}
 		}
 	}
+	
+
 	void shoot() {
 		Monster closestEnemy = findClosestEnemy();
 		if(distance(closestEnemy) <= shooting_range) {			
