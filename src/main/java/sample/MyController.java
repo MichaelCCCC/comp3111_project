@@ -160,36 +160,19 @@ public class MyController {
     
     private String getInitTooltip(Label label) {
     		String result = "";
-    		if(label.equals(labelBasicTower)) {
-    			if(towerInformation[0][0] != null )
-    				result += towerInformation[0][0] ; 
-    			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
-    				if(towerInformation[0][i] != null )
-    					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[0][i])   ; 
-    		}
-    		if(label.equals(labelIceTower)) {
-    			if(towerInformation[1][0] != null )
-    				result += towerInformation[1][0] ; 
-    			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
-    				if(towerInformation[1][i] != null )
-    					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[1][i])   ; 
-    		}
-    		if(label.equals(labelCatapult)) {
-    			if(towerInformation[2][0] != null )
-    				result += towerInformation[2][0] ; 
-    			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
-    				if(towerInformation[2][i] != null )
-    					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[2][i])   ; 
-    		}
-    		if(label.equals(labelIceTower)) {
-    			if(towerInformation[3][0] != null )
-    				result += towerInformation[3][0] ; 
-    			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
-    				if(towerInformation[3][i] != null )
-    					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[3][i])   ; 
-    		}
+    		int towerType = -1 ; 
+    		if(label.equals(labelBasicTower)) towerType = 0 ; 
+    		if(label.equals(labelIceTower)) towerType = 1 ; 
+    		if(label.equals(labelCatapult)) towerType=2 ;
+    		if(label.equals(labelLaserTower)) towerType = 3 ; 
     		
-    			return result ; 
+    		if(towerInformation[towerType][0] != null )
+				result += towerInformation[towerType][0] ; 
+			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
+				if(towerInformation[towerType][i] != null )
+					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[towerType][i])   ;
+    		
+    		return result ; 
     }
     
     private void setDragAndDrop2() { 
