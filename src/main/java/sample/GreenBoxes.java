@@ -2,8 +2,6 @@ package sample;
 import java.util.* ;
 
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;  
 
 class GreenBoxes {
 	

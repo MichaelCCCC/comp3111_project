@@ -67,8 +67,9 @@ public class MyController {
     
     static Integer money = 10 ; 
     
-    String towerInformation[][] = new String[4][8]  ; // get tower information
+    String towerInformation[][] = Tower.getTowerInitInformation()  ; // get tower information
     //get tower information
+    
 
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
     static GreenBoxes greenboxes = new GreenBoxes () ;   //store all the green box
@@ -157,32 +158,37 @@ public class MyController {
     	labelMoney.setText(money.toString());
     }
     
-    private String getTooltip(Label label) {
+    private String getInitTooltip(Label label) {
     		String result = "";
-    		if(label.equals(labelBasicTower))
-    			result =  towerInformation[0][0] + "\nshooting range: " + 
-    		towerInformation[0][1] + "\nattack power: " + towerInformation[0][2] + 
-    		"\nbuilding cost: " + towerInformation[0][3] + "\ntier: " + 
-    		towerInformation[0][4] + "\nupgrade cost: " + towerInformation[0][5] + 
-    		"\nupgrade diff: " + towerInformation[0][6] + "\nnote: " + towerInformation[0][7] ;
-    		if(label.equals(labelIceTower))
-    			result =  towerInformation[1][0] + "\nshooting range: " + 
-    		towerInformation[1][1] + "\nattack power: " + towerInformation[1][2] + 
-    		"\nbuilding cost: " + towerInformation[1][3] + "\ntier: " + 
-    		towerInformation[1][4] + "\nupgrade cost: " + towerInformation[1][5] + 
-    		"\nupgrade diff: " + towerInformation[1][6] + "\nnote: " + towerInformation[1][7] ;
-    		if(label.equals(labelCatapult))
-    			result =  towerInformation[2][0] + "\nshooting range: " + 
-    		towerInformation[2][1] + "\nattack power: " + towerInformation[2][2] + 
-    		"\nbuilding cost: " + towerInformation[2][3] + "\ntier: " + 
-    		towerInformation[2][4] + "\nupgrade cost: " + towerInformation[2][5] + 
-    		"\nupgrade diff: " + towerInformation[2][6] + "\nnote: " + towerInformation[2][7] ;
-    		if(label.equals(labelLaserTower))
-    			result =  towerInformation[3][0] + "\nshooting range: " + 
-    		towerInformation[3][1] + "\nattack power: " + towerInformation[3][2] + 
-    		"\nbuilding cost: " + towerInformation[3][3] + "\ntier: " + 
-    		towerInformation[3][4] + "\nupgrade cost: " + towerInformation[3][5] + 
-    		"\nupgrade diff: " + towerInformation[3][6] + "\nnote: " + towerInformation[3][7] ;
+    		if(label.equals(labelBasicTower)) {
+    			if(towerInformation[0][0] != null )
+    				result += towerInformation[0][0] ; 
+    			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
+    				if(towerInformation[0][i] != null )
+    					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[0][i])   ; 
+    		}
+    		if(label.equals(labelIceTower)) {
+    			if(towerInformation[1][0] != null )
+    				result += towerInformation[1][0] ; 
+    			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
+    				if(towerInformation[1][i] != null )
+    					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[1][i])   ; 
+    		}
+    		if(label.equals(labelCatapult)) {
+    			if(towerInformation[2][0] != null )
+    				result += towerInformation[2][0] ; 
+    			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
+    				if(towerInformation[2][i] != null )
+    					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[2][i])   ; 
+    		}
+    		if(label.equals(labelIceTower)) {
+    			if(towerInformation[3][0] != null )
+    				result += towerInformation[3][0] ; 
+    			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
+    				if(towerInformation[3][i] != null )
+    					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[3][i])   ; 
+    		}
+    		
     			return result ; 
     }
     
@@ -191,7 +197,7 @@ public class MyController {
     		
         
         for(int i = 0 ; i < sources.length ; i++ ) {
-        		Tooltip.install(sources[i], new Tooltip(getTooltip(sources[i])));
+        		Tooltip.install(sources[i], new Tooltip(getInitTooltip(sources[i])));
         		sources[i].setOnDragDetected(new DragEventHandler(sources[i]));//once this is on, it cannot be off
         }
          
