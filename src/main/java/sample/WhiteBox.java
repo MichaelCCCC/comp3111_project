@@ -23,9 +23,6 @@ public class WhiteBox {
 
 		monster = null;
 	}
-	public Monster getMonster() {
-		return monster;
-	}
 	
 	public boolean generateMonster(String id) {
 		if(monster == null) {
@@ -51,13 +48,10 @@ public class WhiteBox {
 	}
 
 	public void removeMonster() {
-		ImageView iv = ImageFunction.setImageView("");
-		
-		label.setGraphic(iv);
-		label.setId("");
-		
-		monster = null;
-
-
+		if(monster != null) {
+			label.setGraphic(null);
+			label.setId("");	
+			monster = null;
+		}
 	}
 }

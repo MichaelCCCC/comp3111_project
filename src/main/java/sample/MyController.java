@@ -1,6 +1,6 @@
 package sample;
 
-import javafx.scene.control.Alert;
+import javafx.scene.control.Alert; 
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
@@ -79,7 +79,6 @@ public class MyController {
     
 
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
-    static GreenBoxes greenboxes = new GreenBoxes () ;   //store all the green box
     private int x = -1, y = 0; //where is my monster
     
     /**
