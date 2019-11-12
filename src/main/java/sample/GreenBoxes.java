@@ -11,6 +11,8 @@ class GreenBoxes {
     static final Image ITimage = new Image("/iceTower.png") ; 
     static final Image Cimage = new Image("/catapult.png")  ;
     static final Image LTimage = new Image( "/laserTower.png") ; 
+    static final int IMAGE_WIDTH = 30; 
+    static final int BOX_WIDTH = 40 ; 
     
 	static List<GreenBox> gbs = new ArrayList<>(); 
 	
@@ -70,13 +72,14 @@ class GreenBoxes {
 	}
 	
 	static boolean targetBuildTower(Object target, String id) {
-		//assert targetHasTower(target) == false : "It has Tower, new tower cannot be built" ; 
+		assert targetHasTower(target) == false : "It has Tower, new tower cannot be built" ; 
 		for (int i = 0 ; i < gbs.size()  ; i++)
 			if(gbs.get(i).label.equals((Label)target))
 			{
 				ImageView iv = new ImageView((id == null) ? null: idReturnImage(id)) ; 
 				if(id != null) {
-					iv.setFitWidth(40) ; 
+					iv.setFitWidth(IMAGE_WIDTH) ;
+					iv.setTranslateX((BOX_WIDTH - IMAGE_WIDTH)/2) ; 
 	        		iv.setPreserveRatio(true) ;
 	        		iv.setSmooth(true);
 	                iv.setCache(true);

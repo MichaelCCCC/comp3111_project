@@ -6,6 +6,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.event.*;
@@ -53,7 +54,7 @@ public class MyController {
     private static final int MAX_H_NUM_GRID = 12;
     private static final int MAX_V_NUM_GRID = 12;
     
-    static final int COST_BASIC_TOWER = 1 ;
+    static final int COST_BASIC_TOWER = 1 ; //<- should come from tower class
     static final int COST_ICE_TOWER = 2 ; 
     static final int COST_CATAPULT = 2 ; 
     static final int COST_LASER_TOWER = 3 ; 
@@ -65,6 +66,9 @@ public class MyController {
     static final Image LTimage = new Image( "/laserTower.png") ; 
     
     static Integer money = 10 ; 
+    
+    String towerInformation[][] = new String[4][8]  ; // get tower information
+    //get tower information
 
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
     static GreenBoxes greenboxes = new GreenBoxes () ;   //store all the green box
@@ -122,8 +126,11 @@ public class MyController {
         
         labelMoney.setText(money.toString());
         
-        for(int i = 0 ; i < GreenBoxes.gbs.size() ; i++ )
+        for(int i = 0 ; i < GreenBoxes.gbs.size() ; i++ ) {
         		setDragAndDrop(GreenBoxes.gbs.get(i).v , GreenBoxes.gbs.get(i).h);
+        		setMouseAction(GreenBoxes.gbs.get(i).v,GreenBoxes.gbs.get(i).h) ; 
+        }
+        		
         
         setDragAndDrop2() ; 
     }
@@ -150,19 +157,106 @@ public class MyController {
     	labelMoney.setText(money.toString());
     }
     
+    private String getTooltip(Label label) {
+    		String result = "";
+    		if(label.equals(labelBasicTower))
+    			result =  towerInformation[0][0] + "\nshooting range: " + 
+    		towerInformation[0][1] + "\nattack power: " + towerInformation[0][2] + 
+    		"\nbuilding cost: " + towerInformation[0][3] + "\ntier: " + 
+    		towerInformation[0][4] + "\nupgrade cost: " + towerInformation[0][5] + 
+    		"\nupgrade diff: " + towerInformation[0][6] + "\nnote: " + towerInformation[0][7] ;
+    		if(label.equals(labelIceTower))
+    			result =  towerInformation[1][0] + "\nshooting range: " + 
+    		towerInformation[1][1] + "\nattack power: " + towerInformation[1][2] + 
+    		"\nbuilding cost: " + towerInformation[1][3] + "\ntier: " + 
+    		towerInformation[1][4] + "\nupgrade cost: " + towerInformation[1][5] + 
+    		"\nupgrade diff: " + towerInformation[1][6] + "\nnote: " + towerInformation[1][7] ;
+    		if(label.equals(labelCatapult))
+    			result =  towerInformation[2][0] + "\nshooting range: " + 
+    		towerInformation[2][1] + "\nattack power: " + towerInformation[2][2] + 
+    		"\nbuilding cost: " + towerInformation[2][3] + "\ntier: " + 
+    		towerInformation[2][4] + "\nupgrade cost: " + towerInformation[2][5] + 
+    		"\nupgrade diff: " + towerInformation[2][6] + "\nnote: " + towerInformation[2][7] ;
+    		if(label.equals(labelLaserTower))
+    			result =  towerInformation[3][0] + "\nshooting range: " + 
+    		towerInformation[3][1] + "\nattack power: " + towerInformation[3][2] + 
+    		"\nbuilding cost: " + towerInformation[3][3] + "\ntier: " + 
+    		towerInformation[3][4] + "\nupgrade cost: " + towerInformation[3][5] + 
+    		"\nupgrade diff: " + towerInformation[3][6] + "\nnote: " + towerInformation[3][7] ;
+    			return result ; 
+    }
+    
     private void setDragAndDrop2() { 
-    		Label source1 = labelBasicTower;
-        Label source2 = labelIceTower;
-        Label source3 = labelCatapult; 
-        Label source4 = labelLaserTower ; 
-         
-        	source1.setOnDragDetected(new DragEventHandler(source1)); //once this is on, it cannot be off
-         
-        	source2.setOnDragDetected(new DragEventHandler(source2));
+    		Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
+    		
         
-        	source3.setOnDragDetected(new DragEventHandler(source3));
-       
-        	source4.setOnDragDetected(new DragEventHandler(source4));
+        for(int i = 0 ; i < sources.length ; i++ ) {
+        		Tooltip.install(sources[i], new Tooltip(getTooltip(sources[i])));
+        		sources[i].setOnDragDetected(new DragEventHandler(sources[i]));//once this is on, it cannot be off
+        }
+         
+    }
+    
+    private void setMouseAction(int v , int h ) {
+    		Label target = grids[v][h] ; 
+    		
+    		target.setOnMouseEntered( new EventHandler <MouseEvent>() {
+            	@Override
+            	public void handle (MouseEvent event) {
+            		System.out.println("mouse entered"); 
+            		if(GreenBoxes.targetHasTower(target))
+            			target.setStyle("-fx-border-color: rgba(255,0,0,0.3) ; -fx-border-width: 3");
+            		event.consume();
+            	}
+            });
+            
+            target.setOnMouseExited((event) -> {
+                /* mouse moved away, remove the graphical cues */
+                target.setStyle("-fx-border-color: black;");
+                System.out.println("Exit");
+                setLabelMoney(money) ; //change the labelmoney after buying
+                event.consume();
+            });
+            
+            
+            String choices [] = {"destroy" , "upgrade" } ; 
+    		ChoiceDialog<String> cd = new ChoiceDialog<String>(choices[0],  choices) ;
+            target.setOnMouseClicked(new EventHandler <MouseEvent>() {
+            		public void handle (MouseEvent event) {
+            			if(GreenBoxes.targetHasTower(target)) {
+            				//target.setGraphic(null);
+            				cd.showAndWait();
+            				
+            				 
+            				if((String)cd.getResult() == choices[0]) 
+            					GreenBoxes.targetDestroyTower(target) ; 
+            					//target.setGraphic(null);
+                			
+                			
+                			if((String)cd.getResult() == choices[1] ) {
+                				if (money >= UPGRADE_COST) {
+                					//tower upgrade
+                					money -= UPGRADE_COST ; 
+                					setLabelMoney(money) ;
+                					System.out.print(target.getId() + " is being upgraded");
+                					Alert alert = new Alert (AlertType.INFORMATION, target.getId() + " is being upgraded") ; 
+            	            			alert.showAndWait() ;
+                				}
+                				else 
+                				{
+                					System.out.println("not enough resource to upgrade " + target.getId() + "tower") ; 
+                					Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
+                	            		alert.showAndWait() ;
+                					
+                				}
+                					
+                			}
+            			}
+            			event.consume() ; 
+            			
+            			
+            		} 
+            }) ; 
     }
     
     /**
@@ -217,6 +311,7 @@ public class MyController {
             }
         });
         
+        
         //lambda
         target.setOnDragExited((event) -> {
             /* mouse moved away, remove the graphical cues */
@@ -225,48 +320,7 @@ public class MyController {
             setLabelMoney(money) ; //change the labelmoney after buying
             event.consume();
         });
-        
-        
-        String choices [] = {"destroy" , "upgrade" } ; 
-		ChoiceDialog<String> cd = new ChoiceDialog<String>(choices[0],  choices) ;
-        target.setOnMouseClicked(new EventHandler <MouseEvent>() {
-        		public void handle (MouseEvent event) {
-        			if(GreenBoxes.targetHasTower(target)) {
-        				//target.setGraphic(null);
-        				cd.showAndWait();
-        				
-        				 
-        				if((String)cd.getResult() == choices[0]) 
-        					GreenBoxes.targetDestroyTower(target) ; 
-        					//target.setGraphic(null);
-            			
-            			
-            			if((String)cd.getResult() == choices[1] ) {
-            				if (money >= UPGRADE_COST) {
-            					//tower upgrade
-            					money -= UPGRADE_COST ; 
-            					setLabelMoney(money) ;
-            					System.out.print(target.getId() + " is being upgraded");
-            					Alert alert = new Alert (AlertType.INFORMATION, target.getId() + " is being upgraded") ; 
-        	            			alert.showAndWait() ;
-            				}
-            				else 
-            				{
-            					System.out.println("not enough resource to upgrade " + target.getId() + "tower") ; 
-            					Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
-            	            		alert.showAndWait() ;
-            					
-            				}
-            					
-            			}
-        			}
-        			
-        			
-        		} 
-        }) ; 
-        
-        
-        
+ 
         
     }
 }
