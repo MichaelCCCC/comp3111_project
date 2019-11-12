@@ -16,9 +16,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
-import tower.BasicTower;
-import tower.Tower;
-import tower.TowerInformation;
+import javafx.scene.shape.Circle;
 
 public class MyController {
     @FXML
@@ -33,7 +31,7 @@ public class MyController {
     @FXML
     private AnchorPane paneArena;
 
-    @FXML
+    @FXML 
     private Label labelBasicTower;
 
     @FXML
@@ -49,18 +47,12 @@ public class MyController {
 	//static
     private Label labelMoney; //<- label cannot be static
 
-    private static final int ARENA_WIDTH = 480;
-    private static final int ARENA_HEIGHT = 480;
-    private static final int GRID_WIDTH = 40;
-    private static final int GRID_HEIGHT = 40;
-    private static final int MAX_H_NUM_GRID = 12;
-    private static final int MAX_V_NUM_GRID = 12;
-    
-    static final int COST_BASIC_TOWER = 1 ; //<- should come from tower class
-    static final int COST_ICE_TOWER = 2 ; 
-    static final int COST_CATAPULT = 2 ; 
-    static final int COST_LASER_TOWER = 3 ; 
-    static final int UPGRADE_COST = 3 ; 
+    static final int ARENA_WIDTH = 480;
+    static final int ARENA_HEIGHT = 480;
+    static final int GRID_WIDTH = 40;
+    static final int GRID_HEIGHT = 40;
+    static final int MAX_H_NUM_GRID = 12;
+    static final int MAX_V_NUM_GRID = 12;
     
     static final Image BTimage = new Image("/basicTower.png") ;  
     static final Image ITimage = new Image("/iceTower.png") ; 
@@ -161,27 +153,27 @@ public class MyController {
     }
     
     private String getInitTooltip(Label label) {
-    		String result = "";
-    		int towerType = -1 ; 
-    		if(label.equals(labelBasicTower)) towerType = 0 ; 
-    		if(label.equals(labelIceTower)) towerType = 1 ; 
-    		if(label.equals(labelCatapult)) towerType=2 ;
-    		if(label.equals(labelLaserTower)) towerType = 3 ; 
-    		
-    		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
-    		
-    		if(initInformationLineId.length != towerInitInformation[towerType].length) {
-    			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
-    			alert.showAndWait() ; 
-    		}
-    		if(towerInitInformation[towerType][0] != null )
-				result += towerInitInformation[towerType][0] ; 
-			for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
-				if(towerInitInformation[towerType][i] != null )
-					result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
-    		
-    		return result ; 
-    }
+		String result = "";
+		int towerType = -1 ; 
+		if(label.equals(labelBasicTower)) towerType = 0 ; 
+		if(label.equals(labelIceTower)) towerType = 1 ; 
+		if(label.equals(labelCatapult)) towerType=2 ;
+		if(label.equals(labelLaserTower)) towerType = 3 ; 
+		
+		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
+		
+		if(initInformationLineId.length != towerInitInformation[towerType].length) {
+			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
+			alert.showAndWait() ; 
+		}
+		if(towerInitInformation[towerType][0] != null )
+			result += towerInitInformation[towerType][0] ; 
+		for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
+			if(towerInitInformation[towerType][i] != null )
+				result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
+		
+		return result ; 
+}
     
     private void setDragAndDrop2() { 
     		Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
@@ -202,7 +194,17 @@ public class MyController {
             	public void handle (MouseEvent event) {
             		System.out.println("mouse entered"); 
             		if(GreenBoxes.targetHasTower(target))
+            		{
             			target.setStyle("-fx-border-color: rgba(255,0,0,0.3) ; -fx-border-width: 3");
+            			
+            			//show range and show tool tip 
+            			
+            			util.showTowerRange(target) ; 
+            			
+            			
+            	        
+            			
+            		}
             		event.consume();
             	}
             });
@@ -231,10 +233,13 @@ public class MyController {
                 			
                 			
                 			if((String)cd.getResult() == choices[1] ) {
-                				if (money >= UPGRADE_COST) {
+                				int upgradeCost = tower.TowerInformation.getUpgradeCost(target.getId()) ; 
+                				if (money >= upgradeCost) {
                 					//tower upgrade
-                					money -= UPGRADE_COST ; 
+                					money -= upgradeCost ; 
                 					setLabelMoney(money) ;
+                					GreenBoxes.targetUpgradeTower(target) ; 
+                					
                 					System.out.print(target.getId() + " is being upgraded");
                 					Alert alert = new Alert (AlertType.INFORMATION, target.getId() + " is being upgraded") ; 
             	            			alert.showAndWait() ;
@@ -360,16 +365,16 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
             switch(db.getString())
             {
             	case "Basic Tower" : 
-            		moneyDeducted = tower.TowerInformation.getCost("Basic Tower") ; 
+            		moneyDeducted = tower.TowerInformation.getBuildingCost("Basic Tower") ; 
             		break ; 
             	case "Ice Tower" : 
-            		moneyDeducted = tower.TowerInformation.getCost("Ice Tower") ; //change
+            		moneyDeducted = tower.TowerInformation.getBuildingCost("Ice Tower") ; //change
             		break ; 
             	case "Catapult" : 
-            		moneyDeducted = tower.TowerInformation.getCost("Catapult")  ; 
+            		moneyDeducted = tower.TowerInformation.getBuildingCost("Catapult")  ; 
             		break ; 
             	case "Laser Tower" : 
-            		moneyDeducted = tower.TowerInformation.getCost("LaserTower")  ;
+            		moneyDeducted = tower.TowerInformation.getBuildingCost("Laser Tower")  ;
             		break ; 
             	default :
             		assert false : "invalid tower" ; 

@@ -46,12 +46,14 @@ public class WhiteBox {
 		return true;
 	}
 	
-	public void removeMonster() {
-		ImageView iv = ImageFunction.setImageView("");
-		
-		label.setGraphic(iv);
-		label.setId("");
-		
-		monster = null;
+	public boolean removeMonster() {
+		if (monster != null) {
+			label.setGraphic(null);
+			label.setId(null);
+			monster = null;
+			return true ;
+		}
+		else 
+			return false ; 
 	}
 }
