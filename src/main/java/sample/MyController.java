@@ -63,12 +63,14 @@ public class MyController {
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
     static GreenBoxes greenboxes = new GreenBoxes () ;   //store all the green box
     private int x = -1, y = 0; //where is my monster
+    
     /**
      * A dummy function to show how button click works
      */
     @FXML
     private void play() {
-        System.out.println("Play button clicked");
+    	/** 
+    	 System.out.println("Play button clicked");
         Label newLabel = new Label();
         newLabel.setLayoutX(GRID_WIDTH / 4 );
         newLabel.setLayoutY(GRID_WIDTH / 4);
@@ -81,7 +83,7 @@ public class MyController {
         newLabel.setBackground(new Background(new BackgroundFill(Color.YELLOWGREEN,
        CornerRadii.EMPTY, Insets.EMPTY)));
         paneArena.getChildren().addAll(newLabel);
-        
+    	 */
     }
 
     /**
@@ -129,13 +131,13 @@ public class MyController {
     private void nextFrame() {
         if (x == -1) {
             grids[0][0].setText("M");
-            x = 0;
+            x = 0; // x is generated 
             return;
         }
         if (y == MAX_V_NUM_GRID - 1)
             return;
-        grids[y++][x].setText("");
-        grids[y][x].setText("M");
+        grids[y++][x].setText(""); //remove text on original labal
+        grids[y][x].setText("M"); //add text on original label 
     }
     
     int getLabelMoney() {
@@ -327,6 +329,7 @@ class DragEventHandler implements EventHandler<MouseEvent> {
     public DragEventHandler(Label e) {
         source = e;
     }
+  
     @Override
     public void handle (MouseEvent event) {
         Dragboard db = source.startDragAndDrop(TransferMode.ANY);
