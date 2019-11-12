@@ -114,11 +114,16 @@ public class Tower {
 //		}
 	}
 	
-	void upgrade() {
+	public void upgrade() {
 		attack_power += 10;
 	}
 	
 	void destroy() {
 		is_destroyed = true;
+	}
+
+	public double getShootingRange() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

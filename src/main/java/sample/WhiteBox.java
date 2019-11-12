@@ -5,7 +5,9 @@ import javafx.scene.image.ImageView;
 import monster.Fox;
 import monster.Monster;
 import monster.Penguin;
+
 import monster.Unicorn;
+
 
 public class WhiteBox {
 	Label label ; 
@@ -13,10 +15,12 @@ public class WhiteBox {
 	final int h;  
 	Monster monster ;
 	
+
 	public WhiteBox(Label _label, int _v, int _h) {
 		label = _label;
 		v = _v;
 		h = _h;
+
 		monster = null;
 	}
 	public Monster getMonster() {
@@ -45,6 +49,7 @@ public class WhiteBox {
 		}
 		return true;
 	}
+
 	public void removeMonster() {
 		ImageView iv = ImageFunction.setImageView("");
 		
@@ -52,5 +57,7 @@ public class WhiteBox {
 		label.setId("");
 		
 		monster = null;
+
+
 	}
 }
