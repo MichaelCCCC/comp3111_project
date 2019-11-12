@@ -47,7 +47,7 @@ public class LaserTower extends Tower{
 //		}
 	}
 	
-	void upgrade() {
+	public void upgrade() {
 		attack_power += 10;
 	}
 }
