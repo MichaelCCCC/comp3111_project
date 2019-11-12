@@ -1,4 +1,4 @@
-package sample;
+package monster;
 
 public class Penguin extends Monster {
 	public static final int DEFAULT_PENGUIN_HP = 10;

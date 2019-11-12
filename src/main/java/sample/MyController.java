@@ -16,6 +16,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
+import tower.BasicTower;
+import tower.Tower;
 
 public class MyController {
     @FXML

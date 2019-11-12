@@ -1,4 +1,6 @@
-package sample;
+package tower;
+
+import monster.Monster;
 
 public class LaserTower extends Tower{
 	int attack_cost;

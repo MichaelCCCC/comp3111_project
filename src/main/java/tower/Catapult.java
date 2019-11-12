@@ -1,4 +1,4 @@
-package sample;
+package tower;
 
 class Catapult extends Tower{
 	

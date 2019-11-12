@@ -1,4 +1,4 @@
-package sample;
+package monster;
 
 public class Unicorn extends Monster {
 	public static final int DEFAULT_UNICORN_HP = 8;

@@ -1,6 +1,9 @@
-package sample;
+package tower;
 import java.lang.Math; 
 import java.util.List;
+
+import monster.Monster;
+
 import java.util.ArrayList;
 
 class TowerInformation {

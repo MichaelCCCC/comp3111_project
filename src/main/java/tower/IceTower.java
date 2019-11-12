@@ -1,4 +1,6 @@
-package sample;
+package tower;
+
+import monster.Monster;
 
 public class IceTower extends Tower{
 	int slow_duration;
