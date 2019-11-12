@@ -1,4 +1,3 @@
-
 package sample;
 
 import javafx.scene.control.Alert;
@@ -413,4 +412,3 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
     }
 
 }
-

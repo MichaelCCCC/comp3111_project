@@ -1,67 +1,131 @@
 package sample;
+import java.lang.Math; 
+import java.util.List;
+import java.util.ArrayList;
 
-abstract class Tower {
-	//initial constant 
+class TowerInformation {
+	public int attack_power;
+	public int building_cost;
+	public int upgrade_cost;
+	private double shooting_range;
 	
-	static final int NUM_TOWER_TYPE =4 ; 
-	static final int NUM_INIT_INFORMATION_LINE = 8 ; 
-	static final int NUM_CURRENT_INFORMATION_LINE = 9 ; 
-	static final String[] INIT_INFORMATION_LINE_ID = {"Name" , "Shooting Range" , "Attack Power", "Building Cost" , "Tier" , "Upgrade Cost" , "Upgrading details", "Note"} ; 
-	static final String[] CURRENT_INFORMATION_LINE_ID = {"Name" , "Shooting Range" , "Attack Power", "Building Cost" , "Tier" , "Upgrade Cost", "Total Cost", "Upgrading details", "Note"}; 
+	TowerInformation(int attack_power, int building_cost, int upgrade_cost, double shooting_range) {
+		this.attack_power = attack_power;
+		this.building_cost = building_cost;
+		this.upgrade_cost = upgrade_cost;
+		this.shooting_range = shooting_range;
+	}
+}
+
+public class Tower {
+	List<Monster> enemyList = new ArrayList<Monster>();
+	protected int x;
+	protected int y;
+	protected int attack_power;
+	protected int building_cost;
+	protected int upgrade_cost;
+	protected double shooting_range;
+	protected boolean is_destroyed = false;
 	
-	//current information of data
-	String name ; 
-	double shootingRange ; 
-	int attackPower; 
-	int buildingCost ; 
-	int tier; 
-	int upgradeCost ; 
-	int totalCost ; 
-	String upgradeDiff ; 
-	String note ; 
-	
-	Tower() {
+	//	Constructor with default parameters
+	Tower(int x, int y) {
+		this.x = x;
+		this.y = y;
+		attack_power = 10;
+		building_cost = 10;
+		upgrade_cost = 10;
+		shooting_range = 10;
 	}
 	
-	Tower(String name , double sr, int ap, int bc, int tier, int uc, String ud, String note) {
-		//initialize variable fields
-		this.name = name  ; 
-		this.shootingRange = sr ; 
-		this.attackPower = ap ; 
-		this.buildingCost = bc ; 
-		this.tier = tier; 
-		this.upgradeCost = uc ; 
-		this.totalCost = uc ; 
-		this.upgradeDiff = ud ; 
-		this.note = note ; 
-	}
-    
-	String[] getTowerCurrentInformation() {
-		String towerInformation[] = new String [NUM_CURRENT_INFORMATION_LINE] ; 
-		//todo
-		towerInformation[0] = name ; 
-		towerInformation[1] = String.valueOf(shootingRange) ; 
-		towerInformation[2] = String.valueOf(attackPower) ; 
-		towerInformation[3] = String.valueOf(buildingCost) ; 
-		towerInformation[4] = String.valueOf(tier) ; 
-		towerInformation[5] = String.valueOf(upgradeCost) ; 
-		towerInformation[6] = String.valueOf(totalCost) ; 
-		towerInformation[7] = upgradeDiff ; 
-		towerInformation[8] = note ; 
-		return towerInformation ; 
+	//	Constructor with custom parameters
+	Tower(int x, int y, int attack_power, int building_cost, int upgrade_cost, double shooting_range) {
+		this.x = x;
+		this.y = y;
+		this.attack_power = attack_power;
+		this.building_cost = building_cost;
+		this.upgrade_cost = upgrade_cost;
+		this.shooting_range = shooting_range;
 	}
 	
-	static String[][] getTowerInitInformation() {
-		String towerInformation[][] = new String [NUM_TOWER_TYPE][NUM_INIT_INFORMATION_LINE]  ;
-		//todo 
-		towerInformation[0][0] = BasicTower.initName ; 
-		towerInformation[0][1] = BasicTower.initShootingRange.toString() ; 
-		towerInformation[0][2] = BasicTower.initAttackPower.toString() ; 
-		towerInformation[0][3] = BasicTower.initBuildingCost.toString() ; 
-		towerInformation[0][4] = BasicTower.initTier.toString() ; 
-		towerInformation[0][5] = BasicTower.initUpgradeCost.toString() ; 
-		towerInformation[0][6] = BasicTower.initUpgradeDiff ; 
-		towerInformation[0][7] = BasicTower.initNote ; 
-		return towerInformation ; 
+	//	Get Tower Coordinate
+	int getX() {
+		return x;
+	}
+	
+	int getY() {
+		return y;
+	}
+	
+	//	Get Tower Destroyed status
+	boolean isDestroyed() {
+		return is_destroyed;
+	}
+	
+	//	Get Tower Upgrade Cost
+	int getUpgradeCost() {
+		return upgrade_cost;
+	}
+	
+	//	Get Tower Information
+	TowerInformation getInfo() {
+		return new TowerInformation(attack_power, building_cost, upgrade_cost, shooting_range);
+	}
+	
+	//	Update Tower Attack Power
+	void setAttackPower(int attack_power) {
+		this.attack_power = attack_power;
+	}
+	
+	//	Update Tower Building Cost
+	void setBuildingCost(int building_cost) {
+		this.building_cost = building_cost;
+	}
+	
+	//	Update Tower Upgrade Cost
+	void setUpgradeCost(int upgrade_cost) {
+		this.upgrade_cost = upgrade_cost;
+	}
+	
+	//	Update Tower Shooting Range
+	void setShootingRange(double shooting_range) {
+		this.shooting_range = shooting_range;
+	}
+	
+	void setAttributes(int attack_power, int building_cost, int upgrade_cost, double shooting_range) {
+		this.attack_power = attack_power;
+		this.building_cost = building_cost;
+		this.upgrade_cost = upgrade_cost;
+		this.shooting_range = shooting_range;
+	}
+	
+	private double distance(Monster enemy) {
+		return Math.sqrt(Math.pow(enemy.getX() - x, 2) + Math.pow(enemy.getY() - y, 2));
+	}
+	
+	protected Monster findClosestEnemy() {
+		Monster closestEnemy;
+		double closestEnemyDistance = Double.MAX_VALUE;
+		for(int i=0; i<enemyList.size(); ++i) {
+			if(distance(enemyList.get(i)) < closestEnemyDistance) {
+				closestEnemyDistance = distance(enemyList.get(i));
+				closestEnemy = enemyList.get(i);
+			}
+		}
+	}
+	
+
+	void shoot() {
+		Monster closestEnemy = findClosestEnemy();
+		if(distance(closestEnemy) <= shooting_range) {			
+			closestEnemy.damage(attack_power);
+		}
+	}
+	
+	void upgrade() {
+		attack_power += 10;
+	}
+	
+	void destroy() {
+		is_destroyed = true;
 	}
 }
