@@ -189,26 +189,30 @@ public class MyController {
     }
     
     private String getInitTooltip(Label label) {
+    	if(towerInitInformation == null)
+    		return null ; 
       
     		String result = "";
-//    		int towerType = -1 ; 
-//    		if(label.equals(labelBasicTower)) towerType = 0 ; 
-//    		if(label.equals(labelIceTower)) towerType = 1 ; 
-//    		if(label.equals(labelCatapult)) towerType=2 ;
-//    		if(label.equals(labelLaserTower)) towerType = 3 ; 
-//    		
-//    		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
-//    		
-//    		if(initInformationLineId.length != towerInitInformation[towerType].length) {
-//    			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
-//    			alert.showAndWait() ; 
-//    		}
-//    		if(towerInitInformation[towerType][0] != null )
-//				result += towerInitInformation[towerType][0] ; 
-//			for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
-//				if(towerInitInformation[towerType][i] != null )
-//					result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
-//    		
+    		int towerType = -1 ; 
+    		if(label.equals(labelBasicTower)) towerType = 0 ; 
+    		if(label.equals(labelIceTower)) towerType = 1 ; 
+    		if(label.equals(labelCatapult)) towerType=2 ;
+    		if(label.equals(labelLaserTower)) towerType = 3 ; 
+    		
+    		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
+    		if (initInformationLineId == null)
+    			return null ; 
+    		
+    		if(initInformationLineId.length != towerInitInformation[towerType].length) {
+    			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
+    			alert.showAndWait() ; 
+    		}
+    		if(towerInitInformation[towerType][0] != null )
+				result += towerInitInformation[towerType][0] ; 
+			for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
+				if(towerInitInformation[towerType][i] != null )
+					result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
+    		
     		return result ; 
     }
 
