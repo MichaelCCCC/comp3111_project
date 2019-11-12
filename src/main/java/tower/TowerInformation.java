@@ -30,6 +30,6 @@ public class TowerInformation {
 
 	public static Integer getBuildingCost(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return 3;
 	}
 }

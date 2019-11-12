@@ -5,7 +5,9 @@ import javafx.scene.image.ImageView;
 import monster.Fox;
 import monster.Monster;
 import monster.Penguin;
-import monster.Unicorn; ; 
+
+import monster.Unicorn;
+
 
 public class WhiteBox {
 	Label label ; 
@@ -13,10 +15,12 @@ public class WhiteBox {
 	final int h;  
 	Monster monster ;
 	
-	public WhiteBox(Label label, int v, int h) {
-		this.label = label;
-		this.v = v;
-		this.h =h;
+
+	public WhiteBox(Label _label, int _v, int _h) {
+		label = _label;
+		v = _v;
+		h = _h;
+
 		monster = null;
 	}
 	public Monster getMonster() {
@@ -45,15 +49,15 @@ public class WhiteBox {
 		}
 		return true;
 	}
-	
-	public boolean removeMonster() {
-		if (monster != null) {
-			label.setGraphic(null);
-			label.setId(null);
-			monster = null;
-			return true ;
-		}
-		else 
-			return false ; 
+
+	public void removeMonster() {
+		ImageView iv = ImageFunction.setImageView("");
+		
+		label.setGraphic(iv);
+		label.setId("");
+		
+		monster = null;
+
+
 	}
 }

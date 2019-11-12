@@ -46,7 +46,7 @@ public class IceTower extends Tower{
 		}
 	}
 	
-	void upgrade() {
+	public void upgrade() {
 		slow_duration += 5;
 	}
 }
