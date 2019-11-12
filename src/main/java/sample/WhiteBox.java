@@ -2,6 +2,10 @@ package sample;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import monster.Fox;
+import monster.Monster;
+import monster.Penguin;
+import monster.Unicorn;
 
 public class WhiteBox {
 	Label label ; 

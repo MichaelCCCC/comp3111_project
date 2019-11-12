@@ -7,7 +7,6 @@ import monster.Monster;
 import java.util.ArrayList;
 
 public class Tower {
-	List<Monster> enemyList = new ArrayList<Monster>();
 	protected int x;
 	protected int y;
 	protected int attack_power;
@@ -91,27 +90,28 @@ public class Tower {
 		this.shooting_range = shooting_range;
 	}
 	
-	private double distance(Monster enemy) {
+	protected double distance(Monster enemy) {
 		return Math.sqrt(Math.pow(enemy.getX() - x, 2) + Math.pow(enemy.getY() - y, 2));
 	}
 	
 	protected Monster findClosestEnemy() {
-		Monster closestEnemy;
-		double closestEnemyDistance = Double.MAX_VALUE;
-		for(int i=0; i<enemyList.size(); ++i) {
-			if(distance(enemyList.get(i)) < closestEnemyDistance) {
-				closestEnemyDistance = distance(enemyList.get(i));
-				closestEnemy = enemyList.get(i);
-			}
-		}
+//		Monster closestEnemy;
+//		double closestEnemyDistance = Double.MAX_VALUE;
+//		for(int i=0; i<enemyList.size(); ++i) {
+//			if(distance(enemyList.get(i)) < closestEnemyDistance) {
+//				closestEnemyDistance = distance(enemyList.get(i));
+//				closestEnemy = enemyList.get(i);
+//			}
+//		}
+		return null;
 	}
 	
 
 	void shoot() {
-		Monster closestEnemy = findClosestEnemy();
-		if(distance(closestEnemy) <= shooting_range) {			
-			closestEnemy.damage(attack_power);
-		}
+//		Monster closestEnemy = findClosestEnemy();
+//		if(distance(closestEnemy) <= shooting_range) {			
+//			closestEnemy.damage(attack_power);
+//		}
 	}
 	
 	void upgrade() {

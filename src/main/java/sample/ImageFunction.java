@@ -19,7 +19,7 @@ class ImageFunction {
     static Image idReturnImage(String id) {
 		switch(id)
 		{
-			case "Basic Tower" : 
+		case "Basic Tower" : 
 				return BTimage; 
 		case "Ice Tower" :
 				return ITimage ;
