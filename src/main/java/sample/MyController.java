@@ -54,11 +54,6 @@ public class MyController {
     static final int MAX_H_NUM_GRID = 12;
     static final int MAX_V_NUM_GRID = 12;
     
-    static final Image BTimage = new Image("/basicTower.png") ;  
-    static final Image ITimage = new Image("/iceTower.png") ; 
-    static final Image Cimage = new Image("/catapult.png")  ;
-    static final Image LTimage = new Image( "/laserTower.png") ; 
-    
     static Integer money = 10 ; 
     
     String towerInitInformation[][] = tower.TowerInformation.getTowerInitInformation()  ; // get tower information
