@@ -17,6 +17,7 @@ class BasicTower extends Tower{
 	static String INIT_NOTE  = "note" ; 
 	
 	
+	
 	BasicTower(){
 		super(INIT_NAME, INIT_SHOOTING_RANGE, INIT_ATTACK_POWER, INIT_BUILDING_COST, INIT_TIER,  INIT_UPGRADE_COST, INIT_UPGRADE_DIFF , INIT_NOTE) ; 
 		
@@ -28,7 +29,7 @@ class BasicTower extends Tower{
 		
 	}
 
-	
+	//different methods with respect to type of tower
 	
 	
 }
