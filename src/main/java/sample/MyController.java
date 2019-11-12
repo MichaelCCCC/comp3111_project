@@ -155,6 +155,7 @@ public class MyController {
             x = 0; // x is generated 
             return;
         }
+        
         if (y == MAX_V_NUM_GRID - 1)
             return;
         grids[y++][x].setText(""); //remove text on original labal
