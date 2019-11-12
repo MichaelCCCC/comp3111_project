@@ -138,6 +138,15 @@ public class MyController {
             return;
         grids[y++][x].setText(""); //remove text on original labal
         grids[y][x].setText("M"); //add text on original label 
+        
+        //monster move
+        
+        //tower attack 
+        
+        //generate monster
+        
+        //detected where monster cross the final line
+        //if yes, notify the play the game is over
     }
     
     int getLabelMoney() {
@@ -172,6 +181,11 @@ public class MyController {
 		return result ; 
 }
     
+    private String getCurrentTooltip(Label label) {
+    	String result = "" ; 
+    	return result; 
+    }
+    
     private void setDragAndDrop2() { 
     		Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
     		
@@ -185,6 +199,7 @@ public class MyController {
     
     private void setMouseAction(int v , int h ) {
     		Label target = grids[v][h] ; 
+    		Tooltip.install(target, new Tooltip(getCurrentTooltip(target)));
     		
     		target.setOnMouseEntered( new EventHandler <MouseEvent>() {
             	@Override
