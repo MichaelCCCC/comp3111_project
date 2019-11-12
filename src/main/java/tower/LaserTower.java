@@ -18,6 +18,10 @@ public class LaserTower extends Tower{
 		this.attack_cost = attack_cost;
 	}
 	
+	public LaserTower() {
+		// TODO Auto-generated constructor stub
+	}
+
 	//	Get Cost of Shooting with Laser Tower
 	int getAttackCost() {
 		return attack_cost;

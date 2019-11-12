@@ -17,6 +17,12 @@ public class IceTower extends Tower{
 		this.slow_duration = slow_duration;
 	}
 	
+	public IceTower() { 
+		// TODO Auto-generated constructor stub
+	}
+
+	
+
 	//	Get Slow Duration of Ice Tower
 	int getSlowDuration() {
 		return slow_duration;

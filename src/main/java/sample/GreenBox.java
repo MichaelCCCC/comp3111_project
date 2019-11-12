@@ -41,9 +41,9 @@ class GreenBox{
 	        
 	        switch(id)
 			{
-				case "Basic Tower" : 
-					tower = new BasicTower() ; 
-					break  ; 
+			case "Basic Tower" : 
+				tower = new Tower() ; 
+				break  ; 
 			case "Ice Tower" :
 				tower = new IceTower() ; 
 					break ;

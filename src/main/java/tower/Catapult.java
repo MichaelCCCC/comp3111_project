@@ -1,8 +1,8 @@
 package tower;
 
-class Catapult extends Tower{
+public class Catapult extends Tower{
 	
-	Catapult() {
+	public Catapult() {
 		
 	}
 
