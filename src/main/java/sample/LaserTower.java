@@ -45,3 +45,6 @@ public class LaserTower extends Tower{
 		attack_power += 10;
 	}
 }
+
+
+}
