@@ -18,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 import tower.BasicTower;
 import tower.Tower;
+import tower.TowerInformation;
 
 public class MyController {
     @FXML
@@ -68,7 +69,7 @@ public class MyController {
     
     static Integer money = 10 ; 
     
-    String towerInformation[][] = Tower.getTowerInitInformation()  ; // get tower information
+    String towerInitInformation[][] = tower.TowerInformation.getTowerInitInformation()  ; // get tower information
     //get tower information
     
 
@@ -167,11 +168,17 @@ public class MyController {
     		if(label.equals(labelCatapult)) towerType=2 ;
     		if(label.equals(labelLaserTower)) towerType = 3 ; 
     		
-    		if(towerInformation[towerType][0] != null )
-				result += towerInformation[towerType][0] ; 
-			for(int i = 1 ; i < Tower.NUM_INIT_INFORMATION_LINE ; i++ ) 
-				if(towerInformation[towerType][i] != null )
-					result += ("\n" + Tower.INIT_INFORMATION_LINE_ID[i] + ": " +towerInformation[towerType][i])   ;
+    		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
+    		
+    		if(initInformationLineId.length != towerInitInformation[towerType].length) {
+    			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
+    			alert.showAndWait() ; 
+    		}
+    		if(towerInitInformation[towerType][0] != null )
+				result += towerInitInformation[towerType][0] ; 
+			for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
+				if(towerInitInformation[towerType][i] != null )
+					result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
     		
     		return result ; 
     }
@@ -353,16 +360,16 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
             switch(db.getString())
             {
             	case "Basic Tower" : 
-            		moneyDeducted = BasicTower.initBuildingCost ; 
+            		moneyDeducted = tower.TowerInformation.getCost("Basic Tower") ; 
             		break ; 
             	case "Ice Tower" : 
-            		moneyDeducted = MyController.COST_ICE_TOWER ; //change
+            		moneyDeducted = tower.TowerInformation.getCost("Ice Tower") ; //change
             		break ; 
             	case "Catapult" : 
-            		moneyDeducted = MyController.COST_CATAPULT  ; 
+            		moneyDeducted = tower.TowerInformation.getCost("Catapult")  ; 
             		break ; 
             	case "Laser Tower" : 
-            		moneyDeducted = MyController.COST_LASER_TOWER  ;
+            		moneyDeducted = tower.TowerInformation.getCost("LaserTower")  ;
             		break ; 
             	default :
             		assert false : "invalid tower" ; 

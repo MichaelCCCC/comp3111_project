@@ -1,6 +1,6 @@
 package tower;
 
-class TowerInformation {
+public class TowerInformation {
 	public int attack_power;
 	public int building_cost;
 	public int upgrade_cost;
