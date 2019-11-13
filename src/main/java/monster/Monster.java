@@ -71,6 +71,11 @@ public class Monster {
 		return "HP :" + HP;
 	}
 
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

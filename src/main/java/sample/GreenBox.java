@@ -32,13 +32,14 @@ class GreenBox{
 		return false ;
 	}
 	
-	boolean buildTower(String id) {
+	Tower buildTower(String id) {
 		if(tower == null) {
 			ImageView iv = ImageFunction.setImageView(id) ; 
 			
 	        tower.getLabel().setGraphic(iv);
 	        tower.getLabel().setId(id) ; 
 	        Tooltip.install(tower.getLabel(), new Tooltip(util.getObjectTooltip(tower.getLabel())) ) ; 
+	        
 	        
 	        switch(id)
 			{
@@ -57,22 +58,22 @@ class GreenBox{
 			default : 
 				Alert alert = new Alert(AlertType.ERROR, "tower is not successfully built") ;  
 	        	alert.showAndWait();
-	        	return false;  
+	        	return null;  
 			}
 	         
 	        if(tower == null )
 	        {
 	        	Alert alert = new Alert(AlertType.ERROR, "tower is not successfully built") ;  
 	        	alert.showAndWait();
-	        	return false; 
+	        	return null; 
 	        }
-	        return true; 
+	        return tower; 
 	        
 	        
 		}
 		
         
-        return false ; 
+        return null ; 
 	}
 	
 }
