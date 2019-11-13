@@ -117,7 +117,6 @@ public class MyController {
                 
                 if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1)) {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-                	WhiteBoxes.wbs.add(new WhiteBox(i,j));
                 }
                 	else 
                 {
@@ -149,26 +148,29 @@ public class MyController {
     @FXML
     private void nextFrame() {
 
-    	//create M 
-        if (x == -1) {
-            grids[0][0].setText("M");
-            x = 0; // x is generated 
-            return;
-        }
-        
-        //move M 
-        
-        if (y == MAX_V_NUM_GRID - 1)
-            return;
-        grids[y++][x].setText(""); //remove text on original labal
-        grids[y][x].setText("M"); //add text on original label 
+//    	//create M 
+//        if (x == -1) {
+//            grids[0][0].setText("M");
+//            x = 0; // x is generated 
+//            return;
+//        }
+//        
+//        //move M 
+//        
+//        if (y == MAX_V_NUM_GRID - 1)
+//            return;
+//        grids[y++][x].setText(""); //remove text on original labal
+//        grids[y][x].setText("M"); //add text on original label 
         
         //monster move
-        
+    	Arena.moveMonster();
         //tower attack 
         
         //generate monster
-        
+    	if(num_frame%5 == 0) {    		
+    		Arena.GenerateMonster(paneArena,"Fox");
+    	}
+    	
         //detected where monster cross the final line
         //if yes, notify the play the game is over
 
