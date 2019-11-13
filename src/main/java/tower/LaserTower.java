@@ -8,7 +8,7 @@ public class LaserTower extends Tower{
 	static TowerInformation LaserTowerInit = new TowerInformation(10, 100, 100, 15, 10, 0, "This is Laser Tower");
 	
 	//	Constructor with default parameters
-	LaserTower(int x, int y) {
+	public LaserTower(int x, int y) {
 		super(x,y);
 		setAttributes(LaserTowerInit.attack_power, LaserTowerInit.building_cost, LaserTowerInit.upgrade_cost, LaserTowerInit.shooting_range, LaserTowerInit.upgrade_diff, LaserTowerInit.tier, LaserTowerInit.comment);
 		attack_cost = 20;

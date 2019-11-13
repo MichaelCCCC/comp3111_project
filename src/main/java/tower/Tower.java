@@ -25,7 +25,7 @@ public class Tower {
 	static TowerInformation BasicTowerInit = new TowerInformation(10, 100, 100, 15, 10, 0, "This is Basic Tower");
 	
 	//	Constructor with default parameters
-	Tower(int x, int y) {
+	public Tower(int x, int y) {
 		this.x = x;
 		this.y = y;
 		attack_power = BasicTowerInit.attack_power;
@@ -148,5 +148,10 @@ public class Tower {
 	public void attack(List<Monster> monsters) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public int getUpgradeCost() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

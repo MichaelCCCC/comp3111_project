@@ -8,6 +8,7 @@ public class Catapult extends Tower{
 		setAttributes(CatapultInit.attack_power, CatapultInit.building_cost, CatapultInit.upgrade_cost, CatapultInit.shooting_range, CatapultInit.upgrade_diff, CatapultInit.tier, CatapultInit.comment);
 	}
 
+
 	void shoot() {
 //		for(int i=0; i<enemyList.size(); ++i) {
 //			Monster currentEnemy = enemyList.get(i);
@@ -16,4 +17,5 @@ public class Catapult extends Tower{
 //			}
 //		}	
 	}
+
 }

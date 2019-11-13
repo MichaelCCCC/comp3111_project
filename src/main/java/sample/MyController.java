@@ -154,22 +154,21 @@ public class MyController {
     @FXML
     private void nextFrame() {
 
-//    	//create M 
-//        if (x == -1) {
-//            grids[0][0].setText("M");
-//            x = 0; // x is generated 
-//            return;
-//        }
-//        
-//        //move M 
-//        
-//        if (y == MAX_V_NUM_GRID - 1)
-//            return;
-//        grids[y++][x].setText(""); //remove text on original labal
-//        grids[y][x].setText("M"); //add text on original label 
+    	//create M 
+        if (x == -1) {
+            grids[0][0].setText("M");
+            x = 0; // x is generated 
+            return;
+        }
+        
+        //move M 
+        
+        if (y == MAX_V_NUM_GRID - 1)
+            return;
+        grids[y++][x].setText(""); //remove text on original labal
+        grids[y][x].setText("M"); //add text on original label 
         
         //monster move
-
         
         util.moveMonsters(monsters)  ;
         
@@ -177,11 +176,10 @@ public class MyController {
         util.towersAttack(monsters, towers) ; 
         
         //generate monster
-
-    	if(num_frame%5 == 0) {    		
-    		util.generateMonsters(paneArena) ; 
-    	}
-
+        util.generateMonsters(paneArena) ; 
+       
+        
+        
         //detected where monster cross the final line
         //if yes, notify the play the game is over
         if (util.decideEndGame()) {
@@ -190,6 +188,7 @@ public class MyController {
         	System.exit(0);
         }
     	
+//    	WhiteBoxes.moveMonsters();
     	num_frame ++;
 
     }
@@ -270,7 +269,7 @@ public class MyController {
                 			
                 			
                 			if((String)cd.getResult() == choices[1] ) {
-                				int upgradeCost = tower.TowerInformation.getUpgradeCost(target.getId()) ; 
+                				int upgradeCost = GreenBoxes.targetGetTower(target).getUpgradeCost() ; 
                 				if (money >= upgradeCost) {
                 					//tower upgrade
                 					money -= upgradeCost ; 
@@ -421,7 +420,8 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
             }
             if(MyController.money >= moneyDeducted && GreenBoxes.targetHasTower(event.getGestureTarget()) == false)
             {
-            	GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
+            	Tower newTower = GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
+            	MyController.towers.add(newTower) ; 
                 //((Label)event.getGestureTarget()).setText(moneyDeducted.toString());
         		MyController.money -= moneyDeducted;  
         		

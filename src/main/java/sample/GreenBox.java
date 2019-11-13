@@ -32,7 +32,7 @@ class GreenBox{
 		return false ;
 	}
 	
-	boolean buildTower(String id) {
+	Tower buildTower(String id) {
 		if(tower == null) {
 			ImageView iv = ImageFunction.setImageView(id) ; 
 			
@@ -40,39 +40,42 @@ class GreenBox{
 	        tower.getLabel().setId(id) ; 
 	        Tooltip.install(tower.getLabel(), new Tooltip(util.getObjectTooltip(tower.getLabel())) ) ; 
 	        
+	        double x = MyController.GRID_WIDTH + ((double)v + 0.5 ) ; 
+	        double y = MyController.GRID_HEIGHT + ((double) h + 0.5 ) ; 
+	        
 	        switch(id)
 			{
 			case "Basic Tower" : 
-				tower = new Tower() ; 
+				tower = new Tower((int)x,(int)y) ; 
 				break  ; 
 			case "Ice Tower" :
-				tower = new IceTower() ; 
+				tower = new IceTower((int)x,(int)y) ; 
 					break ;
 			case "Catapult" : 
-				tower = new Catapult() ; 
+				tower = new Catapult((int)x,(int)y) ; 
 					break ; 
 			case "Laser Tower":
-				tower = new LaserTower() ;
+				tower = new LaserTower((int)x,(int)y) ;
 					break ; 
 			default : 
 				Alert alert = new Alert(AlertType.ERROR, "tower is not successfully built") ;  
 	        	alert.showAndWait();
-	        	return false;  
+	        	return null;  
 			}
 	         
 	        if(tower == null )
 	        {
 	        	Alert alert = new Alert(AlertType.ERROR, "tower is not successfully built") ;  
 	        	alert.showAndWait();
-	        	return false; 
+	        	return null; 
 	        }
-	        return true; 
+	        return tower; 
 	        
 	        
 		}
 		
         
-        return false ; 
+        return null ; 
 	}
 	
 }

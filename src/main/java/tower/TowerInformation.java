@@ -18,4 +18,15 @@ public class TowerInformation {
 		this.tier = tier;
 		this.comment = comment;
 	}
+
+	public static String getTowerBuilingTooltip() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Integer getBuildingCost(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

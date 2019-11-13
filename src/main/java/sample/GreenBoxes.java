@@ -44,15 +44,13 @@ class GreenBoxes {
 	}
 	
 	
-	static boolean targetBuildTower(Object target, String id) {
+	static Tower targetBuildTower(Object target, String id) {
 		if(targetHasTower(target) != false ) {
 			Alert alert = new Alert ( AlertType.ERROR, "It has Tower, new tower cannot be built") ; 
 			alert.showAndWait()  ; 
-			return false ; 
+			return null ; 
 		} 
-		gbs.get(targetGetIndex(target)).buildTower(id);
-		return true;  
-		
+		return gbs.get(targetGetIndex(target)).buildTower(id);
 	}
 	
 	static boolean targetUpgradeTower(Object target) { 
