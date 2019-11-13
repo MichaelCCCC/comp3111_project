@@ -11,7 +11,7 @@ import monster.Penguin;
 import monster.Unicorn;
 public class Arena {
 
-	static List<Monster> monsterlist = new ArrayList<>();
+	public static List<Monster> monsterlist = new ArrayList<>();
 	
 	static void GenerateMonster(AnchorPane Arena,String id) {
 		

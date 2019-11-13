@@ -1,6 +1,7 @@
 package tower;
 
 import monster.Monster;
+import sample.Arena;
 
 public class LaserTower extends Tower{
 	int attack_cost;
@@ -24,12 +25,12 @@ public class LaserTower extends Tower{
 		this.attack_cost = attack_cost;
 	}
 	
-	void shoot() {
-//		for(int i=0; i<enemyList.size(); ++i) {
-//			Monster currentEnemy = enemyList.get(i);
-//			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
-//				currentEnemy.damage(attack_power);
-//			}
-//		}	
+	void attack() {
+		for(int i=0; i<Arena.monsterlist.size(); ++i) {
+			Monster currentEnemy = Arena.monsterlist.get(i);
+			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
+				currentEnemy.damage(attack_power);
+			}
+		}	
 	}
 }

@@ -13,7 +13,7 @@ public class IceTower extends Tower{
 		setAttributes(IceTowerInit.attack_power, IceTowerInit.building_cost, IceTowerInit.upgrade_cost, IceTowerInit.shooting_range, IceTowerInit.upgrade_diff, IceTowerInit.tier, IceTowerInit.comment);
 	}
 	
-	void shoot() {
+	void attack() {
 		Monster closestEnemy = findClosestEnemy();
 		if(distance(closestEnemy) <= shooting_range) {			
 			closestEnemy.slow_down(attack_power);

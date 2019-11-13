@@ -2,11 +2,11 @@ package tower;
 import java.lang.Math; 
 import java.lang.String;
 import java.util.List;
-
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import monster.Monster;
+import sample.Arena;
 
 import java.util.ArrayList;
 
@@ -108,23 +108,23 @@ public class Tower {
 	}
 	
 	protected Monster findClosestEnemy() {
-//		Monster closestEnemy;
-//		double closestEnemyDistance = Double.MAX_VALUE;
-//		for(int i=0; i<enemyList.size(); ++i) {
-//			if(distance(enemyList.get(i)) < closestEnemyDistance) {
-//				closestEnemyDistance = distance(enemyList.get(i));
-//				closestEnemy = enemyList.get(i);
-//			}
-//		}
-		return null;
+		Monster closestEnemy = null;
+		double closestEnemyDistance = Double.MAX_VALUE;
+		for(int i=0; i<Arena.monsterlist.size(); ++i) {
+			if(distance(Arena.monsterlist.get(i)) < closestEnemyDistance) {
+				closestEnemyDistance = distance(Arena.monsterlist.get(i));
+				closestEnemy = Arena.monsterlist.get(i);
+			}
+		}
+		return closestEnemy;
 	}
 	
 
-	void shoot() {
-//		Monster closestEnemy = findClosestEnemy();
-//		if(distance(closestEnemy) <= shooting_range) {			
-//			closestEnemy.damage(attack_power);
-//		}
+	void attack() {
+		Monster closestEnemy = findClosestEnemy();
+		if(distance(closestEnemy) <= shooting_range) {			
+			closestEnemy.damage(attack_power);
+		}
 	}
 	
 	void upgrade() {
@@ -133,20 +133,5 @@ public class Tower {
 	
 	void destroy() {
 		is_destroyed = true;
-	}
-
-	public Label getLabel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getTooltip() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void attack(List<Monster> monsters) {
-		// TODO Auto-generated method stub
-		
 	}
 }
