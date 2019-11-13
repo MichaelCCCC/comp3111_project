@@ -5,21 +5,13 @@ import monster.Monster;
 public class LaserTower extends Tower{
 	int attack_cost;
 	
+	static TowerInformation LaserTowerInit = new TowerInformation(10, 100, 100, 15, 10, 0, "This is Laser Tower");
+	
 	//	Constructor with default parameters
 	public LaserTower(int x, int y) {
 		super(x,y);
-		setAttributes(10,10,10,Double.MAX_VALUE);
+		setAttributes(LaserTowerInit.attack_power, LaserTowerInit.building_cost, LaserTowerInit.upgrade_cost, LaserTowerInit.shooting_range, LaserTowerInit.upgrade_diff, LaserTowerInit.tier, LaserTowerInit.comment);
 		attack_cost = 20;
-	}
-	
-	//	Constructor with custom parameters
-	LaserTower(int x, int y, int attack_power, int building_cost, int upgrade_cost, int attack_cost) {
-		super(x,y,attack_power,building_cost,upgrade_cost,Double.MAX_VALUE);
-		this.attack_cost = attack_cost;
-	}
-	
-	public LaserTower() {
-		// TODO Auto-generated constructor stub
 	}
 
 	//	Get Cost of Shooting with Laser Tower
@@ -32,22 +24,12 @@ public class LaserTower extends Tower{
 		this.attack_cost = attack_cost;
 	}
 	
-	//	Update Laser Tower Attributes
-	void setAttributes(int attack_power, int building_cost, int upgrade_cost, double shooting_range, int attack_cost) {
-		setAttributes(attack_power, building_cost, upgrade_cost, shooting_range);
-		this.attack_cost = attack_cost;
-	}
-	
 	void shoot() {
 //		for(int i=0; i<enemyList.size(); ++i) {
 //			Monster currentEnemy = enemyList.get(i);
 //			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
 //				currentEnemy.damage(attack_power);
 //			}
-//		}
-	}
-	
-	public void upgrade() {
-		attack_power += 10;
+//		}	
 	}
 }
