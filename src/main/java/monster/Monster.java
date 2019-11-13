@@ -27,9 +27,7 @@ public class Monster {
 		direction = Direction.DOWN;
 	}
 
-	public Monster() {
-		// TODO Auto-generated constructor stub
-	}
+
 
 	public int getHP() {
 		return HP;
@@ -71,10 +69,7 @@ public class Monster {
 		return "HP :" + HP;
 	}
 
-	public void move() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	
 	

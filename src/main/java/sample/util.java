@@ -7,8 +7,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
+import monster.Fox;
 import monster.Monster;
+import monster.Monster.Direction;
+import monster.Penguin;
+import monster.Unicorn;
 import tower.Tower;
 import tower.TowerInformation;
 
@@ -18,10 +23,50 @@ class util {
 	
 
 	static boolean moveMonsters(List<Monster> monsters) {
-		// TODO Auto-generated method stub
-		for(int i = 0 ; i < monsters.size() ; i++ )
-			monsters.get(i).move() ;  
-		return false ; 
+		
+		for(int i = 0 ; i < monsters.size() ; i++ ) {
+			Monster monster = monsters.get(i);
+			int x = monster.getX();
+			int y = monster.getY();
+			int speed = monster.getSpeed();
+			changeDirection(monster);
+			switch(monster.getDirection()) {
+			case DOWN:
+				y += speed;
+				break;
+			case UP:
+				y -= speed;
+				break;
+			case RIGHT:
+				x += speed;
+				break;
+			}
+			monster.move(x, y);
+		}
+		return true;
+			
+	}
+	static void changeDirection(Monster monster) {
+		int x = monster.getX();
+		int y = monster.getY();
+		if(y == 20) {
+			if(x > 20) {
+				if(x%160 == 20) {
+					monster.setDirection(Direction.DOWN);
+				}
+				if(x%160 == 100) {
+					monster.setDirection(Direction.RIGHT);
+				}
+			}
+		}
+		if(y == 460) {
+			if(x%160 == 20) {
+				monster.setDirection(Direction.RIGHT);
+			}
+			if(x%160 == 100) {
+				monster.setDirection(Direction.UP);
+			}
+		}
 	}
 
 	static void showAllObjects(List<Monster> monsters, List<Tower> towers ,AnchorPane paneArena) {
@@ -46,11 +91,37 @@ class util {
 	}
 
 	static void generateMonsters(AnchorPane paneArena) {
-		// TODO Auto-generated method stub 
-		Monster monster = new Monster() ; 
-		MyController.monsters.add(monster) ; 
+		int i = (int)(Math.random()*((2)+1));
+		String id = "";
+		String type[] = {"Fox","Unicorn","Penguin"};
+			
+	     Label newLabel = new Label();
+	     newLabel.setLayoutX(10);
+	     newLabel.setLayoutY(10);
+	     newLabel.setMinWidth(1);
+	     newLabel.setMaxWidth(1);
+	     newLabel.setMinHeight(1);
+	     newLabel.setMaxHeight(1);
+	      
+	     ImageView iv = ImageFunction.setImageView(type[i]) ; 
+	     newLabel.setGraphic(iv);
+	     
+	     paneArena.getChildren().addAll(newLabel);
+	     
+	     Monster monster = null;
+	     switch(i) {
+	     	case 0:
+	     		monster = new Fox(newLabel);
+	     		break;
+	     	case 1:
+	     		monster = new Unicorn(newLabel);
+	     		break;
+	     	case 2:
+	     		monster = new Penguin(newLabel);
+			
+	     }
 		Tooltip.install(monster.getLabel(), new Tooltip(getObjectTooltip(monster.getLabel())) ) ; 
-		paneArena.getChildren().addAll(monster.getLabel()); //show the monster
+		MyController.monsters.add(monster);
 	}
 
 	static boolean decideEndGame() {
@@ -84,8 +155,9 @@ class util {
 	static String getObjectTooltip(Label label) {
 		String tooltip = null ; 
 		for(int i = 0 ; i < MyController.monsters.size() ; i++  )
-			if(MyController.monsters.get(i).getLabel() == label)
+			if(MyController.monsters.get(i).getLabel() == label) 
 				tooltip = MyController.monsters.get(i).getTooltip()  ;
+
 		
 		for(int i = 0 ; i < MyController.towers.size() ; i ++ )
 			if(GreenBoxes.towerGetGreenBox(MyController.towers.get(i)).label == label )
