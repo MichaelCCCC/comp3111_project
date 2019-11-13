@@ -22,7 +22,7 @@ public class Tower {
 	protected String comment;
 	protected boolean is_destroyed = false;
 	
-	static TowerInformation BasicTowerInit = new TowerInformation(10, 100, 100, 15, 10, 0, "This is Basic Tower");
+	public static TowerInformation BasicTowerInit = new TowerInformation( 10, 100, 100, 15, 10, 1, "This is Basic Tower");
 	
 	//	Constructor with default parameters
 	public Tower(int x, int y) {

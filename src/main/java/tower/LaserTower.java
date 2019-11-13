@@ -5,7 +5,7 @@ import monster.Monster;
 public class LaserTower extends Tower{
 	int attack_cost;
 	
-	static TowerInformation LaserTowerInit = new TowerInformation(10, 100, 100, 15, 10, 0, "This is Laser Tower");
+	public static TowerInformation LaserTowerInit = new TowerInformation(10, 100, 100, 15, 10, 1, "This is Laser Tower");
 	
 	//	Constructor with default parameters
 	public LaserTower(int x, int y) {
