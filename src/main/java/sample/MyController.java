@@ -117,7 +117,6 @@ public class MyController {
                 
                 if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1)) {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-                	WhiteBoxes.wbs.add(new WhiteBox(i,j));
                 }
                 	else 
                 {
