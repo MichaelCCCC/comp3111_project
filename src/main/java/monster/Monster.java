@@ -1,6 +1,5 @@
 package monster;
 
-import sample.WhiteBox;
 
 public class Monster {
 	//constant
@@ -39,10 +38,7 @@ public class Monster {
 		speed -= offset;
 	}
 
-	public WhiteBox moveTo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 }
 
