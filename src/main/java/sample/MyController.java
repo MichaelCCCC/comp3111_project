@@ -72,10 +72,9 @@ public class MyController {
 
     int num_frame = 0;
     
-    
-
-    String towerInitInformation[][] = tower.TowerInformation.getTowerInitInformation()  ; // get tower information
     //get tower information
+	String towerInitInformation[][] = tower.TowerInformation.getTowerInitInformation()  ;
+
     
 
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
@@ -164,14 +163,21 @@ public class MyController {
         
         //monster move
         
+        util.moveMonsters()  ;
+        
         //tower attack 
+        util.towersAttack() ; 
         
         //generate monster
+        util.generateMonsters() ; 
         
         //detected where monster cross the final line
         //if yes, notify the play the game is over
-
-    	
+        if (util.decideEndGame()) {
+        	Alert alert = new Alert(AlertType.INFORMATION, "The game is over" )  ;
+        	alert.showAndWait() ; 
+        	System.exit(0);
+        }
     	
 //    	WhiteBoxes.moveMonsters();
     	num_frame ++;
@@ -187,6 +193,7 @@ public class MyController {
     	labelMoney.setText(money.toString());
     }
     
+  
     private String getInitTooltip(Label label) {
     	if(towerInitInformation == null)
     		return null ; 
@@ -216,13 +223,10 @@ public class MyController {
     }
 
     
-    private String getCurrentTooltip(Label label) {
-    	String result = "" ; 
-    	return result; 
-    }
+    
     
     private void setDragAndDrop2() { 
-    		Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
+    	Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
     		
         
         for(int i = 0 ; i < sources.length ; i++ ) {
@@ -234,7 +238,7 @@ public class MyController {
     
     private void setMouseAction(int v , int h ) {
     		Label target = grids[v][h] ; 
-    		Tooltip.install(target, new Tooltip(getCurrentTooltip(target)));
+    		
     		
     		target.setOnMouseEntered( new EventHandler <MouseEvent>() {
             	@Override

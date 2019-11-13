@@ -2,12 +2,15 @@ package sample;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Circle;
+import monster.Monster;
 
 class util {
 
-	public static void showTowerRange(Label target) {
+	
+	static void showTowerRange(Label target) {
 		if(GreenBoxes.targetHasTower(target) != true) 
 			return ; 
 		// TODO Auto-generated method stub
@@ -31,6 +34,34 @@ class util {
 		}
 		
 	}
+
+	static void moveMonsters() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void towersAttack() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void generateMonsters() {
+		// TODO Auto-generated method stub
+		Monster monster = new Monster () ; 
+		Tooltip.install(monster.getLabel(), new Tooltip(getObjectTooltip(monster.getLabel())) ) ; 
+		
+	}
+
+	public static boolean decideEndGame() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	private static String getObjectTooltip(Label label) {
+    	String result = "" ; 
+    	return result; 
+    }
+	
 	
 	
 }

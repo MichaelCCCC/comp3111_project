@@ -1,5 +1,7 @@
 package monster;
 
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 public class Monster {
 	//constant
@@ -19,6 +21,10 @@ public class Monster {
 		y = DEFAULT_Y;
 	}
 
+	public Monster() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getHP() {
 		return HP;
 	}
@@ -36,6 +42,11 @@ public class Monster {
 	}
 	public void slow_down(int offset) {
 		speed -= offset;
+	}
+
+	public Label getLabel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
