@@ -117,7 +117,7 @@ public class MyController {
                 
                 if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1)) {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-                	WhiteBoxes.wbs.add(new WhiteBox(newLabel,i,j));
+                	WhiteBoxes.wbs.add(new WhiteBox(i,j));
                 }
                 	else 
                 {
@@ -149,11 +149,14 @@ public class MyController {
     @FXML
     private void nextFrame() {
 
+    	//create M 
         if (x == -1) {
             grids[0][0].setText("M");
             x = 0; // x is generated 
             return;
         }
+        
+        //move M 
         
         if (y == MAX_V_NUM_GRID - 1)
             return;
@@ -170,10 +173,7 @@ public class MyController {
         //if yes, notify the play the game is over
 
     	
-    	System.out.println(num_frame+" frame");
-    	if(num_frame%5 == 0) {
-    		WhiteBoxes.targetGenerateMonster("Fox");
-    	}
+    	
 //    	WhiteBoxes.moveMonsters();
     	num_frame ++;
 

@@ -13,7 +13,7 @@ class GreenBoxes {
 	
 	static Integer targetGetIndex(Object target) {
 		for(int i = 0 ;  i < gbs.size() ; i++)
-			if(gbs.get(i).label.equals((Label)target))
+			if(gbs.get(i).label == ((Label)target))
 				return i ; 
 		return null ; 
 	}
