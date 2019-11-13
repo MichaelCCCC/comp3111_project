@@ -36,9 +36,13 @@ class GreenBox{
 		if(tower == null) {
 			ImageView iv = ImageFunction.setImageView(id) ; 
 			
-	        tower.getLabel().setGraphic(iv);
-	        tower.getLabel().setId(id) ; 
-	        Tooltip.install(tower.getLabel(), new Tooltip(util.getObjectTooltip(tower.getLabel())) ) ; 
+//	        tower.getLabel().setGraphic(iv);
+//	        tower.getLabel().setId(id) ; 
+//	        Tooltip.install(tower.getLabel(), new Tooltip(util.getObjectTooltip(tower.getLabel())) ) ; 
+			
+			label.setGraphic(iv);
+			label.setId(id);
+			Tooltip.install(label, new Tooltip(util.getObjectTooltip(label)) ) ;
 	        
 	        double x = MyController.GRID_WIDTH + ((double)v + 0.5 ) ; 
 	        double y = MyController.GRID_HEIGHT + ((double) h + 0.5 ) ; 
@@ -58,9 +62,6 @@ class GreenBox{
 				tower = new LaserTower((int)x,(int)y) ;
 					break ; 
 			default : 
-				Alert alert = new Alert(AlertType.ERROR, "tower is not successfully built") ;  
-	        	alert.showAndWait();
-	        	return null;  
 			}
 	         
 	        if(tower == null )

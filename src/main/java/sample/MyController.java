@@ -84,7 +84,7 @@ public class MyController {
     static final int MAX_H_NUM_GRID = 12;
     static final int MAX_V_NUM_GRID = 12;
     
-    static Integer money = 10 ; 
+    static Integer money = 300 ; 
     
 
     int num_frame = 0;
@@ -190,7 +190,8 @@ public class MyController {
         //generate monster
         util.generateMonsters(paneArena) ; 
        
-        
+        //show all object 
+        util.showAllObjects(monsters, towers, paneArena);
         
         //detected where monster cross the final line
         //if yes, notify the play the game is over
@@ -213,39 +214,12 @@ public class MyController {
     	money = i ; 
     	labelMoney.setText(money.toString());
     }
-    
-  
-    
-    public int attack_power;
-	public int building_cost;
-	public int upgrade_cost;
-	public double shooting_range;
-	public int upgrade_diff;
-	public int tier;
-	public String comment;
 	
 	
 	
-    private String getInitTooltip(Label label) {
-      
-    		String result = "";
-    		int towerType = -1 ; 
-    		TowerInformation towerInformation[] = {tower.Tower.BasicTowerInit, tower.IceTower.IceTowerInit, tower.Catapult.BasicTowerInit, tower.LaserTower.LaserTowerInit} ; 
-    		if(label == labelBasicTower ) towerType = 0 ; 
-    		if(label == labelIceTower) towerType = 1 ; 
-    		if(label == labelCatapult) towerType=2 ;
-    		if(label ==labelLaserTower) towerType = 3 ; 
-    	
-    		
-    		result += "attack power: " + towerInformation[towerType].attack_power + "\n" ; 
-    		result += "building cost: " + towerInformation[towerType].building_cost + "\n"  ;
-    		result += "upgrade cost: " + towerInformation[towerType].upgrade_cost +"\n" ; 
-    		result += "shooting range: " + towerInformation[towerType].shooting_range + "\n"  ; 
-    		result += "upgrade difference: " + towerInformation[towerType].upgrade_diff + "\n" ; 
-    		result += "tier: " + towerInformation[towerType].tier + "\n" ; 
-    		result += "note: " + towerInformation[towerType].comment + "\n" ; 
-
-    		return result ; 
+    private String getInitTooltip(Label label, Label[] sources) {
+    	TowerInformation towerInformation[] = {tower.Tower.BasicTowerInit, tower.IceTower.IceTowerInit, tower.Catapult.BasicTowerInit, tower.LaserTower.LaserTowerInit} ;
+    	return util.getInitTooltip(label,  towerInformation, sources); 
     }
     
     private void setDragAndDrop2() { 
@@ -253,7 +227,7 @@ public class MyController {
     		
         
         for(int i = 0 ; i < sources.length ; i++ ) {
-        		Tooltip.install(sources[i], new Tooltip(getInitTooltip(sources[i])));
+        		Tooltip.install(sources[i], new Tooltip(getInitTooltip(sources[i],sources)));
         		sources[i].setOnDragDetected(new DragEventHandler(sources[i]));//once this is on, it cannot be off
         }
     }

@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Circle;
 import monster.Monster;
 import tower.Tower;
+import tower.TowerInformation;
 
 class util {
 
@@ -81,6 +82,27 @@ class util {
 		return false;
 	}
 	
+	private static String getTooltipString(TowerInformation towerInformation ) {
+		String result = "" ; 
+		result += "attack power: " + towerInformation.attack_power + "\n" ; 
+		result += "building cost: " + towerInformation.building_cost + "\n"  ;
+		result += "upgrade cost: " + towerInformation.upgrade_cost +"\n" ; 
+		result += "shooting range: " + towerInformation.shooting_range + "\n"  ; 
+		result += "upgrade difference: " + towerInformation.upgrade_diff + "\n" ; 
+		result += "tier: " + towerInformation.tier + "\n" ; 
+		result += "note: " + towerInformation.comment + "\n" ; 
+		return result ; 
+	}
+	
+	static String getInitTooltip(Label label, TowerInformation[] towerInformation, Label[] sources) {
+		int towerType = -1 ; 
+		for(int i = 0 ; i < sources.length ; i++)
+			if(label == sources[i] ) towerType = i ; 
+
+
+		return getTooltipString(towerInformation[towerType]) ; 
+}
+	
 	static String getObjectTooltip(Label label) {
 		String tooltip = null ; 
 		for(int i = 0 ; i < MyController.monsters.size() ; i++  )
@@ -89,7 +111,7 @@ class util {
 		
 		for(int i = 0 ; i < MyController.towers.size() ; i ++ )
 			if(MyController.towers.get(i).getLabel() == label )
-				tooltip = MyController.towers.get(i).getTooltip() ; 
+				tooltip = getTooltipString(MyController.towers.get(i).getInfo() ); 
     	return tooltip ; 
     }
 	

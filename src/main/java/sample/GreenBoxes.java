@@ -52,7 +52,7 @@ class GreenBoxes {
 		} 
 		return gbs.get(targetGetIndex(target)).buildTower(id);
 	}
-	
+ 
 	static boolean targetUpgradeTower(Object target) { 
 		if(targetHasTower(target) != true ) {
 			Alert alert = new Alert ( AlertType.ERROR, "no target for upgrade") ; 
