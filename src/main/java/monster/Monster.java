@@ -49,6 +49,16 @@ public class Monster {
 		return null;
 	}
 
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getTooltip() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 }

@@ -8,6 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +24,7 @@ import javafx.scene.paint.Color;
 import tower.Tower;
 import tower.TowerInformation;
 import javafx.scene.shape.Circle;
+import monster.Monster;
 
 
 public class MyController {
@@ -73,7 +78,8 @@ public class MyController {
     int num_frame = 0;
     
     //get tower information
-	String towerInitInformation[][] = tower.TowerInformation.getTowerInitInformation()  ;
+	static List<Monster> monsters = new ArrayList<> ()  ;
+	static List<Tower> towers = new ArrayList<> ()  ;
 
     
 
@@ -163,7 +169,7 @@ public class MyController {
         
         //monster move
         
-        util.moveMonsters()  ;
+        util.moveMonsters(monsters)  ;
         
         //tower attack 
         util.towersAttack() ; 
@@ -195,31 +201,8 @@ public class MyController {
     
   
     private String getInitTooltip(Label label) {
-    	if(towerInitInformation == null)
-    		return null ; 
-      
-    		String result = "";
-    		int towerType = -1 ; 
-    		if(label.equals(labelBasicTower)) towerType = 0 ; 
-    		if(label.equals(labelIceTower)) towerType = 1 ; 
-    		if(label.equals(labelCatapult)) towerType=2 ;
-    		if(label.equals(labelLaserTower)) towerType = 3 ; 
-    		
-    		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
-    		if (initInformationLineId == null)
-    			return null ; 
-    		
-    		if(initInformationLineId.length != towerInitInformation[towerType].length) {
-    			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
-    			alert.showAndWait() ; 
-    		}
-    		if(towerInitInformation[towerType][0] != null )
-				result += towerInitInformation[towerType][0] ; 
-			for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
-				if(towerInitInformation[towerType][i] != null )
-					result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
-    		
-    		return result ; 
+    	String result = TowerInformation.getTowerBuilingTooltip() ; 
+    	return result ; 
     }
 
     
@@ -233,7 +216,6 @@ public class MyController {
         		Tooltip.install(sources[i], new Tooltip(getInitTooltip(sources[i])));
         		sources[i].setOnDragDetected(new DragEventHandler(sources[i]));//once this is on, it cannot be off
         }
-         
     }
     
     private void setMouseAction(int v , int h ) {

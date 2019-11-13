@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.List;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -35,31 +37,41 @@ class util {
 		
 	}
 
-	static void moveMonsters() {
+	static boolean moveMonsters(List<Monster> monsters) {
 		// TODO Auto-generated method stub
+		for(int i = 0 ; i < monsters.size() ; i++ )
+			monsters.get(i).move() ; 
+		return false ; 
+	}
+
+	static void towersAttack() {
+		// TODO Auto-generated method stub
+		
 		
 	}
 
-	public static void towersAttack() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public static void generateMonsters() {
+	static void generateMonsters() {
 		// TODO Auto-generated method stub
 		Monster monster = new Monster () ; 
 		Tooltip.install(monster.getLabel(), new Tooltip(getObjectTooltip(monster.getLabel())) ) ; 
 		
 	}
 
-	public static boolean decideEndGame() {
+	static boolean decideEndGame() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
-	private static String getObjectTooltip(Label label) {
-    	String result = "" ; 
-    	return result; 
+	static String getObjectTooltip(Label label) {
+		String tooltip = null ; 
+		for(int i = 0 ; i < MyController.monsters.size() ; i++  )
+			if(MyController.monsters.get(i).getLabel() == label)
+				tooltip = MyController.monsters.get(i).getTooltip()  ;
+		
+		for(int i = 0 ; i < MyController.towers.size() ; i ++ )
+			if(MyController.towers.get(i).getLabel() == label )
+				tooltip = MyController.towers.get(i).getTooltip() ; 
+    	return tooltip ; 
     }
 	
 	
