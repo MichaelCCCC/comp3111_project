@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.math.*; 
 
 class ImageFunction {
 
@@ -13,7 +14,8 @@ class ImageFunction {
     static final Image PENGUINimage = new Image ("/penguin.png");
     static final Image UNICORNimage = new Image ("/unicorn.png");
     static final Image COLLISIONimage = new Image ("/collision.png");
-    static final int IMAGE_WIDTH = 30; 
+    static final int IMAGE_WIDTH = 30;
+    static final int MONSTER_WIDTH = 20;
     static final int BOX_WIDTH = 40 ; 
     
     static Image idReturnImage(String id) {
@@ -40,10 +42,19 @@ class ImageFunction {
 		}
 	}
     
+    /*
+     * return an image view when there is only one object in a box
+     */
     static ImageView setImageView(Image image) {
 		ImageView iv = new ImageView(image) ; 
 		if(image != null) {
-			iv.setFitWidth(IMAGE_WIDTH) ;
+			int width;
+			if(image == FOXimage|| image == PENGUINimage|| image == UNICORNimage || image == COLLISIONimage) {
+				width = MONSTER_WIDTH;
+			}else {
+				width = IMAGE_WIDTH;
+			}
+			iv.setFitWidth(width) ;
 			iv.setTranslateX((BOX_WIDTH - IMAGE_WIDTH)/2) ; 
     		iv.setPreserveRatio(true) ;
     		iv.setSmooth(true);
@@ -52,16 +63,39 @@ class ImageFunction {
 		return iv ; 
 	}
 	
+    /*
+     * return an image view when there is only one object in a box
+     */
 	static ImageView setImageView (String id) {
-		ImageView iv = new ImageView((id == null) ? null: idReturnImage(id)) ; 
-		if(id != null) {
-			iv.setFitWidth(IMAGE_WIDTH) ;
-			iv.setTranslateX((BOX_WIDTH - IMAGE_WIDTH)/2) ; 
-    		iv.setPreserveRatio(true) ;
+		return setImageView(idReturnImage(id)) ; 
+	}
+	
+	/*
+	 * return an image view when there is multiple objects in a box
+	 */
+	static ImageView setImageViewMultiple(int size, Image image, int Index) {
+		if(size == 0 || image == null || Index <= 0 || Index >= size )
+			return null ; 
+		
+		ImageView iv = new ImageView(image) ; 
+		if(image != null) {
+			int k = (int)Math.ceil(Math.pow(size, 0.5)); //k can never be 0
+			iv.setFitWidth(IMAGE_WIDTH / k );
+			double smallBoxWidth = (double)BOX_WIDTH / k ; 
+			iv.setX(smallBoxWidth * (Index % k) );
+			iv.setY(smallBoxWidth * (Index / k) );
+			iv.setPreserveRatio(true) ;
     		iv.setSmooth(true);
             iv.setCache(true);
 		}
-		return iv ; 
+		return iv ;
+	}
+	
+	/*
+	 * return an image view when there is multiple objects in a box
+	 */
+	static ImageView setImageViewMultiple(int size, String id , int Index) {
+		return setImageViewMultiple(size, idReturnImage(id) , Index) ; 
 	}
 	
 }
