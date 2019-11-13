@@ -1,7 +1,7 @@
 package tower;
 
 public class Catapult extends Tower{
-	static TowerInformation CatapultInit = new TowerInformation(10, 100, 100, 15, 10, 0, "This is Laser Tower");
+	public static TowerInformation CatapultInit = new TowerInformation(10, 100, 100, 15, 10, 1, "This is Laser Tower");
 	
 	public Catapult(int x, int y) {		
 		super(x,y);

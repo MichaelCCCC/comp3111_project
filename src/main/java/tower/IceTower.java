@@ -5,7 +5,7 @@ import monster.Monster;
 public class IceTower extends Tower{	
 	//	Important ! For IceTower the slow duration is kept in the attack_power variable !
 	
-	static TowerInformation IceTowerInit = new TowerInformation(10, 100, 100, 15, 10, 0, "This is Ice Tower");
+	public static TowerInformation IceTowerInit = new TowerInformation( 10, 100, 100, 15, 10, 1, "This is Ice Tower");
 	
 	//	Constructor with default parameters
 	public IceTower(int x, int y) {

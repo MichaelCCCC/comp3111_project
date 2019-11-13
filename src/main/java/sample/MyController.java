@@ -27,6 +27,18 @@ import javafx.scene.shape.Circle;
 import monster.Monster;
 
 
+/**
+ * @author Yomaru
+ *
+ */
+/**
+ * @author Yomaru
+ *
+ */
+/**
+ * @author Yomaru
+ *
+ */
 public class MyController {
     @FXML
     private Button buttonNextFrame;
@@ -72,7 +84,7 @@ public class MyController {
     static final int MAX_H_NUM_GRID = 12;
     static final int MAX_V_NUM_GRID = 12;
     
-    static Integer money = 10 ; 
+    static Integer money = 300 ; 
     
 
     int num_frame = 0;
@@ -178,7 +190,8 @@ public class MyController {
         //generate monster
         util.generateMonsters(paneArena) ; 
        
-        
+        //show all object 
+        util.showAllObjects(monsters, towers, paneArena);
         
         //detected where monster cross the final line
         //if yes, notify the play the game is over
@@ -201,22 +214,20 @@ public class MyController {
     	money = i ; 
     	labelMoney.setText(money.toString());
     }
-    
-  
-    private String getInitTooltip(Label label) {
-    	String result = TowerInformation.getTowerBuilingTooltip() ; 
-    	return result ; 
+	
+	
+	
+    private String getInitTooltip(Label label, Label[] sources) {
+    	TowerInformation towerInformation[] = {tower.Tower.BasicTowerInit, tower.IceTower.IceTowerInit, tower.Catapult.BasicTowerInit, tower.LaserTower.LaserTowerInit} ;
+    	return util.getInitTooltip(label,  towerInformation, sources); 
     }
-
-    
-    
     
     private void setDragAndDrop2() { 
     	Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
     		
         
         for(int i = 0 ; i < sources.length ; i++ ) {
-        		Tooltip.install(sources[i], new Tooltip(getInitTooltip(sources[i])));
+        		Tooltip.install(sources[i], new Tooltip(getInitTooltip(sources[i],sources)));
         		sources[i].setOnDragDetected(new DragEventHandler(sources[i]));//once this is on, it cannot be off
         }
     }
@@ -403,17 +414,17 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
             switch(db.getString())
             {
             	case "Basic Tower" : 
-            		moneyDeducted = tower.TowerInformation.getBuildingCost("Basic Tower") ; 
+            		moneyDeducted = tower.Tower.BasicTowerInit.building_cost; 
             		//((Label)event.getGestureTarget()).setText(db.getString());
             		break ; 
             	case "Ice Tower" : 
-            		moneyDeducted = tower.TowerInformation.getBuildingCost("Ice Tower") ; //change
+            		moneyDeducted = tower.IceTower.IceTowerInit.building_cost;  //change
             		break ; 
             	case "Catapult" : 
-            		moneyDeducted = tower.TowerInformation.getBuildingCost("Catapult")  ; 
+            		moneyDeducted = tower.Catapult.CatapultInit.building_cost ; 
             		break ; 
             	case "Laser Tower" : 
-            		moneyDeducted = tower.TowerInformation.getBuildingCost("LaserTower")  ;
+            		moneyDeducted = tower.LaserTower.LaserTowerInit.building_cost  ;
             		break ; 
             	default :
             		assert false : "invalid tower" ; 
