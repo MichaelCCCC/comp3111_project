@@ -5,9 +5,11 @@ import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.shape.Circle;
 import monster.Monster;
+import tower.Tower;
 
 class util {
 
@@ -40,25 +42,42 @@ class util {
 	static boolean moveMonsters(List<Monster> monsters) {
 		// TODO Auto-generated method stub
 		for(int i = 0 ; i < monsters.size() ; i++ )
-			monsters.get(i).move() ; 
+			monsters.get(i).move() ;  
 		return false ; 
 	}
 
-	static void towersAttack() {
+	static void showAllObjects(List<Monster> monsters, List<Tower> towers ,AnchorPane paneArena) {
 		// TODO Auto-generated method stub
+		for(int i = 0 ; i < monsters.size() ; i++ )
+			if(!paneArena.getChildren().contains(monsters.get(i).getLabel())) // if the arean haven't show it, show it
+				paneArena.getChildren().add(monsters.get(i).getLabel()) ; 
 		
+		for(int i = 0 ; i < towers.size() ; i++ )
+			if(!paneArena.getChildren().contains(towers.get(i).getLabel()))
+				paneArena.getChildren().add(towers.get(i).getLabel()) ; 
 		
 	}
 
-	static void generateMonsters() {
+	static void towersAttack(List<Monster> monsters, List<Tower> towers) {
 		// TODO Auto-generated method stub
-		Monster monster = new Monster () ; 
-		Tooltip.install(monster.getLabel(), new Tooltip(getObjectTooltip(monster.getLabel())) ) ; 
+		for(int i = 0 ; i < towers.size() ; i++) {
+			towers.get(i).attack(monsters) ; 
+		}
 		
+	}
+
+	static void generateMonsters(AnchorPane paneArena) {
+		// TODO Auto-generated method stub 
+		Monster monster = new Monster() ; 
+		MyController.monsters.add(monster) ; 
+		Tooltip.install(monster.getLabel(), new Tooltip(getObjectTooltip(monster.getLabel())) ) ; 
+		paneArena.getChildren().addAll(monster.getLabel()); //show the monster
 	}
 
 	static boolean decideEndGame() {
 		// TODO Auto-generated method stub
+		
+		
 		return false;
 	}
 	

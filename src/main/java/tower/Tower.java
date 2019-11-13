@@ -134,4 +134,9 @@ public class Tower {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void attack(List<Monster> monsters) {
+		// TODO Auto-generated method stub
+		
+	}
 }

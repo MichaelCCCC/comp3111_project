@@ -136,7 +136,8 @@ public class MyController {
                 newLabel.setMaxHeight(GRID_HEIGHT);
                 newLabel.setStyle("-fx-border-color: black;");
                 grids[i][j] = newLabel;
-                paneArena.getChildren().addAll(newLabel);
+                paneArena.getChildren().addAll(newLabel);// this code show new label on pane.
+                
             }
         
         labelMoney.setText(money.toString());
@@ -172,10 +173,12 @@ public class MyController {
         util.moveMonsters(monsters)  ;
         
         //tower attack 
-        util.towersAttack() ; 
+        util.towersAttack(monsters, towers) ; 
         
         //generate monster
-        util.generateMonsters() ; 
+        util.generateMonsters(paneArena) ; 
+       
+        
         
         //detected where monster cross the final line
         //if yes, notify the play the game is over
