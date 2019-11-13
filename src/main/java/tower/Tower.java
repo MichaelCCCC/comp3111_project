@@ -2,6 +2,9 @@ package tower;
 import java.lang.Math; 
 import java.util.List;
 
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import monster.Monster;
 
 import java.util.ArrayList;
@@ -120,5 +123,20 @@ public class Tower {
 	
 	void destroy() {
 		is_destroyed = true;
+	}
+
+	public Label getLabel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getTooltip() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void attack(List<Monster> monsters) {
+		// TODO Auto-generated method stub
+		
 	}
 }

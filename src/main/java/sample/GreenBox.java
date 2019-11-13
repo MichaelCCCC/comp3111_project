@@ -3,6 +3,7 @@ package sample;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import tower.Catapult;
 import tower.IceTower;
@@ -35,8 +36,9 @@ class GreenBox{
 		if(tower == null) {
 			ImageView iv = ImageFunction.setImageView(id) ; 
 			
-	        label.setGraphic(iv);
-	        label.setId(id) ; 
+	        tower.getLabel().setGraphic(iv);
+	        tower.getLabel().setId(id) ; 
+	        Tooltip.install(tower.getLabel(), new Tooltip(util.getObjectTooltip(tower.getLabel())) ) ; 
 	        
 	        switch(id)
 			{

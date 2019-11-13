@@ -1,6 +1,7 @@
 package monster;
 
-import sample.WhiteBox;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 public class Monster {
 	//constant
@@ -18,6 +19,10 @@ public class Monster {
 		speed = _speed;
 		x = DEFAULT_X;
 		y = DEFAULT_Y;
+	}
+
+	public Monster() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getHP() {
@@ -39,10 +44,22 @@ public class Monster {
 		speed -= offset;
 	}
 
-	public WhiteBox moveTo() {
+	public Label getLabel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getTooltip() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 }
 

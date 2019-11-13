@@ -13,15 +13,6 @@ public class TowerInformation {
 		this.shooting_range = shooting_range;
 	}
 
-	public static String[][] getTowerInitInformation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String[] getInitInformationLineId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public static int getUpgradeCost(String id) {
 		// TODO Auto-generated method stub
@@ -31,5 +22,11 @@ public class TowerInformation {
 	public static Integer getBuildingCost(String id) {
 		// TODO Auto-generated method stub
 		return 3;
+	}
+
+
+	public static String getTowerBuilingTooltip() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
