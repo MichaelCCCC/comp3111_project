@@ -93,10 +93,13 @@ public class MyController {
 	static List<Monster> monsters = new ArrayList<> ()  ;
 	static List<Tower> towers = new ArrayList<> ()  ;
 
-    
 
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
     private int x = -1, y = 0; //where is my monster
+    
+    AnchorPane getArenaPane() {
+    	return paneArena;  
+    }
     
     /**
      * A dummy function to show how button click works
@@ -246,11 +249,8 @@ public class MyController {
             			
             			//show range and show tool tip 
             			
-            			util.showTowerRange(target) ; 
             			
-            			
-            	        
-            			
+
             		}
             		event.consume();
             	}
@@ -275,7 +275,7 @@ public class MyController {
             				
             				 
             				if((String)cd.getResult() == choices[0]) 
-            					GreenBoxes.targetDestroyTower(target) ; 
+            					GreenBoxes.targetDestroyTower(target) ;
             					//target.setGraphic(null);
                 			
                 			
@@ -372,6 +372,7 @@ public class MyController {
  
         
     }
+
 }
 
 class DragEventHandler implements EventHandler<MouseEvent> {
@@ -429,14 +430,14 @@ class DragDroppedEventHandler implements EventHandler<DragEvent> { //always on
             	default :
             		assert false : "invalid tower" ; 
             }
+            
             if(MyController.money >= moneyDeducted && GreenBoxes.targetHasTower(event.getGestureTarget()) == false)
             {
-            	Tower newTower = GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
-            	MyController.towers.add(newTower) ; 
+            	
+            	GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
+              	 
                 //((Label)event.getGestureTarget()).setText(moneyDeducted.toString());
-        		MyController.money -= moneyDeducted;  
-        		
-                
+        		MyController.money -= moneyDeducted; 
                 success = true;
             }
             else

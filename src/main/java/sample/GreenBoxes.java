@@ -19,7 +19,7 @@ class GreenBoxes {
 	}
 	
 	static boolean targetHasTower(Object target) {
-    	if(gbs.get(targetGetIndex(target)).tower != null)
+    	if(gbs.get(targetGetIndex(target)).towerInBox != null)
     		return true  ; 
     	return false ; 
     }
@@ -50,7 +50,8 @@ class GreenBoxes {
 			alert.showAndWait()  ; 
 			return null ; 
 		} 
-		return gbs.get(targetGetIndex(target)).buildTower(id);
+		Tower tower  = gbs.get(targetGetIndex(target)).buildTower(id) ; 
+		return tower;
 	}
  
 	static boolean targetUpgradeTower(Object target) { 
@@ -59,7 +60,7 @@ class GreenBoxes {
 			alert.showAndWait()  ; 
 			return false; 
 		}
-//		gbs.get(targetGetIndex(target)).tower.upgrade() ; 
+		gbs.get(targetGetIndex(target)).towerInBox.upgrade() ; 
 		return true ; 
 		 
 	}
@@ -70,7 +71,13 @@ class GreenBoxes {
 			alert.showAndWait()  ; 
 			return null;
 		}
-		return gbs.get(targetGetIndex(target)).tower ; 
+		return gbs.get(targetGetIndex(target)).towerInBox ; 
 	}
 	
+	static GreenBox towerGetGreenBox(Tower tower) {
+		for(int i = 0 ; i < gbs.size(); i++)
+			if(tower == gbs.get(i).towerInBox)
+				return gbs.get(i) ;
+		return null; 
+	}
 }

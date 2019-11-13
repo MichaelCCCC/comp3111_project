@@ -127,25 +127,16 @@ public class Tower {
 //		}
 	}
 	
-	void upgrade() {
+	public void upgrade() {
 		attack_power += upgrade_diff;
 	}
 	
-	void destroy() {
+	public void destroy() {
 		is_destroyed = true;
 	}
 
-	public Label getLabel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public String getTooltip() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void attack(List<Monster> monsters) {
+	public void attack() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -154,4 +145,5 @@ public class Tower {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 }
