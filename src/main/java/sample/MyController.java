@@ -8,6 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +24,7 @@ import javafx.scene.paint.Color;
 import tower.Tower;
 import tower.TowerInformation;
 import javafx.scene.shape.Circle;
+import monster.Monster;
 
 
 public class MyController {
@@ -72,10 +77,10 @@ public class MyController {
 
     int num_frame = 0;
     
-    
-
-    String towerInitInformation[][] = tower.TowerInformation.getTowerInitInformation()  ; // get tower information
     //get tower information
+	static List<Monster> monsters = new ArrayList<> ()  ;
+	static List<Tower> towers = new ArrayList<> ()  ;
+
     
 
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
@@ -131,7 +136,8 @@ public class MyController {
                 newLabel.setMaxHeight(GRID_HEIGHT);
                 newLabel.setStyle("-fx-border-color: black;");
                 grids[i][j] = newLabel;
-                paneArena.getChildren().addAll(newLabel);
+                paneArena.getChildren().addAll(newLabel);// this code show new label on pane.
+                
             }
         
         labelMoney.setText(money.toString());
@@ -163,20 +169,27 @@ public class MyController {
 //        grids[y][x].setText("M"); //add text on original label 
         
         //monster move
-    	Arena.moveMonster();
+
+        
+        util.moveMonsters(monsters)  ;
+        
         //tower attack 
+        util.towersAttack(monsters, towers) ; 
         
         //generate monster
+
     	if(num_frame%5 == 0) {    		
-    		Arena.GenerateMonster(paneArena,"Fox");
+    		util.generateMonsters(paneArena) ; 
     	}
-    	
+
         //detected where monster cross the final line
         //if yes, notify the play the game is over
-
+        if (util.decideEndGame()) {
+        	Alert alert = new Alert(AlertType.INFORMATION, "The game is over" )  ;
+        	alert.showAndWait() ; 
+        	System.exit(0);
+        }
     	
-    	
-//    	WhiteBoxes.moveMonsters();
     	num_frame ++;
 
     }
@@ -190,54 +203,28 @@ public class MyController {
     	labelMoney.setText(money.toString());
     }
     
+  
     private String getInitTooltip(Label label) {
-    	if(towerInitInformation == null)
-    		return null ; 
-      
-    		String result = "";
-    		int towerType = -1 ; 
-    		if(label.equals(labelBasicTower)) towerType = 0 ; 
-    		if(label.equals(labelIceTower)) towerType = 1 ; 
-    		if(label.equals(labelCatapult)) towerType=2 ;
-    		if(label.equals(labelLaserTower)) towerType = 3 ; 
-    		
-    		String initInformationLineId[] = tower.TowerInformation.getInitInformationLineId() ; 
-    		if (initInformationLineId == null)
-    			return null ; 
-    		
-    		if(initInformationLineId.length != towerInitInformation[towerType].length) {
-    			Alert alert = new Alert(AlertType.ERROR , "initInformationLineId.length != towerInitInformation[towerType].length"); 
-    			alert.showAndWait() ; 
-    		}
-    		if(towerInitInformation[towerType][0] != null )
-				result += towerInitInformation[towerType][0] ; 
-			for(int i = 1 ; i < towerInitInformation[towerType].length ; i++ ) 
-				if(towerInitInformation[towerType][i] != null )
-					result += ("\n" + initInformationLineId[i] + ": " +towerInitInformation[towerType][i])   ;
-    		
-    		return result ; 
+    	String result = TowerInformation.getTowerBuilingTooltip() ; 
+    	return result ; 
     }
 
     
-    private String getCurrentTooltip(Label label) {
-    	String result = "" ; 
-    	return result; 
-    }
+    
     
     private void setDragAndDrop2() { 
-    		Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
+    	Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
     		
         
         for(int i = 0 ; i < sources.length ; i++ ) {
         		Tooltip.install(sources[i], new Tooltip(getInitTooltip(sources[i])));
         		sources[i].setOnDragDetected(new DragEventHandler(sources[i]));//once this is on, it cannot be off
         }
-         
     }
     
     private void setMouseAction(int v , int h ) {
     		Label target = grids[v][h] ; 
-    		Tooltip.install(target, new Tooltip(getCurrentTooltip(target)));
+    		
     		
     		target.setOnMouseEntered( new EventHandler <MouseEvent>() {
             	@Override

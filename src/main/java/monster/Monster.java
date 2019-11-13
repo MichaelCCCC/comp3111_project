@@ -3,6 +3,7 @@ package monster;
 import javafx.scene.control.Label;
 
 
+
 public class Monster {
 	//constant
 	static final int DEFAULT_X = 20;
@@ -26,6 +27,10 @@ public class Monster {
 		direction = Direction.DOWN;
 	}
 
+	public Monster() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getHP() {
 		return HP;
 	}
@@ -37,6 +42,9 @@ public class Monster {
 	}
 	public int getY() {
 		return y;
+	}
+	public Label getLabel() {
+		return label;
 	}
 	public Direction getDirection() {
 		return direction;
@@ -50,11 +58,17 @@ public class Monster {
 	public void slow_down(int offset) {
 		speed -= offset;
 	}
+
 	public void move(int _x, int _y) {
 		x = _x;
 		y = _y;
 		label.setLayoutX(x-10);
 		label.setLayoutY(y-10);
+
+	}
+
+	public String getTooltip() {
+		return "HP :" + HP;
 	}
 
 	
