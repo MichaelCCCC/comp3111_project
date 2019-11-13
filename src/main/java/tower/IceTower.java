@@ -5,7 +5,7 @@ import monster.Monster;
 public class IceTower extends Tower{
 	int slow_duration;
 	//	Constructor with default parameters
-	IceTower(int x, int y) {
+	public IceTower(int x, int y) {
 		super(x,y);
 		setAttributes(10,10,10,10);
 		slow_duration = 5;

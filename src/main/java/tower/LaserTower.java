@@ -6,7 +6,7 @@ public class LaserTower extends Tower{
 	int attack_cost;
 	
 	//	Constructor with default parameters
-	LaserTower(int x, int y) {
+	public LaserTower(int x, int y) {
 		super(x,y);
 		setAttributes(10,10,10,Double.MAX_VALUE);
 		attack_cost = 20;

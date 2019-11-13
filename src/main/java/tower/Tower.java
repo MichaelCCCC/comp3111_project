@@ -19,7 +19,7 @@ public class Tower {
 	protected boolean is_destroyed = false;
 	
 	//	Constructor with default parameters
-	Tower(int x, int y) {
+	public Tower(int x, int y) {
 		this.x = x;
 		this.y = y;
 		attack_power = 10;

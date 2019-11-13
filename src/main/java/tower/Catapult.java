@@ -6,5 +6,9 @@ public class Catapult extends Tower{
 		
 	}
 
+	public Catapult(int x, int y) {
+		// TODO Auto-generated constructor stub
+	}
+
 
 }
