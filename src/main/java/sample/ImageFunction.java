@@ -14,7 +14,8 @@ class ImageFunction {
     static final Image PENGUINimage = new Image ("/penguin.png");
     static final Image UNICORNimage = new Image ("/unicorn.png");
     static final Image COLLISIONimage = new Image ("/collision.png");
-    static final int IMAGE_WIDTH = 30; 
+    static final int IMAGE_WIDTH = 30;
+    static final int MONSTER_WIDTH = 20;
     static final int BOX_WIDTH = 40 ; 
     
     static Image idReturnImage(String id) {
@@ -47,7 +48,13 @@ class ImageFunction {
     static ImageView setImageView(Image image) {
 		ImageView iv = new ImageView(image) ; 
 		if(image != null) {
-			iv.setFitWidth(IMAGE_WIDTH) ;
+			int width;
+			if(image == FOXimage|| image == PENGUINimage|| image == UNICORNimage || image == COLLISIONimage) {
+				width = MONSTER_WIDTH;
+			}else {
+				width = IMAGE_WIDTH;
+			}
+			iv.setFitWidth(width) ;
 			iv.setTranslateX((BOX_WIDTH - IMAGE_WIDTH)/2) ; 
     		iv.setPreserveRatio(true) ;
     		iv.setSmooth(true);

@@ -154,21 +154,22 @@ public class MyController {
     @FXML
     private void nextFrame() {
 
-    	//create M 
-        if (x == -1) {
-            grids[0][0].setText("M");
-            x = 0; // x is generated 
-            return;
-        }
-        
-        //move M 
-        
-        if (y == MAX_V_NUM_GRID - 1)
-            return;
-        grids[y++][x].setText(""); //remove text on original labal
-        grids[y][x].setText("M"); //add text on original label 
+//    	//create M 
+//        if (x == -1) {
+//            grids[0][0].setText("M");
+//            x = 0; // x is generated 
+//            return;
+//        }
+//        
+//        //move M 
+//        
+//        if (y == MAX_V_NUM_GRID - 1)
+//            return;
+//        grids[y++][x].setText(""); //remove text on original labal
+//        grids[y][x].setText("M"); //add text on original label 
         
         //monster move
+
         
         util.moveMonsters(monsters)  ;
         
@@ -176,10 +177,11 @@ public class MyController {
         util.towersAttack(monsters, towers) ; 
         
         //generate monster
-        util.generateMonsters(paneArena) ; 
-       
-        
-        
+
+    	if(num_frame%5 == 0) {    		
+    		util.generateMonsters(paneArena) ; 
+    	}
+
         //detected where monster cross the final line
         //if yes, notify the play the game is over
         if (util.decideEndGame()) {
@@ -188,7 +190,6 @@ public class MyController {
         	System.exit(0);
         }
     	
-//    	WhiteBoxes.moveMonsters();
     	num_frame ++;
 
     }
