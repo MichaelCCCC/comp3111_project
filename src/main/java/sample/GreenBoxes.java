@@ -6,74 +6,110 @@ import tower.Tower;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * @author Yomaru
+ *
+ */
 class GreenBoxes {
 	
-    
+    /*
+     * a list of green boxes
+     */
 	static List<GreenBox> gbs = new ArrayList<>(); 
 	
+	/**
+	 * @param target
+	 * @return
+	 */
 	static Integer targetGetIndex(Object target) {
 		for(int i = 0 ;  i < gbs.size() ; i++)
-			if(gbs.get(i).label == ((Label)target))
+			if(gbs.get(i).gbLabel == ((Label)target))
 				return i ; 
 		return null ; 
 	}
 	
+	/**
+	 * @param target
+	 * @return
+	 */
+	static GreenBox targetGetGreenBox(Object  target) {
+		return gbs.get(targetGetIndex(target)) ; 
+	}
+	
+	/**
+	 * @param target
+	 * @return
+	 */
 	static boolean targetHasTower(Object target) {
     	if(gbs.get(targetGetIndex(target)).towerInBox != null)
     		return true  ; 
     	return false ; 
     }
 	
+	
+	/**
+	 * @param target
+	 * @return
+	 */
 	static int targetV(Object target) {
 		return gbs.get(targetGetIndex(target)).v ; 
 	}
 	
+	/**
+	 * @param target
+	 * @return
+	 */
 	static int targetH(Object target) {
 		return gbs.get(targetGetIndex(target)).h ;
 	}
 	
-	
+	/**
+	 * @param target
+	 * @return
+	 */
 	static boolean targetDestroyTower(Object target) {
-		if(targetHasTower(target) != true ) {
-			Alert alert = new Alert ( AlertType.ERROR,"It has no Tower, no tower can be destroyed" ) ; 
-			alert.showAndWait()  ; 
-			return false ; 
-		} 
-		gbs.get(targetGetIndex(target)).destroyTower() ; 
+		targetGetGreenBox(target).destroyTower() ; 
 		return true ;
 	}
 	
 	
+	/**
+	 * @param target
+	 * @param id
+	 * @return
+	 */
 	static Tower targetBuildTower(Object target, String id) {
 		if(targetHasTower(target) != false ) {
 			Alert alert = new Alert ( AlertType.ERROR, "It has Tower, new tower cannot be built") ; 
 			alert.showAndWait()  ; 
 			return null ; 
 		} 
-		Tower tower  = gbs.get(targetGetIndex(target)).buildTower(id) ; 
+		Tower tower  = targetGetGreenBox(target).buildTower(id) ; 
 		return tower;
 	}
  
+	/**
+	 * @param target
+	 * @return
+	 */
 	static boolean targetUpgradeTower(Object target) { 
-		if(targetHasTower(target) != true ) {
-			Alert alert = new Alert ( AlertType.ERROR, "no target for upgrade") ; 
-			alert.showAndWait()  ; 
-			return false; 
-		}
-		gbs.get(targetGetIndex(target)).towerInBox.upgrade() ; 
+		targetGetGreenBox(target).towerInBox.upgrade() ; 
 		return true ; 
 		 
 	}
 	
+	/**
+	 * @param target
+	 * @return
+	 */
 	static Tower targetGetTower(Object target) {
-		if(targetHasTower(target) == false ) {
-			Alert alert = new Alert ( AlertType.ERROR, "target has no tower") ; 
-			alert.showAndWait()  ; 
-			return null;
-		}
-		return gbs.get(targetGetIndex(target)).towerInBox ; 
+		return targetGetGreenBox(target).towerInBox ; 
 	}
 	
+	/**
+	 * @param tower
+	 * @return
+	 */
 	static GreenBox towerGetGreenBox(Tower tower) {
 		for(int i = 0 ; i < gbs.size(); i++)
 			if(tower == gbs.get(i).towerInBox)
