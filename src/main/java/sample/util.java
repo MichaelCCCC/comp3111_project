@@ -242,7 +242,7 @@ class util {
 		double xp = (monster.getX()) ; 
 		double yp = (monster.getY() ); 
 		//k is the multiple constant
-		int k = 1 ; 
+		int k = 1000 ; 
 		double xpp = k * (xp - x ) + x ; 
 		double ypp = k* (yp - y ) + y ; 
 		Line line = new Line(x , y ,xpp ,ypp) ;  

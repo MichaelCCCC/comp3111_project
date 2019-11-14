@@ -121,12 +121,15 @@ public class MyController {
         if (grids[0][0] != null)
             return; //created already
         
+        List<Label> wbs = new ArrayList<>( );
         for (int i = 0; i < MAX_V_NUM_GRID; i++) //the top left corner is (0,0)
             for (int j = 0; j < MAX_H_NUM_GRID; j++) {
                 Label newLabel = new Label();
                 
                 if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1)) {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+                    //white boxes
+                    wbs.add(newLabel) ;
                 }
                 	else 
                 {
@@ -151,9 +154,8 @@ public class MyController {
         for(int i = 0 ; i < GreenBoxes.gbs.size() ; i++ ) {
         		setDragAndDrop(GreenBoxes.gbs.get(i).v , GreenBoxes.gbs.get(i).h);
         		setMouseAction(GreenBoxes.gbs.get(i).v,GreenBoxes.gbs.get(i).h) ; 
-        }
         		
-        
+        } 
         setDragAndDrop2() ; 
     }
 
@@ -269,8 +271,6 @@ public class MyController {
      */
     private void  setTempMouseAction(Label tempLabel, Shape shootingRange, Label target) {  	
     	
-    	
-    	
     	tempLabel.setOnMouseExited(new EventHandler<MouseEvent> () {
     		@Override 
     		public void handle(MouseEvent event ) {
@@ -336,6 +336,23 @@ public class MyController {
     protected Label lastLabel = null ;
     protected Shape lastShootingRange = null ; 
     
+    private void setMouseAction3(Shape lastShootingRange2 ) {
+    	EventHandler<? super MouseEvent> linehover =  new EventHandler<MouseEvent>() {
+    		@Override
+		    public void handle(MouseEvent event) {
+    			System.out.println(exit);
+		    	if(exit == true) {
+		    		if(paneArena.getChildren().contains(lastLabel))
+		    			paneArena.getChildren().remove(lastLabel); 
+		    		if(paneArena.getChildren().contains(lastShootingRange))
+		    			paneArena.getChildren().remove(lastShootingRange); 
+		    	}
+		    	exit = true  ;
+    		}
+    	} ; 
+    	lastShootingRange2.setOnMouseEntered(linehover) ; 
+    }
+    
     /*
      * applicable to only green boxes
      */
@@ -364,6 +381,8 @@ public class MyController {
 	            				lastShootingRange = addShootingRangeToPaneArena(target) ; 
 	            				lastLabel = addLastLabel(target) ; 
 	            				setTempMouseAction(lastLabel, lastShootingRange, target) ; 
+	            				if(GreenBoxes.targetGetTower(target).getClass() != tower.LaserTower.class)
+	            					setMouseAction3(lastShootingRange) ; 
 	                			
 	                		}
 	                		event.consume();
