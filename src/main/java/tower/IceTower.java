@@ -3,9 +3,11 @@ package tower;
 import monster.Monster;
 
 public class IceTower extends Tower{	
+	
+	public static final String NAME = "Ice Tower" ;
 	//	Important ! For IceTower the slow duration is kept in the attack_power variable !
 	
-	public static TowerInformation IceTowerInit = new TowerInformation( 10, 100, 100, 15, 10, 1, "This is Ice Tower");
+	public static TowerInformation IceTowerInit = new TowerInformation(NAME, 10, 100, 100, 50, 10, 1, "This is Ice Tower");
 	
 	//	Constructor with default parameters
 	public IceTower(int x, int y) {

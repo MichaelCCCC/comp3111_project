@@ -1,7 +1,7 @@
 package tower;
 
 public class TowerInformation {
-	//public String name ; 
+	public String name ; 
 	public int attack_power;
 	public int building_cost;
 	public int upgrade_cost;
@@ -10,8 +10,8 @@ public class TowerInformation {
 	public int tier;
 	public String comment;
 	
-	TowerInformation( int attack_power, int building_cost, int upgrade_cost, double shooting_range, int upgrade_diff, int tier, String comment) {
-		//this.name = name ; 
+	TowerInformation(String name, int attack_power, int building_cost, int upgrade_cost, double shooting_range, int upgrade_diff, int tier, String comment) {
+		this.name = name ; 
 		this.attack_power = attack_power;
 		this.building_cost = building_cost;
 		this.upgrade_cost = upgrade_cost;

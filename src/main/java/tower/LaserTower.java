@@ -3,9 +3,11 @@ package tower;
 import monster.Monster;
 
 public class LaserTower extends Tower{
+	public static final String NAME = "Laser Tower" ;
+	
 	int attack_cost;
 	
-	public static TowerInformation LaserTowerInit = new TowerInformation(10, 100, 100, 15, 10, 1, "This is Laser Tower");
+	public static TowerInformation LaserTowerInit = new TowerInformation(NAME,10, 100, 100, 15, 10, 1, "This is Laser Tower");
 	
 	//	Constructor with default parameters
 	public LaserTower(int x, int y) {
@@ -15,7 +17,7 @@ public class LaserTower extends Tower{
 	}
 
 	//	Get Cost of Shooting with Laser Tower
-	int getAttackCost() {
+	public int getAttackCost() {
 		return attack_cost;
 	}
 	
@@ -31,5 +33,12 @@ public class LaserTower extends Tower{
 //				currentEnemy.damage(attack_power);
 //			}
 //		}	
+	}
+
+	public Monster getMonstershooted() {
+		// TODO Auto-generated method stub
+		if(sample.MyController.monsters.size() != 0 )
+			return sample.MyController.monsters.get(0);
+		return null ; 
 	}
 }

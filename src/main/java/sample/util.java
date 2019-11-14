@@ -5,6 +5,8 @@ import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.scene.image.ImageView;
 import monster.Fox;
 import monster.Monster;
@@ -70,6 +72,19 @@ class util {
 			}
 		}
 	}
+	
+	private static void refreshLists(List<Monster> monsters, List <Tower> towers) {
+		for(int i = 0 ; i < monsters.size() ; i++)
+			if(monsters.get(i) == null || monsters.get(i).getLabel() == null)
+				monsters.remove(i) ; 
+		
+		for(int i = 0 ; i < towers.size() ; i++) {
+			if(towers.get(i) == null )
+				towers.remove(i) ;
+			if(GreenBoxes.towerGetGreenBox(towers.get(i)) == null)
+				towers.remove(i) ; 
+		} 
+	}
 
 	/**
 	 * @param monsters
@@ -77,6 +92,7 @@ class util {
 	 * @param paneArena
 	 */
 	static void showAllObjects(List<Monster> monsters, List<Tower> towers ,AnchorPane paneArena) {
+		refreshLists(monsters, towers)  ; 
 		for(int i = 0 ; i < monsters.size() ; i++ )
 			if(!paneArena.getChildren().contains(monsters.get(i).getLabel())) // if the arean haven't show it, show it
 				paneArena.getChildren().add(monsters.get(i).getLabel()) ; 
@@ -153,10 +169,36 @@ class util {
 	 */
 	static String getTowerTooltipString(TowerInformation towerInformation ) {
 		String result = "" ; 
+		result += towerInformation.name ; 
 		result += "attack power: " + towerInformation.attack_power + "\n" ; 
 		result += "building cost: " + towerInformation.building_cost + "\n"  ;
 		result += "upgrade cost: " + towerInformation.upgrade_cost +"\n" ; 
-		result += "shooting range: " + towerInformation.shooting_range + "\n"  ; 
+		if(towerInformation.name != tower.LaserTower.NAME ) 
+			result += "shooting range: " + towerInformation.shooting_range + "\n"  ; 
+		result += "upgrade difference: " + towerInformation.upgrade_diff + "\n" ; 
+		result += "tier: " + towerInformation.tier + "\n" ; 
+		result += "note: " + towerInformation.comment + "\n" ; 
+		return result ; 
+	}
+	
+	/**
+	 * @param towerInformation
+	 * @param target: should be a label 
+	 * @return tooltip
+	 */
+	static String getTowerTooltipString(TowerInformation towerInformation, Object target) {
+		Class<? extends Tower> temp = GreenBoxes.targetGetTower(target).getClass() ; 
+		String result = "" ; 
+		result += towerInformation.name ; 
+		result += "attack power: " + towerInformation.attack_power + "\n" ; 
+		result += "building cost: " + towerInformation.building_cost + "\n"  ;
+		result += "upgrade cost: " + towerInformation.upgrade_cost +"\n" ; 
+		if( temp  == tower.LaserTower.class)
+			result += "attack cost: " + ((tower.LaserTower)GreenBoxes.targetGetTower(target)).getAttackCost() + "\n" ; 
+		if (temp == tower.Tower.class || temp == tower.IceTower.class)
+			result += "shooting range: " + towerInformation.shooting_range + "\n"  ; 
+		if  (temp == tower.Catapult.class)
+			result += "shooting range: " + ((tower.Catapult)GreenBoxes.targetGetTower(target)).shortDistance + " to " + ((tower.Catapult)GreenBoxes.targetGetTower(target)).shortDistance + "\n"; 
 		result += "upgrade difference: " + towerInformation.upgrade_diff + "\n" ; 
 		result += "tier: " + towerInformation.tier + "\n" ; 
 		result += "note: " + towerInformation.comment + "\n" ; 
@@ -178,24 +220,36 @@ class util {
 		return getTowerTooltipString(towerInformation[towerType]) ; 
 }
 	
+	static Shape lineToFirstMonster(GreenBox gb) {
+		if(MyController.monsters.size() != 0 )
+		{
+			Monster monster = MyController.monsters.get(0) ; 
+			return new Line(gb.getTowerX(), gb.getTowerY() , monster.getX(),monster.getY()) ; 
+		}
+		return null ; 
+	}
+	
 	/**
-	 * @param label
-	 * @return
+	 * @param green box that contain laser tower
+	 * @return a line to monster shooted
 	 */
-	static String labelGetObjectTooltip(Label label) {
-		String tooltip = null ; 
-		for(int i = 0 ; i < MyController.monsters.size() ; i++  )
-			if(MyController.monsters.get(i).getLabel() == label) 
-				tooltip = MyController.monsters.get(i).getTooltip()  ;
-				 
-
-		
-		for(int i = 0 ; i < MyController.towers.size() ; i ++ )
-			if(GreenBoxes.towerGetGreenBox(MyController.towers.get(i)).gbLabel == label )
-				tooltip = getTowerTooltipString(MyController.towers.get(i).getInfo() ); 
-    	return tooltip ; 
-    }
-	
-	
+	static Shape lineToMonsterShooted(GreenBox gb) {
+		Monster monster = ((tower.LaserTower)gb.towerInBox).getMonstershooted() ; 
+		if(monster == null )
+			return null; 
+		double x = gb.getTowerX() ; 
+		double y = gb.getTowerY() ; 
+		double xp = (monster.getX()) ; 
+		double yp = (monster.getY() ); 
+		//k is the multiple constant
+		int k = 1 ; 
+		double xpp = k * (xp - x ) + x ; 
+		double ypp = k* (yp - y ) + y ; 
+		Line line = new Line(x , y ,xpp ,ypp) ;  
+		line.setStyle("-fx-stroke: red;");
+		line.setId(gb.id);
+		return line;
+		//return lineToFirstMonster(gb) ;
+	}
 	
 }

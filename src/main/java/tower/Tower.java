@@ -11,6 +11,7 @@ import monster.Monster;
 import java.util.ArrayList;
 
 public class Tower {
+	public static final String NAME = "Basic Tower" ;
 	protected int x;
 	protected int y;
 	protected int attack_power;
@@ -22,7 +23,7 @@ public class Tower {
 	protected String comment;
 	protected boolean is_destroyed = false;
 	
-	public static TowerInformation BasicTowerInit = new TowerInformation( 10, 100, 100, 100, 10, 1, "This is Basic Tower");
+	public static TowerInformation BasicTowerInit = new TowerInformation(NAME, 10, 100, 100, 100, 10, 1, "This is Basic Tower");
 	
 	//	Constructor with default parameters
 	public Tower(int x, int y) {
@@ -55,7 +56,7 @@ public class Tower {
 	
 	//	Get Tower Information
 	public TowerInformation getInfo() {
-		return new TowerInformation(attack_power, building_cost, upgrade_cost, shooting_range, upgrade_diff, tier, comment);
+		return new TowerInformation(NAME,attack_power, building_cost, upgrade_cost, shooting_range, upgrade_diff, tier, comment);
 	}
 	
 	//	Set Tower Attack Power

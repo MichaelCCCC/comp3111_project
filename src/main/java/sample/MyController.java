@@ -19,10 +19,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
-
+import javafx.scene.shape.Shape;
 import tower.Tower;
 import tower.TowerInformation;
-import javafx.scene.shape.Circle;
 import monster.Monster;
 
 
@@ -86,7 +85,7 @@ public class MyController {
     /*
      * initial amount of money
      */
-    static final int INIT_MONEY = 300 ; 
+    static final int INIT_MONEY = 5000 ; 
     
     /*
      * current money amount of player
@@ -102,12 +101,12 @@ public class MyController {
     /*
      * a list of monsters
      */
-	static List<Monster> monsters = new ArrayList<> ()  ;
+	public static List<Monster> monsters = new ArrayList<> ()  ;
 	
 	/*
 	 * a list of towers
 	 */
-	static List<Tower> towers = new ArrayList<> ()  ;
+	public static List<Tower> towers = new ArrayList<> ()  ;
 
 	/*
 	 * grid of arena
@@ -263,15 +262,20 @@ public class MyController {
     	setMouseAction(label) ; 
     }
     
+    
+    boolean exit = true ;  
     /*
      * set up mouse action for the temporary label
      */
-    private void  setTempMouseAction(Label tempLabel, Circle shootingRange) {  	
-    	EventHandler<? super MouseEvent> linehover =  new EventHandler<MouseEvent>() {
+    private void  setTempMouseAction(Label tempLabel, Shape shootingRange, Label target) {  	
+    	
+    	
+    	
+    	tempLabel.setOnMouseExited(new EventHandler<MouseEvent> () {
     		@Override 
     		public void handle(MouseEvent event ) {
-    			if(event.getEventType() == MouseEvent.MOUSE_EXITED ){
-    				
+    			if(event.getEventType() == MouseEvent.MOUSE_EXITED && exit ){
+    				exit = false ; 
 					//System.out.println("Exited: " + GreenBoxes.targetGetGreenBox(tempLabel).toString() + ": " + GreenBoxes.targetH(tempLabel) +  ", " + GreenBoxes.targetV(tempLabel));
 		            System.out.println("exit temp label") ; 
     				/* mouse moved away, remove the graphical cues */
@@ -282,25 +286,72 @@ public class MyController {
 	                event.consume();	
     	    	}
     		}
-    	} ; 
-    	tempLabel.setOnMouseExited(linehover);
+    	});
     	
+    	String choices [] = {"destroy" , "upgrade" } ; 
+		ChoiceDialog<String> cd = new ChoiceDialog<String>(choices[0],  choices) ;
+        tempLabel.setOnMouseClicked(new EventHandler <MouseEvent>() {
+        		public void handle (MouseEvent event) {
+        			System.out.println("mouse clicked") ; 
+        			if(GreenBoxes.targetHasTower(target)) {
+        				
+        				cd.showAndWait();
+        				
+        				if((String)cd.getResult() == choices[0]) {
+        					System.out.println("destroy tower. remove shooting range and temp label") ;
+        					exit = false ; 
+        					paneArena.getChildren().remove(shootingRange) ; 
+        	                paneArena.getChildren().remove(tempLabel) ;
+        	                GreenBoxes.targetDestroyTower(target) ;
+        				}
+        				
+            			if((String)cd.getResult() == choices[1] ) {
+            				int upgradeCost = GreenBoxes.targetGetTower(target).getUpgradeCost() ; 
+            				if (money >= upgradeCost) {
+            					//tower upgrade
+            					money -= upgradeCost ; 
+            					setLabelMoney(money) ;
+            					GreenBoxes.targetUpgradeTower(target) ; 
+            					
+            					System.out.print(target.getId() + " is being upgraded");
+            					Alert alert = new Alert (AlertType.INFORMATION, target.getId() + " is being upgraded") ; 
+        	            			alert.showAndWait() ;
+            				}
+            				else 
+            				{
+            					System.out.println("not enough resource to upgrade " + target.getId() + "tower") ; 
+            					Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
+            	            		alert.showAndWait() ;
+            				}	
+            			}
+        			}
+        			event.consume() ;	
+        		} 
+        }) ; 
     }
     
     /*
      * record the last label that the cursor is at
      */
     protected Label lastLabel = null ;
+    protected Shape lastShootingRange = null ; 
     
     /*
      * applicable to only green boxes
      */
     private void setMouseAction(Label target ) {
-    		
-    		
     		EventHandler<? super MouseEvent> linehover =  new EventHandler<MouseEvent>(){			
     		    @Override
     		    public void handle(MouseEvent event) {
+    		    	
+    		    	System.out.println(exit);
+    		    	if(exit == true) {
+    		    		if(paneArena.getChildren().contains(lastLabel))
+    		    			paneArena.getChildren().remove(lastLabel); 
+    		    		if(paneArena.getChildren().contains(lastShootingRange))
+    		    			paneArena.getChildren().remove(lastShootingRange); 
+    		    	}
+    		    	exit = true  ; 
 		        	if(event.getEventType() == MouseEvent.MOUSE_ENTERED  ){
 		        		//System.out.println("mouse entered"); 
 			        	if(target != lastLabel  ) {
@@ -310,9 +361,9 @@ public class MyController {
 	            				System.out.println("has tower") ; 
 	            				
 	                			//show shooting range of current tower  
-	            				Circle shootingRange = addShootingRangeToPaneArena(target) ; 
-	            				Label lastLabel = addLastLabel(target) ; 
-	            				setTempMouseAction(lastLabel, shootingRange) ; 
+	            				lastShootingRange = addShootingRangeToPaneArena(target) ; 
+	            				lastLabel = addLastLabel(target) ; 
+	            				setTempMouseAction(lastLabel, lastShootingRange, target) ; 
 	                			
 	                		}
 	                		event.consume();
@@ -321,52 +372,18 @@ public class MyController {
     		    }
     		};
 			target.setOnMouseEntered(linehover);  
-    		target.setOnMouseExited(linehover);
-    		
-            String choices [] = {"destroy" , "upgrade" } ; 
-    		ChoiceDialog<String> cd = new ChoiceDialog<String>(choices[0],  choices) ;
-            target.setOnMouseClicked(new EventHandler <MouseEvent>() {
-            		public void handle (MouseEvent event) {
-            			if(GreenBoxes.targetHasTower(target)) {
-            				
-            				cd.showAndWait();
-            				
-            				if((String)cd.getResult() == choices[0]) 
-            					GreenBoxes.targetDestroyTower(target) ;
-            				
-                			if((String)cd.getResult() == choices[1] ) {
-                				int upgradeCost = GreenBoxes.targetGetTower(target).getUpgradeCost() ; 
-                				if (money >= upgradeCost) {
-                					//tower upgrade
-                					money -= upgradeCost ; 
-                					setLabelMoney(money) ;
-                					GreenBoxes.targetUpgradeTower(target) ; 
-                					
-                					System.out.print(target.getId() + " is being upgraded");
-                					Alert alert = new Alert (AlertType.INFORMATION, target.getId() + " is being upgraded") ; 
-            	            			alert.showAndWait() ;
-                				}
-                				else 
-                				{
-                					System.out.println("not enough resource to upgrade " + target.getId() + "tower") ; 
-                					Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
-                	            		alert.showAndWait() ;
-                				}	
-                			}
-            			}
-            			event.consume() ;	
-            		} 
-            }) ; 
+            
     }
     
     /**
-     * @param target
-     * @return
+     * @param tower target
+     * @return tower label
      */
-    protected Label addLastLabel(Label target) {
+    protected Label addLastLabel(Object target) {
+    	System.out.println("add temp label " ) ; 
     	Label tempLabel = GreenBoxes.targetGetGreenBox(target).copyOfLabel()  ; 
-    	Tooltip.install(tempLabel, new Tooltip(util.getTowerTooltipString(GreenBoxes.targetGetTower(target).getInfo())));
-    	tempLabel.setStyle("-fx-border-color: rgba(255,0,0,0.3) ; -fx-border-width: 3");
+    	Tooltip.install(tempLabel, new Tooltip(util.getTowerTooltipString(GreenBoxes.targetGetTower(target).getInfo(), target)));
+    	tempLabel.setStyle("-fx-border-color: rgba(255,0,0,0.3) ; -fx-border-width: 3 ; ");
     	paneArena.getChildren().add(tempLabel) ; 
 		return tempLabel ; 
     	
@@ -374,12 +391,21 @@ public class MyController {
 
 	/**
 	 * @param target
-	 * @return
+	 * @return shape of shooting range
 	 */
-	protected Circle addShootingRangeToPaneArena(Label target) { 
-		Circle shootingRange = GreenBoxes.targetGetGreenBox(target).shootingRange ; 
-		paneArena.getChildren().add(shootingRange); 
-		System.out.println("add shooting range") ; 
+	protected Shape addShootingRangeToPaneArena(Object target) { 
+		//for laser tower, shooting range need to be set every time
+		if(GreenBoxes.targetGetTower(target).getClass() == tower.LaserTower.class)
+			GreenBoxes.targetGetGreenBox(target).setupShootingRange(GreenBoxes.targetGetTower(target), tower.LaserTower.class);
+		Shape shootingRange = GreenBoxes.targetGetGreenBox(target).shootingRange; 
+		if(shootingRange == null ) 
+		{
+			System.out.println("child node is null") ; 
+			return null ; 
+		}
+		paneArena.getChildren().add(shootingRange);  
+		if(shootingRange != null ) 
+			System.out.println("add shooting range") ; 
 		return shootingRange ; 
 	}
 
@@ -425,6 +451,7 @@ public class MyController {
                     	
                     	GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
                     	util.showAllObjects(monsters, towers, paneArena);
+                    	//paneArena.getChildren().add(util.lineToFirstMonster(GreenBoxes.targetGetGreenBox(target)));
                 		MyController.money -= moneyDeducted; 
                 		setLabelMoney(money) ;
                         success = true;
@@ -479,7 +506,6 @@ public class MyController {
             /* mouse moved away, remove the graphical cues */
             target.setStyle("-fx-border-color: black;");
             System.out.println("Exit");
-            setLabelMoney(money) ; //change the labelmoney after buying
             event.consume();
         });      
     }
