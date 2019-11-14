@@ -16,6 +16,11 @@ import tower.TowerInformation;
 
 class util {
 
+	/**
+	 * @param monsters
+	 * @return
+	 */
+	
 	static boolean moveMonsters(List<Monster> monsters) {
 		
 		for(int i = 0 ; i < monsters.size() ; i++ ) {
@@ -40,6 +45,9 @@ class util {
 		return true;
 			
 	}
+	/**
+	 * @param monster
+	 */
 	static void changeDirection(Monster monster) {
 		int x = monster.getX();
 		int y = monster.getY();
@@ -63,19 +71,25 @@ class util {
 		}
 	}
 
+	/**
+	 * @param monsters
+	 * @param towers
+	 * @param paneArena
+	 */
 	static void showAllObjects(List<Monster> monsters, List<Tower> towers ,AnchorPane paneArena) {
-		// TODO Auto-generated method stub
 		for(int i = 0 ; i < monsters.size() ; i++ )
 			if(!paneArena.getChildren().contains(monsters.get(i).getLabel())) // if the arean haven't show it, show it
 				paneArena.getChildren().add(monsters.get(i).getLabel()) ; 
 		
 		for(int i = 0 ; i < towers.size() ; i++ )
-//			if(!paneArena.getChildren().contains(towers.get(i).getLabel()))
-//				paneArena.getChildren().add(towers.get(i).getLabel()) ; 
 			if(!paneArena.getChildren().contains(GreenBoxes.towerGetGreenBox(towers.get(i)).gbLabel))
 				paneArena.getChildren().add(GreenBoxes.towerGetGreenBox(towers.get(i)).gbLabel) ; 
 	}
 
+	/**
+	 * @param monsters
+	 * @param towers
+	 */
 	static void towersAttack(List<Monster> monsters, List<Tower> towers) {
 		// TODO Auto-generated method stub
 		for(int i = 0 ; i < towers.size() ; i++) {
@@ -84,9 +98,11 @@ class util {
 		
 	}
 
+	/**
+	 * @param paneArena
+	 */
 	static void generateMonsters(AnchorPane paneArena) {
 		int i = (int)(Math.random()*((2)+1));
-		String id = "";
 		String type[] = {"Fox","Unicorn","Penguin"};
 			
 	     Label newLabel = new Label();
@@ -115,18 +131,26 @@ class util {
 			
 	     }
 	    MyController.monsters.add(monster);
-		//Tooltip.install(monster.getLabel(), new Tooltip(getObjectTooltip(monster.getLabel())) ) ; 
 	    Tooltip.install(monster.getLabel(), new Tooltip(monster.getTooltip())) ; 
 		
 	}
 
+	/**
+	 * @return
+	 */
 	static boolean decideEndGame() {
 		// TODO Auto-generated method stub
-		
-		
+		for(int i = 0 ; i < MyController.monsters.size() ; i++) {
+			if(MyController.monsters.get(i).getX() > MyController.ARENA_WIDTH)
+				return true ; 
+		}
 		return false;
 	}
 	
+	/**
+	 * @param towerInformation
+	 * @return
+	 */
 	static String getTowerTooltipString(TowerInformation towerInformation ) {
 		String result = "" ; 
 		result += "attack power: " + towerInformation.attack_power + "\n" ; 
@@ -139,7 +163,13 @@ class util {
 		return result ; 
 	}
 	
-	static String getInitTooltip(Label label, TowerInformation[] towerInformation, Label[] sources) {
+	/**
+	 * @param label
+	 * @param towerInformation
+	 * @param sources
+	 * @return
+	 */
+	static String sourceLabelGetTooltip(Label label, TowerInformation[] towerInformation, Label[] sources) {
 		int towerType = -1 ; 
 		for(int i = 0 ; i < sources.length ; i++)
 			if(label == sources[i] ) towerType = i ; 
@@ -148,7 +178,11 @@ class util {
 		return getTowerTooltipString(towerInformation[towerType]) ; 
 }
 	
-	static String getObjectTooltip(Label label) {
+	/**
+	 * @param label
+	 * @return
+	 */
+	static String labelGetObjectTooltip(Label label) {
 		String tooltip = null ; 
 		for(int i = 0 ; i < MyController.monsters.size() ; i++  )
 			if(MyController.monsters.get(i).getLabel() == label) 

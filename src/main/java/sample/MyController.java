@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.input.*;
 
 import java.util.ArrayList;
@@ -31,14 +30,7 @@ import monster.Monster;
  * @author Yomaru
  *
  */
-/**
- * @author Yomaru
- *
- */
-/**
- * @author Yomaru
- *
- */
+
 public class MyController {
     @FXML
     private Button buttonNextFrame;
@@ -72,10 +64,17 @@ public class MyController {
     
     @FXML
     private Label Unicorn;
+    
+
+    @FXML
+    private Label frameText;
+
+    @FXML
+    private Label labelFrame;
 
     @FXML
 	//static
-    private Label labelMoney; //<- label cannot be static
+    private Label labelMoney; 
 
     static final int ARENA_WIDTH = 480;
     static final int ARENA_HEIGHT = 480;
@@ -84,32 +83,37 @@ public class MyController {
     static final int MAX_H_NUM_GRID = 12;
     static final int MAX_V_NUM_GRID = 12;
     
-    static Integer money = 300 ; 
+    /*
+     * initial amount of money
+     */
+    static final int INIT_MONEY = 300 ; 
     
-
-    int num_frame = 0;
+    /*
+     * current money amount of player
+     */
+    static Integer money = INIT_MONEY ; 
     
-    //get tower information
+    /*
+     * current number of frame
+     */
+    private int num_frame = 0;
+    private final int TEST_FRAME = 10 ;  // by default is 1 
+    
+    /*
+     * a list of monsters
+     */
 	static List<Monster> monsters = new ArrayList<> ()  ;
+	
+	/*
+	 * a list of towers
+	 */
 	static List<Tower> towers = new ArrayList<> ()  ;
 
-
+	/*
+	 * grid of arena
+	 */
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena
-    private int x = -1, y = 0; //where is my monster
-
-	protected Label lastLabel = null ;
     
-    AnchorPane getArenaPane() {
-    	return paneArena;  
-    }
-    
-    /**
-     * A dummy function to show how button click works
-     */
-    @FXML
-    private void play() { 
-    }
-
     /**
      * A function that create the Arena
      */
@@ -142,7 +146,8 @@ public class MyController {
                 
             }
         
-        labelMoney.setText(money.toString());
+        labelMoney.setText(Integer.valueOf(money).toString());
+        labelFrame.setText(Integer.valueOf(num_frame).toString());
         
         for(int i = 0 ; i < GreenBoxes.gbs.size() ; i++ ) {
         		setDragAndDrop(GreenBoxes.gbs.get(i).v , GreenBoxes.gbs.get(i).h);
@@ -153,53 +158,77 @@ public class MyController {
         setDragAndDrop2() ; 
     }
 
+    /**
+     * 
+     */
     @FXML
     private void nextFrame() {
         
-        //monster move
-        
-        util.moveMonsters(monsters)  ;
-        
-        //tower attack 
-        util.towersAttack(monsters, towers) ; 
-        
-        //generate monster
-        if(num_frame % 5 == 0) {        	
-        	util.generateMonsters(paneArena) ; 
-        }
-       
-        //show all object 
-        util.showAllObjects(monsters, towers, paneArena);
-        
-        //detected where monster cross the final line
-        //if yes, notify the play the game is over
-        if (util.decideEndGame()) {
-        	Alert alert = new Alert(AlertType.INFORMATION, "The game is over" )  ;
-        	alert.showAndWait() ; 
-        	System.exit(0);
-        }
-    	
-//    	WhiteBoxes.moveMonsters();
-    	num_frame ++;
+    	for(int i =  0 ; i < TEST_FRAME ; i++ ) {
+    		//monster move
+            
+            util.moveMonsters(monsters)  ;
+            
+            //tower attack 
+            util.towersAttack(monsters, towers) ; 
+            
+            //generate monster
+            if(num_frame % 5 == 0) {        	
+            	util.generateMonsters(paneArena) ; 
+            }
+           
+            //show all object 
+            util.showAllObjects(monsters, towers, paneArena);
+            
+            //detected where monster cross the final line
+            //if yes, notify the play the game is over
+            if (util.decideEndGame()) {
+            	Alert alert = new Alert(AlertType.INFORMATION, "The game is over" )  ;
+            	alert.showAndWait() ; 
+            	System.exit(0);
+            }
 
+        	num_frame ++ ;
+    	}
+    	setLabelFrame(num_frame) ; 
+        
     }
     
-    int getLabelMoney() {
-    	return Integer.parseInt(labelMoney.getText()) ; 
+    @FXML
+    private void play() {
+    	
     }
-   
+     
+    /**
+     * @param i
+     */
     void setLabelMoney(Integer i) {
     	money = i ; 
     	labelMoney.setText(money.toString());
     }
 	
+    /**
+     * @param i
+     */
+    void setLabelFrame(Integer i) {
+    	num_frame = i ; 
+    	labelFrame.setText(Integer.valueOf(num_frame).toString());
+    }
 	
 	
+    /**
+     * @param label
+     * @param sources
+     * @return
+     */
     private String getInitTooltip(Label label, Label[] sources) {
     	TowerInformation towerInformation[] = {tower.Tower.BasicTowerInit, tower.IceTower.IceTowerInit, tower.Catapult.BasicTowerInit, tower.LaserTower.LaserTowerInit} ;
-    	return util.getInitTooltip(label,  towerInformation, sources); 
+    	return util.sourceLabelGetTooltip(label, towerInformation, sources); 
     }
     
+    /**
+     * 
+     */
     private void setDragAndDrop2() { 
     	Label sources[] = { labelBasicTower, labelIceTower, labelCatapult, labelLaserTower} ; 
     		
@@ -225,34 +254,43 @@ public class MyController {
     
     
     
+    /**
+     * @param v
+     * @param h
+     */
     private void setMouseAction(int v , int h ) {
     	Label label = grids[v][h] ; 
     	setMouseAction(label) ; 
     }
     
-    private void  setTempMouseAction(Label tempLabel, Circle shootingRange) {
-    	
+    /*
+     * set up mouse action for the temporary label
+     */
+    private void  setTempMouseAction(Label tempLabel, Circle shootingRange) {  	
     	EventHandler<? super MouseEvent> linehover =  new EventHandler<MouseEvent>() {
     		@Override 
     		public void handle(MouseEvent event ) {
     			if(event.getEventType() == MouseEvent.MOUSE_EXITED ){
     				
-					System.out.println("Exited: " + GreenBoxes.targetGetGreenBox(tempLabel).toString() + ": " + GreenBoxes.targetH(tempLabel) +  ", " + GreenBoxes.targetV(tempLabel));
-		            /* mouse moved away, remove the graphical cues */
+					//System.out.println("Exited: " + GreenBoxes.targetGetGreenBox(tempLabel).toString() + ": " + GreenBoxes.targetH(tempLabel) +  ", " + GreenBoxes.targetV(tempLabel));
+		            System.out.println("exit temp label") ; 
+    				/* mouse moved away, remove the graphical cues */
 					
-	                System.out.println("remove shooting range") ; 
+	                System.out.println("remove shooting range and temp label") ; 
 	                paneArena.getChildren().remove(shootingRange) ; 
 	                paneArena.getChildren().remove(tempLabel) ; 
-	                
-	                
-	                event.consume();
-    				
+	                event.consume();	
     	    	}
     		}
     	} ; 
-    	// TODO Auto-generated method stub
+    	tempLabel.setOnMouseExited(linehover);
     	
     }
+    
+    /*
+     * record the last label that the cursor is at
+     */
+    protected Label lastLabel = null ;
     
     /*
      * applicable to only green boxes
@@ -260,9 +298,7 @@ public class MyController {
     private void setMouseAction(Label target ) {
     		
     		
-    		EventHandler<? super MouseEvent> linehover =  new EventHandler<MouseEvent>(){
-
-    			
+    		EventHandler<? super MouseEvent> linehover =  new EventHandler<MouseEvent>(){			
     		    @Override
     		    public void handle(MouseEvent event) {
 		        	if(event.getEventType() == MouseEvent.MOUSE_ENTERED  ){
@@ -283,69 +319,21 @@ public class MyController {
 			        	}
 		        }
     		    }
-
     		};
-    		
-    		
-    		//remove tower -> exit -> remove shooting range -> add shooting range -> add tower -> (= lastGB) X enter 
-    		//remove tower -> X exit -> add shooting range -> add tower -> X enter
-    		
-    		
 			target.setOnMouseEntered(linehover);  
     		target.setOnMouseExited(linehover);
-    		//target.setOnMouseMoved(linehover);
     		
-//    		target.setOnMouseEntered( new EventHandler <MouseEvent>() {
-//            	@Override
-//            	public void handle (MouseEvent event) {
-//            		System.out.println("mouse entered"); 
-//            		
-//            		
-//        			if(GreenBoxes.targetHasTower(target))
-//            		{
-//        				target.setStyle("-fx-border-color: rgba(255,0,0,0.3) ; -fx-border-width: 3");
-//            			//show shooting range of current tower 
-//            			gb = GreenBoxes.targetGetGreenBox(target);
-//            			paneArena.getChildren().add(gb.shootingRange);
-//            			
-//            			
-//            			//paneArena.getChildren().remove(target) ;
-//            			
-//
-//            		}
-//            		event.consume();
-//            	}
-//            });
-    		
-    	
-            
-//            target.setOnMouseExited((event) -> {
-//                /* mouse moved away, remove the graphical cues */
-//                target.setStyle("-fx-border-color: black;");
-//                System.out.println("Exit");
-//                setLabelMoney(money) ; //change the labelmoney after buying
-//                
-//                
-//                event.consume();
-//            });
-            
-    		
-    		
-            
             String choices [] = {"destroy" , "upgrade" } ; 
     		ChoiceDialog<String> cd = new ChoiceDialog<String>(choices[0],  choices) ;
             target.setOnMouseClicked(new EventHandler <MouseEvent>() {
             		public void handle (MouseEvent event) {
             			if(GreenBoxes.targetHasTower(target)) {
-            				//target.setGraphic(null);
+            				
             				cd.showAndWait();
             				
-            				 
             				if((String)cd.getResult() == choices[0]) 
             					GreenBoxes.targetDestroyTower(target) ;
-            					//target.setGraphic(null);
-                			
-                			
+            				
                 			if((String)cd.getResult() == choices[1] ) {
                 				int upgradeCost = GreenBoxes.targetGetTower(target).getUpgradeCost() ; 
                 				if (money >= upgradeCost) {
@@ -363,40 +351,35 @@ public class MyController {
                 					System.out.println("not enough resource to upgrade " + target.getId() + "tower") ; 
                 					Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
                 	            		alert.showAndWait() ;
-                					
-                				}
-                					
+                				}	
                 			}
             			}
-            			event.consume() ; 
-            			
-            			
+            			event.consume() ;	
             		} 
             }) ; 
     }
     
+    /**
+     * @param target
+     * @return
+     */
     protected Label addLastLabel(Label target) {
-		// TODO Auto-generated method stub
     	Label tempLabel = GreenBoxes.targetGetGreenBox(target).copyOfLabel()  ; 
+    	Tooltip.install(tempLabel, new Tooltip(util.getTowerTooltipString(GreenBoxes.targetGetTower(target).getInfo())));
     	tempLabel.setStyle("-fx-border-color: rgba(255,0,0,0.3) ; -fx-border-width: 3");
     	paneArena.getChildren().add(tempLabel) ; 
-		
-		System.out.print("add tower");
 		return tempLabel ; 
-    	//return null;
+    	
 	}
 
+	/**
+	 * @param target
+	 * @return
+	 */
 	protected Circle addShootingRangeToPaneArena(Label target) { 
-		// TODO Auto-generated method stub
-		//make a copy of this label 
-    	//Label tempLabel = GreenBoxes.targetGetGreenBox(target).copyOfLabel()  ; 
-    	//tempLabel.setStyle("-fx-border-color: rgba(255,0,0,0.3) ; -fx-border-width: 3");
 		Circle shootingRange = GreenBoxes.targetGetGreenBox(target).shootingRange ; 
-		paneArena.getChildren().add(shootingRange);
-		//paneArena.getChildren().add(tempLabel) ; 
-		
-		//System.out.print("add tower");
-		//return tempLabel ; 
+		paneArena.getChildren().add(shootingRange); 
+		System.out.println("add shooting range") ; 
 		return shootingRange ; 
 	}
 
@@ -408,9 +391,6 @@ public class MyController {
    
         target.setText("");
         
-        
-        //target.setOnDragDetected(new DragEventHandler(target)) ; 
-
         target.setOnDragDropped(new EventHandler<DragEvent>() {
         	@Override
             public void handle(DragEvent event) {
@@ -419,15 +399,7 @@ public class MyController {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
                 System.out.println(db.getString());
-                
-                
-                if (db.hasString() || db.hasImage()) { //db is the button being dragged
-                    
-                	
-                	//((Label)event.getGestureTarget()).setText(db.getString()); //set the target to tower
-                    
-                	
-                	//set image 
+                  if (db.hasString() || db.hasImage()) { //db is the button being dragged
                     Integer moneyDeducted = 0 ; 
                     switch(db.getString())
                     {
@@ -453,7 +425,6 @@ public class MyController {
                     	
                     	GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
                     	util.showAllObjects(monsters, towers, paneArena);
-                        //((Label)event.getGestureTarget()).setText(moneyDeducted.toString());
                 		MyController.money -= moneyDeducted; 
                 		setLabelMoney(money) ;
                         success = true;
@@ -464,21 +435,12 @@ public class MyController {
                     	Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
                     	alert.showAndWait() ; 
                     	success = false ; 
-                    }
-                    
+                    }  
                 }
                 event.setDropCompleted(success);
                 event.consume();
-                
-
             }
         });
-        
-        //target.setOnDragDropped(new DragDroppedEventHandler(paneArena) ) ; 
-
-
-        //well, you can also write anonymous class or even lambda
-        //Anonymous class
         
         target.setOnDragOver(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
@@ -509,12 +471,9 @@ public class MyController {
                     target.setStyle("-fx-border-color: blue;");
                     
                 }
-
                 event.consume();
             }
         });
-        
-        
         //lambda
         target.setOnDragExited((event) -> {
             /* mouse moved away, remove the graphical cues */
@@ -522,99 +481,6 @@ public class MyController {
             System.out.println("Exit");
             setLabelMoney(money) ; //change the labelmoney after buying
             event.consume();
-        });
- 
-        
+        });      
     }
-
 }
-
-//class DragEventHandler implements EventHandler<MouseEvent> {
-//    private Label source;
-//    public DragEventHandler(Label e) {
-//        source = e;
-//    }
-//  
-//    @Override
-//    public void handle (MouseEvent event) {
-//        Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-//
-//        ClipboardContent content = new ClipboardContent();
-//        content.putString(source.getText());
-//        db.setContent(content);
-//
-//        event.consume();
-//    }
-//}
-
-//class DragDroppedEventHandler implements EventHandler<DragEvent> { 
-//	private AnchorPane paneArena;
-//
-//	public DragDroppedEventHandler(AnchorPane paneArena) {
-//		// TODO Auto-generated constructor stub
-//		this.paneArena = paneArena ;
-//	}
-//
-////always on 
-//	
-//	@Override
-//    public void handle(DragEvent event) {
-//
-//        System.out.println("xx");
-//        Dragboard db = event.getDragboard();
-//        boolean success = false;
-//        System.out.println(db.getString());
-//        
-//        
-//        if (db.hasString() || db.hasImage()) { //db is the button being dragged
-//            
-//        	
-//        	//((Label)event.getGestureTarget()).setText(db.getString()); //set the target to tower
-//            
-//        	
-//        	//set image 
-//            Integer moneyDeducted = 0 ; 
-//            switch(db.getString())
-//            {
-//            	case "Basic Tower" : 
-//            		moneyDeducted = tower.Tower.BasicTowerInit.building_cost; 
-//            		//((Label)event.getGestureTarget()).setText(db.getString());
-//            		break ; 
-//            	case "Ice Tower" : 
-//            		moneyDeducted = tower.IceTower.IceTowerInit.building_cost;  //change
-//            		break ; 
-//            	case "Catapult" : 
-//            		moneyDeducted = tower.Catapult.CatapultInit.building_cost ; 
-//            		break ; 
-//            	case "Laser Tower" : 
-//            		moneyDeducted = tower.LaserTower.LaserTowerInit.building_cost  ;
-//            		break ; 
-//            	default :
-//            		assert false : "invalid tower" ; 
-//            }
-//            
-//            if(MyController.money >= moneyDeducted && GreenBoxes.targetHasTower(event.getGestureTarget()) == false)
-//            {
-//            	
-//            	GreenBoxes.targetBuildTower(event.getGestureTarget(), db.getString()) ;
-//              	 
-//                //((Label)event.getGestureTarget()).setText(moneyDeducted.toString());
-//        		MyController.money -= moneyDeducted; 
-//                success = true;
-//            }
-//            else
-//            {
-//            	//alert
-//            	Alert alert = new Alert (AlertType.WARNING, "Don't have enough money") ; 
-//            	alert.showAndWait() ; 
-//            	success = false ; 
-//            }
-//            
-//        }
-//        event.setDropCompleted(success);
-//        event.consume();
-//        
-//
-//    }
-//
-//}

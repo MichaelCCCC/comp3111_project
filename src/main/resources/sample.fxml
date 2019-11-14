@@ -63,7 +63,13 @@
                      </padding>
                   </Label>
                   <Label layoutX="17.0" layoutY="381.0" text="Money: " />
-                  <Label fx:id="labelMoney" layoutX="43.0" layoutY="423.0" text="5">
+                  <Label fx:id="labelMoney" layoutX="69.0" layoutY="375.0" text="5">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="frameText" layoutX="16.0" layoutY="418.0" text="frame:" />
+                  <Label fx:id="labelFrame" layoutX="68.0" layoutY="412.0" text="0">
                      <font>
                         <Font size="24.0" />
                      </font>
