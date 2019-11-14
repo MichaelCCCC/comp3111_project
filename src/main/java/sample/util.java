@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import monster.Fox;
 import monster.Monster;
 import monster.Monster.Direction;
+import monster.Monster.Status;
 import monster.Penguin;
 import monster.Unicorn;
 import tower.Tower;
@@ -251,5 +252,29 @@ class util {
 		return line;
 		//return lineToFirstMonster(gb) ;
 	}
-	
+	static void checkMonsterDead() {
+		for(int i = 0; i<MyController.monsters.size(); i++) {
+			Monster monster = MyController.monsters.get(i);
+			if(monster.getStatus() == Status.ALIVE) {
+				int HP = monster.getHP();
+				if(HP <= 0) {
+					ImageView iv = ImageFunction.setImageView("Collision"); 
+					monster.getLabel().setGraphic(iv);
+					monster.setStatus(Status.DEAD);
+				}
+			}
+		}
+	}
+	/**
+	 * @param paneArena
+	 */
+	static void removeDeadMonster(AnchorPane paneArena) {
+		for(int i = 0; i<MyController.monsters.size(); i++) {
+			Monster monster = MyController.monsters.get(i);
+			if(monster.getStatus() == Status.DEAD) {
+				paneArena.getChildren().remove(monster.getLabel());
+				MyController.monsters.remove(monster);
+			}
+		}
+	}
 }
