@@ -79,7 +79,7 @@ class GreenBoxes {
 	 * @return
 	 */
 	static Tower targetBuildTower(Object target, String id) {
-		if(targetHasTower(target) != false ) {
+		if(targetHasTower(target) == true ) {
 			Alert alert = new Alert ( AlertType.ERROR, "It has Tower, new tower cannot be built") ; 
 			alert.showAndWait()  ; 
 			return null ; 

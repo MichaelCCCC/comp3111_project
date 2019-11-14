@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import tower.Catapult;
 import tower.IceTower;
 import tower.LaserTower;
@@ -17,7 +18,7 @@ class GreenBox{
 	final int h;  
 	Tower towerInBox = null ; 
 	String id = null;
-	Circle shootingRange = null ; 
+	Shape shootingRange = null ; 
 	
 	/**
 	 * @param label
@@ -118,22 +119,34 @@ class GreenBox{
 	 * @param tower
 	 * @param towerClass
 	 */
-	private void setupShootingRange(Tower tower, Class<? extends Tower> towerClass) {
-		
+	void setupShootingRange(Tower tower, Class<? extends Tower> towerClass) {
 		if(towerClass == Tower.class || towerClass == IceTower.class) {
-			shootingRange = new Circle () ; 
-			shootingRange.setCenterX(getTowerX());
-			shootingRange.setCenterY(getTowerY());
-			shootingRange.setRadius(tower.getInfo().shooting_range);
-			shootingRange.setStyle("-fx-fill: rgba(0,0,0,0.3); ");
+			Circle circle = new Circle () ; 
+			circle.setCenterX(getTowerX());
+			circle.setCenterY(getTowerY());
+			circle.setRadius(tower.getInfo().shooting_range);
+			circle.setStyle("-fx-fill: rgba(0,0,0,0.3); ");
+			shootingRange = circle ; 
+			
+			shootingRange.setId(id) ; 
 		}
 		
 		if(towerClass == Catapult.class) {
+			Circle outside = new Circle(getTowerX(),getTowerY() , ((Catapult)tower).longDistance) ; 
 			
+			Circle inside = new Circle(getTowerX(),getTowerY(),((Catapult)tower).shortDistance) ; 
+			
+			
+			shootingRange = Shape.subtract(outside, inside); 
+			shootingRange.setStyle("-fx-fill : rgba(0,0,0,0.3) ;"); 
+			shootingRange.setId(id);
 		}
 		
-		if(towerClass == LaserTower.class) {
+		if(towerClass == LaserTower.class) { 
+			if(((tower.LaserTower)towerInBox).getMonstershooted() == null )
+				return ; 
 			
+			shootingRange = util.lineToMonsterShooted(this) ; 
 		}
 		
 		
