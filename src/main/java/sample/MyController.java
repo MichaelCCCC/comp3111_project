@@ -166,6 +166,8 @@ public class MyController {
     private void nextFrame() {
         
     	for(int i =  0 ; i < TEST_FRAME ; i++ ) {
+    		//remove dead monster
+    		util.removeDeadMonster(paneArena);
     		//monster move
             
             util.moveMonsters(monsters)  ;
@@ -177,7 +179,7 @@ public class MyController {
             if(num_frame % 5 == 0) {        	
             	util.generateMonsters(paneArena) ; 
             }
-           
+           util.checkMonsterDead();
             //show all object 
             util.showAllObjects(monsters, towers, paneArena);
             
