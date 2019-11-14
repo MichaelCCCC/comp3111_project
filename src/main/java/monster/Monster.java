@@ -11,11 +11,11 @@ public class Monster {
 	static public enum Direction {UP, DOWN, RIGHT};
 	
 	//private data member
-	private int HP;
+	protected int HP;
 	private int speed;
-	private int x;
-	private int y;
-	private Label label;
+	protected int x;
+	protected int y;
+	protected Label label;
 	private Direction direction;
 	
 	public Monster(int _HP, int _speed, Label _label) {
