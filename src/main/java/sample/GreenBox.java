@@ -13,22 +13,25 @@ import tower.LaserTower;
 import tower.Tower;
 
 class GreenBox{ 
-	Label label ; 
+	Label gbLabel ;
+	//Label towerLabel ; 
 	final int v ; 
 	final int h;  
 	Tower towerInBox = null ; 
+	String id = null;
 	Circle shootingRange = null ; 
 	
 	GreenBox(Label label, int v, int h){
-		this.label = label; 
+		this.gbLabel = label; 
 		this.v = v ; 
 		this.h = h ; 
 	}
 	
 	boolean destroyTower() {
 		if(towerInBox != null) {
-			label.setGraphic(null);
-			label.setId(null);
+			gbLabel.setGraphic(null);
+			gbLabel.setId(null);
+			//towerLabel = null ; 
 			towerInBox = null ; 
 			MyController.towers.remove(towerInBox) ; 
 			shootingRange = null ; 
@@ -37,20 +40,38 @@ class GreenBox{
 		return false ;
 	}
 	
+	Label copyOfLabel() {
+		Label copy = new Label () ; 
+		copy.setGraphic(ImageFunction.setImageView(id)) ; 
+		copy.setId(id);
+		copy.setLayoutX(h * MyController.GRID_WIDTH);
+        copy.setLayoutY(v * MyController.GRID_HEIGHT);
+		return copy  ;
+	}
+	
 	Tower buildTower(String id) {
 		if(towerInBox == null) {
+			this.id = id ; 
+			//towerLabel = new Label() ; 
 			ImageView iv = ImageFunction.setImageView(id) ; 
 			
-//	        tower.getLabel().setGraphic(iv);
-//	        tower.getLabel().setId(id) ; 
+	        gbLabel.setGraphic(iv);
+	        gbLabel.setId(id) ; 
 //	        Tooltip.install(tower.getLabel(), new Tooltip(util.getObjectTooltip(tower.getLabel())) ) ; 
 			
-			label.setGraphic(iv);
-			label.setId(id);
-			Tooltip.install(label, new Tooltip(util.getObjectTooltip(label)) ) ;
+			
 	        
-	        double x = MyController.GRID_WIDTH + ((double)v + 0.5 ) ; 
-	        double y = MyController.GRID_HEIGHT + ((double) h + 0.5 ) ; 
+	        double x = MyController.GRID_WIDTH * ((double)h ) ; 
+	        double y = MyController.GRID_HEIGHT * ((double) v + 0.5 ) ; 
+	        
+//	        towerLabel.setLayoutX(x);
+//			towerLabel.setLayoutY(y);
+//			towerLabel.setMinWidth(1);
+//			towerLabel.setMaxWidth(1);
+//			towerLabel.setMinHeight(1);
+//			towerLabel.setMaxHeight(1);
+//			towerLabel.setGraphic(iv);
+//			towerLabel.setId(id);
 	        
 	        switch(id)
 			{
@@ -77,7 +98,11 @@ class GreenBox{
 	        	alert.showAndWait();
 	        	return null; 
 	        }
+	        
+	        //install tooltip after add towerBoxes
 	        MyController.towers.add(towerInBox ) ; 
+	        Tooltip.install(gbLabel, new Tooltip(util.getTowerTooltipString(towerInBox.getInfo())) ) ;
+	        
 	        return towerInBox; 
 	        
 	        
@@ -90,11 +115,11 @@ class GreenBox{
 		// TODO Auto-generated method stub
 		
 		if(towerClass == Tower.class || towerClass == IceTower.class) {
-			Circle circle = new Circle () ; 
-			circle.setCenterX(MyController.GRID_WIDTH * ((double)v + 0.5));
-			circle.setCenterY(MyController.GRID_WIDTH * ((double)h + 0.5));
-			circle.setRadius(tower.getInfo().shooting_range);
-			circle.setStyle("-fx-border-color: rgba(0,0,0,0.3); -fx-border-width: 3");
+			shootingRange = new Circle () ; 
+			shootingRange.setCenterX(MyController.GRID_WIDTH * ((double)h + 0.5));
+			shootingRange.setCenterY(MyController.GRID_WIDTH * ((double)v + 0.5));
+			shootingRange.setRadius(tower.getInfo().shooting_range);
+			shootingRange.setStyle("-fx-fill: rgba(0,0,0,0.3); ");
 		}
 		
 		if(towerClass == Catapult.class) {

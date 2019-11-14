@@ -2,13 +2,10 @@ package sample;
 
 import java.util.List;
 
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
 import monster.Fox;
 import monster.Monster;
 import monster.Monster.Direction;
@@ -18,9 +15,6 @@ import tower.Tower;
 import tower.TowerInformation;
 
 class util {
-
-	
-	
 
 	static boolean moveMonsters(List<Monster> monsters) {
 		
@@ -78,8 +72,8 @@ class util {
 		for(int i = 0 ; i < towers.size() ; i++ )
 //			if(!paneArena.getChildren().contains(towers.get(i).getLabel()))
 //				paneArena.getChildren().add(towers.get(i).getLabel()) ; 
-			if(!paneArena.getChildren().contains(GreenBoxes.towerGetGreenBox(towers.get(i)).label))
-				paneArena.getChildren().add(GreenBoxes.towerGetGreenBox(towers.get(i)).label) ; 
+			if(!paneArena.getChildren().contains(GreenBoxes.towerGetGreenBox(towers.get(i)).gbLabel))
+				paneArena.getChildren().add(GreenBoxes.towerGetGreenBox(towers.get(i)).gbLabel) ; 
 	}
 
 	static void towersAttack(List<Monster> monsters, List<Tower> towers) {
@@ -120,8 +114,10 @@ class util {
 	     		monster = new Penguin(newLabel);
 			
 	     }
-		Tooltip.install(monster.getLabel(), new Tooltip(getObjectTooltip(monster.getLabel())) ) ; 
-		MyController.monsters.add(monster);
+	    MyController.monsters.add(monster);
+		//Tooltip.install(monster.getLabel(), new Tooltip(getObjectTooltip(monster.getLabel())) ) ; 
+	    Tooltip.install(monster.getLabel(), new Tooltip(monster.getTooltip())) ; 
+		
 	}
 
 	static boolean decideEndGame() {
@@ -131,7 +127,7 @@ class util {
 		return false;
 	}
 	
-	private static String getTooltipString(TowerInformation towerInformation ) {
+	static String getTowerTooltipString(TowerInformation towerInformation ) {
 		String result = "" ; 
 		result += "attack power: " + towerInformation.attack_power + "\n" ; 
 		result += "building cost: " + towerInformation.building_cost + "\n"  ;
@@ -149,7 +145,7 @@ class util {
 			if(label == sources[i] ) towerType = i ; 
 
 
-		return getTooltipString(towerInformation[towerType]) ; 
+		return getTowerTooltipString(towerInformation[towerType]) ; 
 }
 	
 	static String getObjectTooltip(Label label) {
@@ -157,11 +153,12 @@ class util {
 		for(int i = 0 ; i < MyController.monsters.size() ; i++  )
 			if(MyController.monsters.get(i).getLabel() == label) 
 				tooltip = MyController.monsters.get(i).getTooltip()  ;
+				 
 
 		
 		for(int i = 0 ; i < MyController.towers.size() ; i ++ )
-			if(GreenBoxes.towerGetGreenBox(MyController.towers.get(i)).label == label )
-				tooltip = getTooltipString(MyController.towers.get(i).getInfo() ); 
+			if(GreenBoxes.towerGetGreenBox(MyController.towers.get(i)).gbLabel == label )
+				tooltip = getTowerTooltipString(MyController.towers.get(i).getInfo() ); 
     	return tooltip ; 
     }
 	
