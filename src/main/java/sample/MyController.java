@@ -96,7 +96,8 @@ public class MyController {
      * current number of frame
      */
     private int num_frame = 0;
-    private final int TEST_FRAME = 10 ;  // by default is 1 
+    private final int TEST_FRAME = 1 ;  // by default is 1 
+    private final int SPEED = 4 ; 
     
     /*
      * a list of monsters
@@ -169,8 +170,8 @@ public class MyController {
     		//remove dead monster
     		util.removeDeadMonster(paneArena);
     		//monster move
-            
-            util.moveMonsters(monsters)  ;
+            for(int j = 0 ; j < SPEED ; j++ )
+            	util.moveMonsters(monsters)  ;
             
             //tower attack 
             util.towersAttack(monsters, towers) ; 
@@ -179,7 +180,7 @@ public class MyController {
             if(num_frame % 5 == 0) {        	
             	util.generateMonsters(paneArena) ; 
             }
-           util.checkMonsterDead();
+            util.checkMonsterDead();
             //show all object 
             util.showAllObjects(monsters, towers, paneArena);
             

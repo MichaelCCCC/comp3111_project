@@ -4,6 +4,7 @@ import java.util.List;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
@@ -255,6 +256,7 @@ class util {
 		return line;
 		//return lineToFirstMonster(gb) ;
 	}
+	
 	static void checkMonsterDead() {
 		for(int i = 0; i<MyController.monsters.size(); i++) {
 			Monster monster = MyController.monsters.get(i);
