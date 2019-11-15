@@ -121,7 +121,7 @@ public class Tower {
 	}
 	
 
-	void shoot() {
+	public void shoot() {
 //		Monster closestEnemy = findClosestEnemy();
 //		if(distance(closestEnemy) <= shooting_range) {			
 //			closestEnemy.damage(attack_power);
@@ -137,14 +137,9 @@ public class Tower {
 	}
 
 
-	public void attack() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public int getUpgradeCost() {
 		// TODO Auto-generated method stub
-		return 0;
+		return upgrade_cost;
 	}
 
 }

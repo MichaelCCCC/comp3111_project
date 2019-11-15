@@ -169,6 +169,7 @@ public class MyController {
     	for(int i =  0 ; i < TEST_FRAME ; i++ ) {
     		//remove dead monster
     		util.removeDeadMonster(paneArena);
+    		
     		//monster move
             for(int j = 0 ; j < SPEED ; j++ )
             	util.moveMonsters(monsters)  ;
