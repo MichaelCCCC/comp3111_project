@@ -1,6 +1,7 @@
 package monster;
 
 import javafx.scene.control.Label;
+import sample.MyController;
 
 
 
@@ -18,8 +19,10 @@ public class Monster {
 	protected Label label;
 	private Direction direction;
 	private Status status;
+	public String name = null ; 
 	
-	public Monster(int _HP, int _speed, Label _label) {
+	public Monster(String id,int _HP, int _speed, Label _label) {
+		name = id ; 
 		HP = _HP;
 		speed = _speed;
 		x = DEFAULT_X;
@@ -77,9 +80,10 @@ public class Monster {
 		return "HP :" + HP;
 	}
 
-
-
-	
-	
+	public boolean reachEndZone() {
+		if(x >= MyController.zones.get(1).getLayoutX())
+			return true ; 
+		return false;
+	}
 }
 
