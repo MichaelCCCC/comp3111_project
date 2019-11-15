@@ -122,12 +122,13 @@ class util {
 		
 		
 		for(int i = 0 ; i < towers.size() ; i++) {
+			Tower tower = towers.get(i);
 			List<Monster> monsterShooted  = null ; 
 			
-			monsterShooted = towers.get(i).shoot() ; 
+			monsterShooted = tower.shoot() ; 
 			if(monsterShooted == null) //the tower hit nothing
 				continue ; 
-			Tower tower = towers.get(i);
+			
 			//if the tower hit somethings
 			for(int j = 0 ; j < monsterShooted.size() ; j++) {
 				Monster monster = monsters.get(j) ; 
@@ -141,8 +142,11 @@ class util {
 		
 			for(int j = 0 ; j < lastShootingShape.size() ; j++)
 			{
-				lastShootingShape.get(i).setStyle("-fx-stroke: blue;");
-				paneArena.getChildren()	.add(lastShootingShape.get(i)) ; 
+				lastShootingShape.get(i).setStyle("-fx-stroke: blue; -fx-stroke-dash-array: 3 5 3 5 3 5; -fx-stroke-width: 3;\n" + 
+						"    -fx-stroke-dash-offset: 6;\n" + 
+						"    -fx-stroke-line-cap: butt;");
+				if(!paneArena.getChildren().contains(lastShootingShape.get(i)))
+				paneArena.getChildren().add(lastShootingShape.get(i)) ; 
 			}
 		}
 		

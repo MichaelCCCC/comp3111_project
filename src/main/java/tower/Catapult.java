@@ -11,7 +11,7 @@ public class Catapult extends Tower{
 	public int shortDistance = 50 ; 
 	public int longDistance = 150 ; 
 	static final int INIT_LONG_DISTANCE = 150 ; 
-	static final String NOTE = "All monsters placed at the radius of 25px of where the stone drop receive damage." ; 
+	static final String NOTE = "All monsters placed at the\n radius of 25px of where\n the stone drop receive\n damage." ; 
 	
 	public static TowerInformation CatapultInit = new TowerInformation(NAME, 10, 100, 100, INIT_LONG_DISTANCE, 10, 1, NOTE);
 	
