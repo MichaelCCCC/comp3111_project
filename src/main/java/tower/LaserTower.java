@@ -29,22 +29,18 @@ public class LaserTower extends Tower{
 		this.attack_cost = attack_cost;
 	}
 	
-	public List<Monster> shoot() {
-//		for(int i=0; i<enemyList.size(); ++i) {
-//			Monster currentEnemy = enemyList.get(i);
-//			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
-//				currentEnemy.damage(attack_power);
-//			}
-//		}	
-		List<Monster> monsterShooted = new ArrayList<>( );
-		monsterShooted.add(MyController.monsters.get(0)) ; 
-		return monsterShooted; 
-	}
+//	public List<Monster> shoot() {
+////		for(int i=0; i<enemyList.size(); ++i) {
+////			Monster currentEnemy = enemyList.get(i);
+////			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
+////				currentEnemy.damage(attack_power);
+////			}
+////		}	
+//		List<Monster> monsterShooted = new ArrayList<>( );
+//		if(MyController.monsters.size() == 0)
+//			return null ; 
+//		monsterShooted.add(MyController.monsters.get(0)) ; 
+//		return monsterShooted; 
+//	}
 
-	public Monster getMonstershooted() {
-		// TODO Auto-generated method stub
-		if(sample.MyController.monsters.size() != 0 )
-			return sample.MyController.monsters.get(0);
-		return null ; 
-	}
 }

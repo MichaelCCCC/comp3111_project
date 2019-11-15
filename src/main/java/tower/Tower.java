@@ -121,6 +121,13 @@ public class Tower {
 		return null;
 	}
 	
+	public Monster getMonstershooted() {
+		// TODO Auto-generated method stub
+		if(sample.MyController.monsters.size() != 0 )
+			return sample.MyController.monsters.get(0);
+		return null ; 
+	}
+	
 
 	public List<Monster> shoot() {
 //		Monster closestEnemy = findClosestEnemy();
@@ -128,7 +135,7 @@ public class Tower {
 //			closestEnemy.damage(attack_power);
 //		}
 		List<Monster> monsterShooted = new ArrayList<>( );
-		monsterShooted.add(MyController.monsters.get(0)) ; 
+		monsterShooted.add(getMonstershooted() ) ; 
 		return monsterShooted; 
 	}
 	

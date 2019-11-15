@@ -55,7 +55,7 @@ class util {
 	/**
 	 * @param monster
 	 */
-	static void changeDirection(Monster monster) {
+	private static void changeDirection(Monster monster) {
 		int x = monster.getX();
 		int y = monster.getY();
 		if(y == 20) {
@@ -123,9 +123,13 @@ class util {
 		
 		for(int i = 0 ; i < towers.size() ; i++) {
 			List<Monster> monsterShooted  = null ; 
+			
 			monsterShooted = towers.get(i).shoot() ; 
+			if(monsterShooted == null) //the tower hit nothing
+				continue ; 
+			Tower tower = towers.get(i);
+			//if the tower hit somethings
 			for(int j = 0 ; j < monsterShooted.size() ; j++) {
-				Tower tower = towers.get(i);
 				Monster monster = monsters.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
 				System.out.println( tower.name + "@(" + gb.getTowerX() + "," + gb.getTowerY() + ") -> " + monster.name + "@(" + monster.getX() + "," + monster.getY()+")");
@@ -133,7 +137,9 @@ class util {
 				//the number of line to monsters shooted should be the same as monster shooted
 			} 
 			
-			for(int j = 0 ; j < monsterShooted.size() ; j++)
+			
+		
+			for(int j = 0 ; j < lastShootingShape.size() ; j++)
 			{
 				lastShootingShape.get(i).setStyle("-fx-stroke: blue;");
 				paneArena.getChildren()	.add(lastShootingShape.get(i)) ; 
@@ -255,7 +261,8 @@ class util {
 	 * @return a line to monster shooted
 	 */
 	static Shape lineToMonsterShooted(GreenBox gb, boolean infinite) {
-		Monster monster = ((tower.LaserTower)gb.towerInBox).getMonstershooted() ; 
+		Monster monster  = gb.towerInBox.getMonstershooted() ; 
+		
 		if(monster == null )
 			return null; 
 		double x = gb.getTowerX() ; 
@@ -290,7 +297,8 @@ class util {
 	 * @param paneArena
 	 */
 	static void removeDeadMonster(AnchorPane paneArena) {
-		for(int i = 0; i<MyController.monsters.size(); i++) {
+		for(int 
+				i = 0; i<MyController.monsters.size(); i++) {
 			Monster monster = MyController.monsters.get(i);
 			if(monster.getStatus() == Status.DEAD) {
 				paneArena.getChildren().remove(monster.getLabel());
