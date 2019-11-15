@@ -1,22 +1,26 @@
 package tower;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import monster.Monster;
-import sample.Arena;
+import sample.MyController;
 
 public class LaserTower extends Tower{
+	public static final String NAME = "Laser Tower";
 	int attack_cost;
 	
-	static TowerInformation LaserTowerInit = new TowerInformation(10, 100, 100, 15, 10, 0, "This is Laser Tower");
+	public static TowerInformation LaserTowerInit = new TowerInformation(NAME,10, 100, 100, 15, 10, 1, "This is Laser Tower");
 	
 	//	Constructor with default parameters
-	LaserTower(int x, int y) {
-		super(x,y);
+	public LaserTower(int x, int y) {
+		super(NAME,x,y);
 		setAttributes(LaserTowerInit.attack_power, LaserTowerInit.building_cost, LaserTowerInit.upgrade_cost, LaserTowerInit.shooting_range, LaserTowerInit.upgrade_diff, LaserTowerInit.tier, LaserTowerInit.comment);
 		attack_cost = 20;
 	}
 
 	//	Get Cost of Shooting with Laser Tower
-	int getAttackCost() {
+	public int getAttackCost() {
 		return attack_cost;
 	}
 	
@@ -25,12 +29,20 @@ public class LaserTower extends Tower{
 		this.attack_cost = attack_cost;
 	}
 	
-	void attack() {
-		for(int i=0; i<Arena.monsterlist.size(); ++i) {
-			Monster currentEnemy = Arena.monsterlist.get(i);
+
+	public List<Monster> shoot() {
+		for(int i=0; i<MyController.monsters.size(); ++i) {
+			Monster currentEnemy = MyController.monsters.get(i);
 			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
 				currentEnemy.damage(attack_power);
+				System.out.println("L (" + currentEnemy.getX() + "," + currentEnemy.getY() + ")");
 			}
 		}	
+		List<Monster> monsterShooted = new ArrayList<>( );
+		if(MyController.monsters.size() == 0)
+			return null ; 
+		monsterShooted.add(MyController.monsters.get(0)) ; 
+		return monsterShooted; 
 	}
+
 }
