@@ -109,7 +109,7 @@ class util {
 	 */
 	static void towersAttack(List<Monster> monsters, List<Tower> towers) {
 		for(int i = 0 ; i < towers.size() ; i++) {
-			towers.get(i).attack() ; 
+			towers.get(i).shoot() ; 
 		}
 		
 	}
