@@ -7,7 +7,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
-import javafx.scene.image.ImageView;
 import monster.Fox;
 import monster.Monster;
 import monster.Monster.Direction;
@@ -107,7 +106,6 @@ class util {
 	 * @param towers
 	 */
 	static void towersAttack(List<Monster> monsters, List<Tower> towers) {
-		// TODO Auto-generated method stub
 		for(int i = 0 ; i < towers.size() ; i++) {
 			towers.get(i).attack() ; 
 		}
@@ -121,29 +119,35 @@ class util {
 		int i = (int)(Math.random()*((2)+1));
 		String type[] = {"Fox","Unicorn","Penguin"};
 			
-	     Label newLabel = new Label();
-	     newLabel.setLayoutX(10);
-	     newLabel.setLayoutY(10);
-	     newLabel.setMinWidth(1);
-	     newLabel.setMaxWidth(1);
-	     newLabel.setMinHeight(1);
-	     newLabel.setMaxHeight(1);
-	      
-	     ImageView iv = ImageFunction.setImageView(type[i]) ; 
-	     newLabel.setGraphic(iv);
+//	     Label newLabel = new Label();
+//	     newLabel.setLayoutX(10);
+//	     newLabel.setLayoutY(10);
+//	     newLabel.setMinWidth(1);
+//	     newLabel.setMaxWidth(1);
+//	     newLabel.setMinHeight(1);
+//	     newLabel.setMaxHeight(1); 
+//	      
+//	     ImageView iv = ImageFunction.setImageView(type[i]) ; 
+//	     newLabel.setGraphic(iv);
+		Label monsterLabel = new Label () ; 
+		monsterLabel.setGraphic(ImageFunction.setImageView(type[i])) ; 
+		monsterLabel.setId(type[i]);
+		monsterLabel.setLayoutX(10);
+		monsterLabel.setLayoutY(10);
+		
 	     
-	     paneArena.getChildren().addAll(newLabel);
+	     paneArena.getChildren().addAll(monsterLabel);
 	     
 	     Monster monster = null;
 	     switch(i) {
 	     	case 0:
-	     		monster = new Fox(newLabel);
+	     		monster = new Fox(monsterLabel);
 	     		break;
 	     	case 1:
-	     		monster = new Unicorn(newLabel);
+	     		monster = new Unicorn(monsterLabel);
 	     		break;
 	     	case 2:
-	     		monster = new Penguin(newLabel);
+	     		monster = new Penguin(monsterLabel);
 			
 	     }
 	    MyController.monsters.add(monster);
@@ -155,7 +159,6 @@ class util {
 	 * @return
 	 */
 	static boolean decideEndGame() {
-		// TODO Auto-generated method stub
 		for(int i = 0 ; i < MyController.monsters.size() ; i++) {
 			if(MyController.monsters.get(i).getX() > MyController.ARENA_WIDTH)
 				return true ; 
