@@ -31,17 +31,15 @@ public class LaserTower extends Tower{
 	
 
 	public List<Monster> shoot() {
+		List<Monster> monsterShooted = new ArrayList<>( );
 		for(int i=0; i<MyController.monsters.size(); ++i) {
 			Monster currentEnemy = MyController.monsters.get(i);
 			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
 				currentEnemy.damage(attack_power);
 				System.out.println("L (" + currentEnemy.getX() + "," + currentEnemy.getY() + ")");
+				monsterShooted.add(MyController.monsters.get(i)) ; 
 			}
 		}	
-		List<Monster> monsterShooted = new ArrayList<>( );
-		if(MyController.monsters.size() == 0)
-			return null ; 
-		monsterShooted.add(MyController.monsters.get(0)) ; 
 		return monsterShooted; 
 	}
 

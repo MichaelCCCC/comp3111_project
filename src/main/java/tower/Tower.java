@@ -119,12 +119,6 @@ public class Tower {
 		return closestEnemy;
 	}
 	
-	public Monster getMonstershooted() {
-		if(sample.MyController.monsters.size() != 0 )
-			return sample.MyController.monsters.get(0);
-		return null ; 
-	}
-	
 	public List<Monster> shoot() {
 		Monster closestEnemy = findClosestEnemy();
 		if(distance(closestEnemy) <= shooting_range) {			
@@ -132,7 +126,7 @@ public class Tower {
 			System.out.println("T (" + closestEnemy.getX() + "," + closestEnemy.getY() + ")");
 		}
 		List<Monster> monsterShooted = new ArrayList<>( );
-		monsterShooted.add(getMonstershooted() ) ; 
+		monsterShooted.add(closestEnemy) ; 
 		return monsterShooted; 
 	}
 	

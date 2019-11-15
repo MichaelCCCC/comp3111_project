@@ -22,17 +22,15 @@ public class Catapult extends Tower{
 
 	
 	public List<Monster> shoot() {
+		List<Monster> monsterShooted = new ArrayList<>( );
 		for(int i=0; i<MyController.monsters.size(); ++i) {
 			Monster currentEnemy = MyController.monsters.get(i);
 			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
 				currentEnemy.damage(attack_power);
 				System.out.println("C (" + currentEnemy.getX() + "," + currentEnemy.getY() + ")");
+				monsterShooted.add(currentEnemy) ; 
 			}
 		}	
-		List<Monster> monsterShooted = new ArrayList<>( );
-		if(MyController.monsters.size() == 0 )
-			return null;
-		monsterShooted.add(MyController.monsters.get(0)) ; 
 		return monsterShooted; 
 	}
 

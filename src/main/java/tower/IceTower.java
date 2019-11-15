@@ -22,16 +22,12 @@ public class IceTower extends Tower{
 
 	public List<Monster> shoot() {
 		Monster closestEnemy = findClosestEnemy();
-		if (closestEnemy == null)
-			return null ; 
+		List<Monster> monsterShooted = new ArrayList<>( );
 		if(distance(closestEnemy) <= shooting_range) {			
 			closestEnemy.slow_down(attack_power);
 			System.out.println("I (" + closestEnemy.getX() + "," + closestEnemy.getY() + ")");
+			monsterShooted.add(closestEnemy) ; 
 		}
-		List<Monster> monsterShooted = new ArrayList<>( );
-		if(MyController.monsters.size() == 0)
-			return null ; 
-		monsterShooted.add(MyController.monsters.get(0)) ; 
 		return monsterShooted; 
 	}
 
