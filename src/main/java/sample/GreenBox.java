@@ -146,7 +146,8 @@ class GreenBox{
 			if(((tower.LaserTower)towerInBox).getMonstershooted() == null )
 				return ; 
 			
-			shootingRange = util.lineToMonsterShooted(this) ; 
+			shootingRange = util.lineToMonsterShooted(this, true ) ; 
+			shootingRange.setStyle("-fx-stroke: red;");
 		}
 		
 		

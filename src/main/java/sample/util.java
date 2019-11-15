@@ -1,6 +1,8 @@
 package sample;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -19,6 +21,8 @@ import tower.TowerInformation;
 
 class util {
 
+	static List<Shape> lastShootingShape = new ArrayList<>( ) ; 
+	
 	/**
 	 * @param monsters
 	 * @return
@@ -51,7 +55,7 @@ class util {
 	/**
 	 * @param monster
 	 */
-	static void changeDirection(Monster monster) {
+	private static void changeDirection(Monster monster) {
 		int x = monster.getX();
 		int y = monster.getY();
 		if(y == 20) {
@@ -75,6 +79,7 @@ class util {
 	}
 	
 	private static void refreshLists(List<Monster> monsters, List <Tower> towers) {
+		
 		for(int i = 0 ; i < monsters.size() ; i++)
 			if(monsters.get(i) == null || monsters.get(i).getLabel() == null)
 				monsters.remove(i) ; 
@@ -85,6 +90,10 @@ class util {
 			if(GreenBoxes.towerGetGreenBox(towers.get(i)) == null)
 				towers.remove(i) ; 
 		} 
+		
+		//refresh tooltip of monters, but refresh tooltip of towers is done through tempLabel
+		for(int i = 0 ; i < monsters.size(); i++ ) 
+			Tooltip.install(monsters.get(i).getLabel(),new Tooltip(monsters.get(i).getTooltip()) );
 	}
 
 	/**
@@ -107,35 +116,47 @@ class util {
 	 * @param monsters
 	 * @param towers
 	 */
-	static void towersAttack(List<Monster> monsters, List<Tower> towers) {
+	static void towersAttack(List<Monster> monsters, List<Tower> towers, AnchorPane paneArena) {
+		if(monsters.size() == 0 || towers.size() == 0)
+			return ; 
+		
+		
 		for(int i = 0 ; i < towers.size() ; i++) {
-			towers.get(i).shoot() ; 
+			List<Monster> monsterShooted  = null ; 
+			
+			monsterShooted = towers.get(i).shoot() ; 
+			if(monsterShooted == null) //the tower hit nothing
+				continue ; 
+			Tower tower = towers.get(i);
+			//if the tower hit somethings
+			for(int j = 0 ; j < monsterShooted.size() ; j++) {
+				Monster monster = monsters.get(j) ; 
+				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
+				System.out.println( tower.name + "@(" + gb.getTowerX() + "," + gb.getTowerY() + ") -> " + monster.name + "@(" + monster.getX() + "," + monster.getY()+")");
+				lastShootingShape.add(lineToMonsterShooted(gb, false )) ; 
+				//the number of line to monsters shooted should be the same as monster shooted
+			} 
+			
+			
+		
+			for(int j = 0 ; j < lastShootingShape.size() ; j++)
+			{
+				lastShootingShape.get(i).setStyle("-fx-stroke: blue;");
+				paneArena.getChildren()	.add(lastShootingShape.get(i)) ; 
+			}
 		}
 		
 	}
-
+	
 	/**
 	 * @param paneArena
 	 */
 	static void generateMonsters(AnchorPane paneArena) {
 		int i = (int)(Math.random()*((2)+1));
 		String type[] = {"Fox","Unicorn","Penguin"};
-			
-//	     Label newLabel = new Label();
-//	     newLabel.setLayoutX(10);
-//	     newLabel.setLayoutY(10);
-//	     newLabel.setMinWidth(1);
-//	     newLabel.setMaxWidth(1);
-//	     newLabel.setMinHeight(1);
-//	     newLabel.setMaxHeight(1); 
-//	      
-//	     ImageView iv = ImageFunction.setImageView(type[i]) ; 
-//	     newLabel.setGraphic(iv);
-		Label monsterLabel = new Label () ; 
-		monsterLabel.setGraphic(ImageFunction.setImageView(type[i])) ; 
-		monsterLabel.setId(type[i]);
-		monsterLabel.setLayoutX(10);
-		monsterLabel.setLayoutY(10);
+		double gridX = 1/4  ;
+		double gridY = 1/4 ; 
+		Label monsterLabel = ImageFunction.setImageToLabel(type[i], gridX, gridY) ; 
 		
 	     
 	     paneArena.getChildren().addAll(monsterLabel);
@@ -154,6 +175,7 @@ class util {
 	     }
 	    MyController.monsters.add(monster);
 	    Tooltip.install(monster.getLabel(), new Tooltip(monster.getTooltip())) ; 
+	    System.out.println("<type>" + type[i] + ":<" + monster.getHP() + "> generated" ) ; 
 		
 	}
 
@@ -162,7 +184,7 @@ class util {
 	 */
 	static boolean decideEndGame() {
 		for(int i = 0 ; i < MyController.monsters.size() ; i++) {
-			if(MyController.monsters.get(i).getX() > MyController.ARENA_WIDTH)
+			if(MyController.monsters.get(i).reachEndZone() == true)
 				return true ; 
 		}
 		return false;
@@ -238,8 +260,9 @@ class util {
 	 * @param green box that contain laser tower
 	 * @return a line to monster shooted
 	 */
-	static Shape lineToMonsterShooted(GreenBox gb) {
-		Monster monster = ((tower.LaserTower)gb.towerInBox).getMonstershooted() ; 
+	static Shape lineToMonsterShooted(GreenBox gb, boolean infinite) {
+		Monster monster  = gb.towerInBox.getMonstershooted() ; 
+		
 		if(monster == null )
 			return null; 
 		double x = gb.getTowerX() ; 
@@ -247,11 +270,11 @@ class util {
 		double xp = (monster.getX()) ; 
 		double yp = (monster.getY() ); 
 		//k is the multiple constant
-		int k = 1000 ; 
+		int k = (infinite == true)? 1000 : 1 ; 
 		double xpp = k * (xp - x ) + x ; 
 		double ypp = k* (yp - y ) + y ; 
-		Line line = new Line(x , y ,xpp ,ypp) ;  
-		line.setStyle("-fx-stroke: red;");
+		Line line = new Line(x , y ,xpp ,ypp) ; 
+		
 		line.setId(gb.id);
 		return line;
 		//return lineToFirstMonster(gb) ;
@@ -274,7 +297,8 @@ class util {
 	 * @param paneArena
 	 */
 	static void removeDeadMonster(AnchorPane paneArena) {
-		for(int i = 0; i<MyController.monsters.size(); i++) {
+		for(int 
+				i = 0; i<MyController.monsters.size(); i++) {
 			Monster monster = MyController.monsters.get(i);
 			if(monster.getStatus() == Status.DEAD) {
 				paneArena.getChildren().remove(monster.getLabel());
@@ -282,4 +306,11 @@ class util {
 			}
 		}
 	}
+	public static void removeLastShooting(AnchorPane paneArena) {
+		for(int i = 0 ; i < lastShootingShape.size() ; i++)
+			paneArena.getChildren().remove(lastShootingShape.get(i)) ; 
+		lastShootingShape.clear(); ; 
+	}
+	
+	
 }
