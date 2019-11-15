@@ -9,14 +9,15 @@ public class Monster {
 	static final int DEFAULT_X = 20;
 	static final int DEFAULT_Y = 20;
 	static public enum Direction {UP, DOWN, RIGHT};
-	
+	static public enum Status{ALIVE,DEAD};
 	//private data member
-	private int HP;
+	protected int HP;
 	private int speed;
-	private int x;
-	private int y;
-	private Label label;
+	protected int x;
+	protected int y;
+	protected Label label;
 	private Direction direction;
+	private Status status;
 	
 	public Monster(int _HP, int _speed, Label _label) {
 		HP = _HP;
@@ -25,6 +26,7 @@ public class Monster {
 		y = DEFAULT_Y;
 		label = _label;
 		direction = Direction.DOWN;
+		status = Status.ALIVE;
 	}
 
 
@@ -47,8 +49,14 @@ public class Monster {
 	public Direction getDirection() {
 		return direction;
 	}
+	public Status getStatus() {
+		return status;
+	}
 	public void setDirection(Direction _direction) {
 		direction = _direction;
+	}
+	public void setStatus(Status _status) {
+		status = _status;
 	}
 	public void damage(int damage) {
 		HP -= damage;
