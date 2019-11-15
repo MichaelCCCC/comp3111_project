@@ -20,18 +20,19 @@ public class Catapult extends Tower{
 		setAttributes(CatapultInit.attack_power, CatapultInit.building_cost, CatapultInit.upgrade_cost, CatapultInit.shooting_range, CatapultInit.upgrade_diff, CatapultInit.tier, CatapultInit.comment);
 	}
 
-	
-	public List<Monster> shoot() {
-		List<Monster> monsterShooted = new ArrayList<>( );
-		for(int i=0; i<MyController.monsters.size(); ++i) {
-			Monster currentEnemy = MyController.monsters.get(i);
-			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
-				currentEnemy.damage(attack_power);
-				System.out.println("C (" + currentEnemy.getX() + "," + currentEnemy.getY() + ")");
-				monsterShooted.add(currentEnemy) ; 
-			}
-		}	
-		return monsterShooted; 
-	}
+
+//	public List<Monster> shoot() {
+////		for(int i=0; i<enemyList.size(); ++i) {
+////			Monster currentEnemy = enemyList.get(i);
+////			if(currentEnemy.getY() <= y-3 || currentEnemy.getY() <= y+3) {
+////				currentEnemy.damage(attack_power);
+////			}
+////		}	
+//		List<Monster> monsterShooted = new ArrayList<>( );
+//		if(MyController.monsters.size() == 0 )
+//			return null;
+//		monsterShooted.add(MyController.monsters.get(0)) ; 
+//		return monsterShooted; 
+//	}
 
 }

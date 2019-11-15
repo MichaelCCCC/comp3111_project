@@ -19,16 +19,17 @@ public class IceTower extends Tower{
 		setAttributes(IceTowerInit.attack_power, IceTowerInit.building_cost, IceTowerInit.upgrade_cost, IceTowerInit.shooting_range, IceTowerInit.upgrade_diff, IceTowerInit.tier, IceTowerInit.comment);
 	}
 	
-
-	public List<Monster> shoot() {
-		Monster closestEnemy = findClosestEnemy();
-		List<Monster> monsterShooted = new ArrayList<>( );
-		if(distance(closestEnemy) <= shooting_range) {			
-			closestEnemy.slow_down(attack_power);
-			System.out.println("I (" + closestEnemy.getX() + "," + closestEnemy.getY() + ")");
-			monsterShooted.add(closestEnemy) ; 
-		}
-		return monsterShooted; 
-	}
-
+//	public List<Monster> shoot() {
+//		Monster closestEnemy = findClosestEnemy();
+//		if (closestEnemy == null)
+//			return null ; 
+//		if(distance(closestEnemy) <= shooting_range) {			
+//			closestEnemy.slow_down(attack_power);
+//		}
+//		List<Monster> monsterShooted = new ArrayList<>( );
+//		if(MyController.monsters.size() == 0)
+//			return null ; 
+//		monsterShooted.add(MyController.monsters.get(0)) ; 
+//		return monsterShooted; 
+//	}
 }

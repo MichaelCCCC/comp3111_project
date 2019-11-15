@@ -2,11 +2,13 @@ package tower;
 import java.lang.Math; 
 import java.lang.String;
 import java.util.List;
+
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import monster.Monster;
 import sample.MyController;
+
 import java.util.ArrayList;
 
 public class Tower {
@@ -108,25 +110,32 @@ public class Tower {
 	}
 	
 	protected Monster findClosestEnemy() {
-		Monster closestEnemy = null;
-		double closestEnemyDistance = Double.MAX_VALUE;
-		for(int i=0; i<MyController.monsters.size(); ++i) {
-			if(distance(MyController.monsters.get(i)) < closestEnemyDistance) {
-				closestEnemyDistance = distance(MyController.monsters.get(i));
-				closestEnemy = MyController.monsters.get(i);
-			}
-		}
-		return closestEnemy;
+//		Monster closestEnemy;
+//		double closestEnemyDistance = Double.MAX_VALUE;
+//		for(int i=0; i<enemyList.size(); ++i) {
+//			if(distance(enemyList.get(i)) < closestEnemyDistance) {
+//				closestEnemyDistance = distance(enemyList.get(i));
+//				closestEnemy = enemyList.get(i);
+//			}
+//		}
+		return null;
 	}
 	
+	public Monster getMonstershooted() {
+		// TODO Auto-generated method stub
+		if(sample.MyController.monsters.size() != 0 )
+			return sample.MyController.monsters.get(0);
+		return null ; 
+	}
+	
+
 	public List<Monster> shoot() {
-		Monster closestEnemy = findClosestEnemy();
-		if(distance(closestEnemy) <= shooting_range) {			
-			closestEnemy.damage(attack_power);
-			System.out.println("T (" + closestEnemy.getX() + "," + closestEnemy.getY() + ")");
-		}
+//		Monster closestEnemy = findClosestEnemy();
+//		if(distance(closestEnemy) <= shooting_range) {			
+//			closestEnemy.damage(attack_power);
+//		}
 		List<Monster> monsterShooted = new ArrayList<>( );
-		monsterShooted.add(closestEnemy) ; 
+		monsterShooted.add(getMonstershooted() ) ; 
 		return monsterShooted; 
 	}
 	
@@ -138,7 +147,10 @@ public class Tower {
 		is_destroyed = true;
 	}
 
+
 	public int getUpgradeCost() {
+		// TODO Auto-generated method stub
 		return upgrade_cost;
 	}
+
 }

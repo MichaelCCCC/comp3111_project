@@ -1,6 +1,7 @@
 package monster;
 
 import javafx.scene.control.Label;
+import sample.MyController;
 
 
 
@@ -9,27 +10,29 @@ public class Monster {
 	static final int DEFAULT_X = 20;
 	static final int DEFAULT_Y = 20;
 	static public enum Direction {UP, DOWN, RIGHT};
-	
+	static public enum Status{ALIVE,DEAD};
 	//private data member
-	private int HP;
+	protected int HP;
 	private int speed;
-	private int x;
-	private int y;
-	private Label label;
+	protected int x;
+	protected int y;
+	protected Label label;
 	private Direction direction;
+	private Status status;
+	public String name = null ; 
 	
-	public Monster(int _HP, int _speed, Label _label) {
+	public Monster(String id,int _HP, int _speed, Label _label) {
+		name = id ; 
 		HP = _HP;
 		speed = _speed;
 		x = DEFAULT_X;
 		y = DEFAULT_Y;
 		label = _label;
 		direction = Direction.DOWN;
+		status = Status.ALIVE;
 	}
 
-	public Monster() {
-		// TODO Auto-generated constructor stub
-	}
+
 
 	public int getHP() {
 		return HP;
@@ -49,8 +52,14 @@ public class Monster {
 	public Direction getDirection() {
 		return direction;
 	}
+	public Status getStatus() {
+		return status;
+	}
 	public void setDirection(Direction _direction) {
 		direction = _direction;
+	}
+	public void setStatus(Status _status) {
+		status = _status;
 	}
 	public void damage(int damage) {
 		HP -= damage;
@@ -71,7 +80,10 @@ public class Monster {
 		return "HP :" + HP;
 	}
 
-	
-	
+	public boolean reachEndZone() {
+		if(x >= MyController.zones.get(1).getLayoutX())
+			return true ; 
+		return false;
+	}
 }
 
