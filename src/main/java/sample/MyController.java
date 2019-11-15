@@ -10,6 +10,7 @@ import javafx.scene.input.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javafx.event.*;
 import javafx.fxml.FXML;
@@ -100,6 +101,11 @@ public class MyController {
     private final int SPEED = 4 ; 
     
     /*
+     * by default is 1, greater than 1 will generate one monster per frame
+     */
+    private double MONSTER_GENERATION_RATE = 1 ; 
+    
+    /*
      * a list of monsters
      */
 	public static List<Monster> monsters = new ArrayList<> ()  ;
@@ -109,6 +115,7 @@ public class MyController {
 	 */
 	public static List<Tower> towers = new ArrayList<> ()  ;
 
+	public static List<Label> zones = new ArrayList<>() ; 
 	/*
 	 * grid of arena
 	 */
@@ -122,15 +129,13 @@ public class MyController {
         if (grids[0][0] != null)
             return; //created already
         
-        List<Label> wbs = new ArrayList<>( );
         for (int i = 0; i < MAX_V_NUM_GRID; i++) //the top left corner is (0,0)
             for (int j = 0; j < MAX_H_NUM_GRID; j++) {
                 Label newLabel = new Label();
                 
                 if (j % 2 == 0 || i == ((j + 1) / 2 % 2) * (MAX_V_NUM_GRID - 1)) {
                     newLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-                    //white boxes
-                    wbs.add(newLabel) ;
+                    
                 }
                 	else 
                 {
@@ -148,6 +153,17 @@ public class MyController {
                 paneArena.getChildren().addAll(newLabel);// this code show new label on pane.
                 
             }
+        
+      //set monster generation zone and end zone 
+        Label monsterZone = ImageFunction.setImageToLabel("Hole", 0, 0) ; 
+        paneArena.getChildren().add(monsterZone);
+        
+        Label endZone = ImageFunction.setImageToLabel("Castle", 11, 0) ; 
+        paneArena.getChildren().add(endZone) ; 
+        
+        zones.add(monsterZone ) ; 
+        zones.add(endZone) ; 
+        
         
         labelMoney.setText(Integer.valueOf(money).toString());
         labelFrame.setText(Integer.valueOf(num_frame).toString());
@@ -167,6 +183,10 @@ public class MyController {
     private void nextFrame() {
         
     	for(int i =  0 ; i < TEST_FRAME ; i++ ) {
+    		
+    		//remove all shooting record 
+    		util.removeLastShooting(paneArena) ; 
+    		
     		//remove dead monster
     		util.removeDeadMonster(paneArena);
     		
@@ -175,12 +195,12 @@ public class MyController {
             	util.moveMonsters(monsters)  ;
             
             //tower attack 
-            util.towersAttack(monsters, towers) ; 
+            util.towersAttack(monsters, towers, paneArena) ; 
             
             //generate monster
-            if(num_frame % 5 == 0) {        	
+            if(new Random().nextInt((int)(1/MONSTER_GENERATION_RATE) + 1)==0)     	
             	util.generateMonsters(paneArena) ; 
-            }
+            
             util.checkMonsterDead();
             //show all object 
             util.showAllObjects(monsters, towers, paneArena);
@@ -195,6 +215,7 @@ public class MyController {
 
         	num_frame ++ ;
     	}
+    	
     	setLabelFrame(num_frame) ; 
         
     }
@@ -281,10 +302,10 @@ public class MyController {
     			if(event.getEventType() == MouseEvent.MOUSE_EXITED && exit ){
     				exit = false ; 
 					//System.out.println("Exited: " + GreenBoxes.targetGetGreenBox(tempLabel).toString() + ": " + GreenBoxes.targetH(tempLabel) +  ", " + GreenBoxes.targetV(tempLabel));
-		            System.out.println("exit temp label") ; 
+		            //System.out.println("exit temp label") ; 
     				/* mouse moved away, remove the graphical cues */
 					
-	                System.out.println("remove shooting range and temp label") ; 
+	                //System.out.println("remove shooting range and temp label") ; 
 	                paneArena.getChildren().remove(shootingRange) ; 
 	                paneArena.getChildren().remove(tempLabel) ; 
 	                event.consume();	
@@ -296,13 +317,14 @@ public class MyController {
 		ChoiceDialog<String> cd = new ChoiceDialog<String>(choices[0],  choices) ;
         tempLabel.setOnMouseClicked(new EventHandler <MouseEvent>() {
         		public void handle (MouseEvent event) {
-        			System.out.println("mouse clicked") ; 
+        			//System.out.println("mouse clicked") ; 
         			if(GreenBoxes.targetHasTower(target)) {
         				
         				cd.showAndWait();
         				
         				if((String)cd.getResult() == choices[0]) {
-        					System.out.println("destroy tower. remove shooting range and temp label") ;
+        					System.out.println("destroy tower.") ;
+        					//System.out.println("remove shooting range and temp label.") ; 
         					exit = false ; 
         					paneArena.getChildren().remove(shootingRange) ; 
         	                paneArena.getChildren().remove(tempLabel) ;
@@ -344,7 +366,7 @@ public class MyController {
     	EventHandler<? super MouseEvent> linehover =  new EventHandler<MouseEvent>() {
     		@Override
 		    public void handle(MouseEvent event) {
-    			System.out.println(exit);
+    			//System.out.println(exit);
 		    	if(exit == true) {
 		    		if(paneArena.getChildren().contains(lastLabel))
 		    			paneArena.getChildren().remove(lastLabel); 
@@ -365,7 +387,7 @@ public class MyController {
     		    @Override
     		    public void handle(MouseEvent event) {
     		    	
-    		    	System.out.println(exit);
+    		    	//System.out.println(exit);
     		    	if(exit == true) {
     		    		if(paneArena.getChildren().contains(lastLabel))
     		    			paneArena.getChildren().remove(lastLabel); 
@@ -376,10 +398,10 @@ public class MyController {
 		        	if(event.getEventType() == MouseEvent.MOUSE_ENTERED  ){
 		        		//System.out.println("mouse entered"); 
 			        	if(target != lastLabel  ) {
-			        		System.out.println("mouse entered: " + GreenBoxes.targetGetGreenBox(target).toString() + ": " + GreenBoxes.targetH(target) +  ", " + GreenBoxes.targetV(target));
+			        		//System.out.println("mouse entered: " + GreenBoxes.targetGetGreenBox(target).toString() + ": " + GreenBoxes.targetH(target) +  ", " + GreenBoxes.targetV(target));
 	            			if(GreenBoxes.targetHasTower(target))
 	                		{
-	            				System.out.println("has tower") ; 
+	            				//System.out.println("has tower") ; 
 	            				
 	                			//show shooting range of current tower  
 	            				lastShootingRange = addShootingRangeToPaneArena(target) ; 
@@ -403,7 +425,7 @@ public class MyController {
      * @return tower label
      */
     protected Label addLastLabel(Object target) {
-    	System.out.println("add temp label " ) ; 
+    	//System.out.println("add temp label " ) ; 
     	Label tempLabel = GreenBoxes.targetGetGreenBox(target).copyOfLabel()  ; 
     	Tooltip.install(tempLabel, new Tooltip(util.getTowerTooltipString(GreenBoxes.targetGetTower(target).getInfo(), target)));
     	tempLabel.setStyle("-fx-border-color: rgba(255,0,0,0.3) ; -fx-border-width: 3 ; ");
@@ -427,8 +449,8 @@ public class MyController {
 			return null ; 
 		}
 		paneArena.getChildren().add(shootingRange);  
-		if(shootingRange != null ) 
-			System.out.println("add shooting range") ; 
+		//if(shootingRange != null ) 
+			//System.out.println("add shooting range") ; 
 		return shootingRange ; 
 	}
 
@@ -444,10 +466,10 @@ public class MyController {
         	@Override
             public void handle(DragEvent event) {
 
-                System.out.println("xx");
+                //System.out.println("xx");
                 Dragboard db = event.getDragboard();
                 boolean success = false;
-                System.out.println(db.getString());
+                //System.out.println(db.getString());
                   if (db.hasString() || db.hasImage()) { //db is the button being dragged
                     Integer moneyDeducted = 0 ; 
                     switch(db.getString())
@@ -495,7 +517,7 @@ public class MyController {
         target.setOnDragOver(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
                 /* data is dragged over the target */
-                System.out.println("onDragOver");
+                //System.out.println("onDragOver");
 
                 /* accept it only if it is  not dragged from the same node
                  * and if it has a string data */
@@ -514,7 +536,7 @@ public class MyController {
         target.setOnDragEntered(new EventHandler <DragEvent>() {
             public void handle(DragEvent event) {
                 /* the drag-and-drop gesture entered the target */
-                System.out.println("onDragEntered");
+                //System.out.println("onDragEntered");
                 /* show to the user that it is an actual gesture target */
                 if (event.getGestureSource() != target &&
                         event.getDragboard().hasString()) {
@@ -528,7 +550,7 @@ public class MyController {
         target.setOnDragExited((event) -> {
             /* mouse moved away, remove the graphical cues */
             target.setStyle("-fx-border-color: black;");
-            System.out.println("Exit");
+            //System.out.println("Exit");
             event.consume();
         });      
     }
