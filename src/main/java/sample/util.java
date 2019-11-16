@@ -125,7 +125,8 @@ class util {
 			Tower tower = towers.get(i);
 			List<Monster> monsterShooted  = null ; 
 			
-			monsterShooted = tower.shoot() ; 
+			//if (tower.shoot() != null )
+				monsterShooted = tower.shoot() ; 
 			if(monsterShooted == null) //the tower hit nothing
 				continue ; 
 			
@@ -134,7 +135,8 @@ class util {
 				Monster monster = monsters.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
 				System.out.println( tower.name + "@(" + gb.getTowerX() + "," + gb.getTowerY() + ") -> " + monster.name + "@(" + monster.getX() + "," + monster.getY()+")");
-				lastShootingShape.add(lineToMonsterShooted(gb, false )) ; 
+				if(lineToMonsterShooted(gb, false ) != null)
+					lastShootingShape.add(lineToMonsterShooted(gb, false )) ; 
 				//the number of line to monsters shooted should be the same as monster shooted
 			} 
 			
