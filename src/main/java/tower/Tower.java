@@ -51,10 +51,6 @@ public class Tower {
 		return is_destroyed;
 	}
 	
-	//	Get Tower Information
-	public TowerInformation getInitInfo() {
-		return BasicTowerInit;
-	}
 	
 	public TowerInformation getInfo() {
 		return new TowerInformation(name,attack_power,building_cost, upgrade_cost,shooting_range,upgrade_diff,tier,comment) ;
