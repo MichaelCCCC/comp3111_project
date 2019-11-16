@@ -332,7 +332,7 @@ public class MyController {
         				}
         				
             			if((String)cd.getResult() == choices[1] ) {
-            				int upgradeCost = GreenBoxes.targetGetTower(target).getUpgradeCost() ; 
+            				int upgradeCost = GreenBoxes.targetGetTower(target).getInfo().upgrade_cost ; 
             				if (money >= upgradeCost) {
             					//tower upgrade
             					money -= upgradeCost ; 

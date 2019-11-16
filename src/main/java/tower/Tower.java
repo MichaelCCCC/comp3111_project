@@ -2,10 +2,6 @@ package tower;
 import java.lang.Math; 
 import java.lang.String;
 import java.util.List;
-
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import monster.Monster;
 import sample.MyController;
 
@@ -109,48 +105,59 @@ public class Tower {
 		return Math.sqrt(Math.pow(enemy.getX() - x, 2) + Math.pow(enemy.getY() - y, 2));
 	}
 	
-	protected Monster findClosestEnemy() {
-//		Monster closestEnemy;
-//		double closestEnemyDistance = Double.MAX_VALUE;
-//		for(int i=0; i<enemyList.size(); ++i) {
-//			if(distance(enemyList.get(i)) < closestEnemyDistance) {
-//				closestEnemyDistance = distance(enemyList.get(i));
-//				closestEnemy = enemyList.get(i);
-//			}
-//		}
-		return null;
+	protected double distance(Monster enemy1, Monster enemy2) {
+		return Math.sqrt(Math.pow(enemy1.getX() - enemy2.getX(), 2) + Math.pow(enemy1.getY() - enemy2.getY(), 2));
 	}
 	
-	public Monster getMonstershooted() {
-		// TODO Auto-generated method stub
-		if(sample.MyController.monsters.size() != 0 )
-			return sample.MyController.monsters.get(0);
-		return null ; 
+	public Monster findClosestEnemy() {
+		Monster closestEnemy = null;
+		double closestEnemyDistance = Double.MAX_VALUE;
+		for(int i=0; i<MyController.monsters.size(); ++i) {
+			double dist = distance(MyController.monsters.get(i));
+			if(dist < closestEnemyDistance) {
+				closestEnemyDistance = distance(MyController.monsters.get(i));
+				closestEnemy = MyController.monsters.get(i);
+			}
+			else if(dist == closestEnemyDistance) {
+				if(MyController.monsters.get(i).getX() > closestEnemy.getX()) {
+					closestEnemy = MyController.monsters.get(i);
+				}
+				else if(MyController.monsters.get(i).getX() == closestEnemy.getX()) {
+					if(MyController.monsters.get(i).getY() < closestEnemy.getY()) {
+						closestEnemy = MyController.monsters.get(i);
+					}
+				}
+			}
+		}
+		return closestEnemy;
+	}
+	
+	public List<Monster> getTargetedMonster() {
+		List<Monster> targetedMonster = new ArrayList<Monster>();
+		Monster closestEnemy = findClosestEnemy();
+		if(distance(closestEnemy) <= shooting_range) {			
+			targetedMonster.add(closestEnemy);
+		}
+		
+		return targetedMonster;
 	}
 	
 
 	public List<Monster> shoot() {
-//		Monster closestEnemy = findClosestEnemy();
-//		if(distance(closestEnemy) <= shooting_range) {			
-//			closestEnemy.damage(attack_power);
-//		}
-		List<Monster> monsterShooted = new ArrayList<>( );
-		monsterShooted.add(getMonstershooted() ) ; 
-		return monsterShooted; 
+		List<Monster> targetedMonster = getTargetedMonster();
+		for(int i=0; i<targetedMonster.size(); ++i) {
+			targetedMonster.get(i).damage(attack_power) ; 
+		}
+		return targetedMonster; 
 	}
 	
 	public void upgrade() {
 		attack_power += upgrade_diff;
+		tier++;
 	}
 	
 	public void destroy() {
 		is_destroyed = true;
-	}
-
-
-	public int getUpgradeCost() {
-		// TODO Auto-generated method stub
-		return upgrade_cost;
 	}
 
 }
