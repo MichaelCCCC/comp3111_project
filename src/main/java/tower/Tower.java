@@ -52,8 +52,12 @@ public class Tower {
 	}
 	
 	//	Get Tower Information
+	public TowerInformation getInitInfo() {
+		return BasicTowerInit;
+	}
+	
 	public TowerInformation getInfo() {
-		return new TowerInformation(NAME,attack_power, building_cost, upgrade_cost, shooting_range, upgrade_diff, tier, comment);
+		return new TowerInformation(name,attack_power,building_cost, upgrade_cost,shooting_range,upgrade_diff,tier,comment) ;
 	}
 	
 	//	Set Tower Attack Power
@@ -135,10 +139,13 @@ public class Tower {
 	public List<Monster> getTargetedMonster() {
 		List<Monster> targetedMonster = new ArrayList<Monster>();
 		Monster closestEnemy = findClosestEnemy();
+		if (closestEnemy == null )
+			return null ; 
 		if(distance(closestEnemy) <= shooting_range) {			
 			targetedMonster.add(closestEnemy);
 		}
-		
+		if(targetedMonster.size() == 0 )
+			targetedMonster = null ; 
 		return targetedMonster;
 	}
 	

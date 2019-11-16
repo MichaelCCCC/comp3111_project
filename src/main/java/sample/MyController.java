@@ -445,7 +445,7 @@ public class MyController {
 		Shape shootingRange = GreenBoxes.targetGetGreenBox(target).shootingRange; 
 		if(shootingRange == null ) 
 		{
-			System.out.println("child node is null") ; 
+			System.out.println("cannot generate shooting range shape") ; 
 			return null ; 
 		}
 		paneArena.getChildren().add(shootingRange);  
