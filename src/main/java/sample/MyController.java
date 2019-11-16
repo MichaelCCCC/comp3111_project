@@ -332,7 +332,7 @@ public class MyController {
         				}
         				
             			if((String)cd.getResult() == choices[1] ) {
-            				int upgradeCost = GreenBoxes.targetGetTower(target).getUpgradeCost() ; 
+            				int upgradeCost = GreenBoxes.targetGetTower(target).getInfo().upgrade_cost ; 
             				if (money >= upgradeCost) {
             					//tower upgrade
             					money -= upgradeCost ; 
@@ -445,7 +445,7 @@ public class MyController {
 		Shape shootingRange = GreenBoxes.targetGetGreenBox(target).shootingRange; 
 		if(shootingRange == null ) 
 		{
-			System.out.println("child node is null") ; 
+			System.out.println("cannot generate shooting range shape") ; 
 			return null ; 
 		}
 		paneArena.getChildren().add(shootingRange);  
