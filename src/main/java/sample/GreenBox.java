@@ -143,7 +143,7 @@ class GreenBox{
 		}
 		
 		if(towerClass == LaserTower.class) { 
-			if(((tower.LaserTower)towerInBox).getMonstershooted() == null )
+			if(((tower.LaserTower)towerInBox).getTargetedMonster() == null )
 				return ; 
 			
 			shootingRange = util.lineToMonsterShooted(this, true ) ; 

@@ -265,7 +265,7 @@ class util {
 	 * @return a line to monster shooted
 	 */
 	static Shape lineToMonsterShooted(GreenBox gb, boolean infinite) {
-		Monster monster  = gb.towerInBox.getMonstershooted() ; 
+		Monster monster  = gb.towerInBox.findClosestEnemy() ; 
 		
 		if(monster == null )
 			return null; 
