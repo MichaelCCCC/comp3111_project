@@ -19,13 +19,21 @@ import monster.Unicorn;
 import tower.Tower;
 import tower.TowerInformation;
 
+/**
+ * @author Yomaru
+ *
+ */
 class util {
 
+	/**
+	 * a list of shape record the relationship between monsters targeted and towers in the last frame
+	 */
 	static List<Shape> lastShootingShape = new ArrayList<>( ) ; 
 	
 	/**
+	 * a function to move all monsters
 	 * @param monsters
-	 * @return
+	 * @return whether the monsters are successfully moved
 	 */
 	
 	static boolean moveMonsters(List<Monster> monsters) {
@@ -53,6 +61,7 @@ class util {
 			
 	}
 	/**
+	 * a function to change the direction of a monster 
 	 * @param monster
 	 */
 	private static void changeDirection(Monster monster) {
@@ -78,6 +87,12 @@ class util {
 		}
 	}
 	
+	/**
+	 * A function to refresh the list of monsters and towers to make sure there isn't any null in the list.
+	 * Then refresh every tooptip of monsters because monsters can be shot in this frame.
+	 * @param a list of monsters
+	 * @param a list of towers
+	 */
 	private static void refreshLists(List<Monster> monsters, List <Tower> towers) {
 		
 		for(int i = 0 ; i < monsters.size() ; i++)
@@ -97,8 +112,9 @@ class util {
 	}
 
 	/**
-	 * @param monsters
-	 * @param towers
+	 * A function to make sure every elements in the list of monsters and towers are shown, no matter what the status of the elements are. 
+	 * @param a list of monsters
+	 * @param a list of towers
 	 * @param paneArena
 	 */
 	static void showAllObjects(List<Monster> monsters, List<Tower> towers ,AnchorPane paneArena) {
@@ -113,8 +129,10 @@ class util {
 	}
 
 	/**
-	 * @param monsters
-	 * @param towers
+	 * a function that allow each tower to attack monsters, record the monsters which are attacked, and then show the relationship between the monsters and towers in this frame.
+	 * @param the list of monsters
+	 * @param the list of towers
+	 * @param paneArena
 	 */
 	static void towersAttack(List<Monster> monsters, List<Tower> towers, AnchorPane paneArena) {
 		if(monsters.size() == 0 || towers.size() == 0)
@@ -136,8 +154,8 @@ class util {
 				Monster monster = monsters.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
 				System.out.println( tower.name + "@(" + gb.getTowerX() + "," + gb.getTowerY() + ") -> " + monster.name + "@(" + monster.getX() + "," + monster.getY()+")");
-				if(lineToMonsterShooted(gb, false ) != null)
-					lastShootingShape.add(lineToMonsterShooted(gb, false )) ; 
+				if(lineToMonsterShot(gb, false ) != null)
+					lastShootingShape.add(lineToMonsterShot(gb, false )) ; 
 				//the number of line to monsters shooted should be the same as monster shooted
 			} 
 			
@@ -154,6 +172,7 @@ class util {
 	}
 	
 	/**
+	 * A function to generate a monster randomly, and then show it on Arena
 	 * @param paneArena
 	 */
 	static void generateMonsters(AnchorPane paneArena) {
@@ -185,7 +204,8 @@ class util {
 	}
 
 	/**
-	 * @return
+	 * A function to determine whether the game is ended. 
+	 * @return whether the game is end
 	 */
 	static boolean decideEndGame() {
 		for(int i = 0 ; i < MyController.monsters.size() ; i++) {
@@ -196,8 +216,9 @@ class util {
 	}
 	
 	/**
+	 * A function to get tower initial information and then return it as a readable string 
 	 * @param towerInformation
-	 * @return
+	 * @return a string of tower information
 	 */
 	static String getTowerTooltipString(TowerInformation towerInformation ) {
 		String result = "" ; 
@@ -214,6 +235,7 @@ class util {
 	}
 	
 	/**
+	 * A function to get the current information of the tower
 	 * @param towerInformation
 	 * @param target: should be a label 
 	 * @return tooltip
@@ -240,10 +262,11 @@ class util {
 	}
 	
 	/**
+	 * A function to get the tooltip string of the tower source label 
 	 * @param label
 	 * @param towerInformation
 	 * @param sources
-	 * @return
+	 * @return tooptip 
 	 */
 	static String sourceLabelGetTooltip(Label label, TowerInformation[] towerInformation, Label[] sources) {
 		int towerType = -1 ; 
@@ -254,6 +277,11 @@ class util {
 		return getTowerTooltipString(towerInformation[towerType]) ; 
 }
 	
+	/**
+	 * A function to generate a line from the green box to first monster alive in the monster list. If there is no monster in the list, it will return null.
+	 * @param greenbox
+	 * @return a line to first monster alive or null
+	 */
 	static Shape lineToFirstMonsterAlive(GreenBox gb) {
 		if(MyController.monsters.size() > 0  )
 		{
@@ -270,11 +298,12 @@ class util {
 	}
 	
 	/**
+	 * A monster to the closest enemy
 	 * @param green box that contain laser tower
 	 * @return a line to monster shooted
 	 */
-	static Shape lineToMonsterShooted(GreenBox gb, boolean infinite) {
-		Monster monster  = gb.towerInBox.findClosestEnemy()  ; 
+	static Shape lineToMonsterShot(GreenBox gb, boolean infinite) {
+		Monster monster  = gb.towerInBox.findClosestEnemy()  ; //in fact, this should be monster targeted
 		
 		if(monster == null)
 			return null; 
@@ -296,6 +325,10 @@ class util {
 		//return lineToFirstMonster(gb) ;
 	}
 	
+	/**
+	 * A function to scan through the list of monster to see whether the monster is dead or not,
+	 * then change the status of monster to DEAD if yes
+	 */
 	static void checkMonsterDead() {
 		for(int i = 0; i<MyController.monsters.size(); i++) {
 			Monster monster = MyController.monsters.get(i);
@@ -309,7 +342,9 @@ class util {
 			}
 		}
 	}
+	
 	/**
+	 * A function to remove dead monster from the arena
 	 * @param paneArena
 	 */
 	static void removeDeadMonster(AnchorPane paneArena) {
@@ -322,6 +357,12 @@ class util {
 			}
 		}
 	}
+	
+	
+	/**
+	 * A function to remove last shooting shape from arena and then clear the list of shooting shape as well
+	 * @param paneArena
+	 */
 	public static void removeLastShooting(AnchorPane paneArena) {
 		for(int i = 0 ; i < lastShootingShape.size() ; i++)
 			paneArena.getChildren().remove(lastShootingShape.get(i)) ; 

@@ -446,7 +446,7 @@ public class MyController {
 	protected Shape addShootingRangeToPaneArena(Object target) { 
 		//for laser tower, shooting range need to be set every time
 		if(GreenBoxes.targetGetTower(target).getClass() == tower.LaserTower.class) {
-			GreenBoxes.targetGetGreenBox(target).setupShootingRange(GreenBoxes.targetGetTower(target), tower.LaserTower.class);
+			GreenBoxes.targetGetGreenBox(target).shootingRange = GreenBoxes.targetGetGreenBox(target).setupShootingRange(GreenBoxes.targetGetTower(target), tower.LaserTower.class);
 			System.out.println("set up successful") ; 
 		}
 		Shape shootingRange = GreenBoxes.targetGetGreenBox(target).shootingRange; 
