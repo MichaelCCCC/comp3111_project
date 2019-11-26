@@ -148,13 +148,16 @@ class GreenBox{
 		}
 		
 		if(towerClass == tower.LaserTower.class) { 
-			if(((tower.LaserTower)towerInBox).findClosestEnemy() == null )
+			if(util.lineToMonsterShooted(this, true) == null ) {
+				System.out.println("don't shoot any monster") ; 
 				return null ; 
+			}
 			
 			//shootingRange = util.lineToFirstMonsterAlive(this) ; 
 			shootingRange = util.lineToMonsterShooted(this, true);
 			shootingRange.setStyle("-fx-stroke: red;");
 		}
+		this.shootingRange = shootingRange ;
 		return shootingRange; 
 		
 	}

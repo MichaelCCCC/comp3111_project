@@ -125,7 +125,8 @@ class util {
 			Tower tower = towers.get(i);
 			List<Monster> monsterShooted  = null ; 
 			
-			if (tower.shoot() != null )
+
+			if (tower.getTargetedMonster() != null )
 				monsterShooted = tower.shoot() ; 
 			if(monsterShooted == null) //the tower hit nothing
 				continue ; 
@@ -140,16 +141,14 @@ class util {
 				//the number of line to monsters shooted should be the same as monster shooted
 			} 
 			
-			
-		
-			for(int j = 0 ; j < lastShootingShape.size() ; j++)
-			{
-				lastShootingShape.get(i).setStyle("-fx-stroke: blue; -fx-stroke-dash-array: 3 5 3 5 3 5; -fx-stroke-width: 3;\n" + 
-						"    -fx-stroke-dash-offset: 6;\n" + 
-						"    -fx-stroke-line-cap: butt;");
-				if(!paneArena.getChildren().contains(lastShootingShape.get(i)))
-				paneArena.getChildren().add(lastShootingShape.get(i)) ; 
-			}
+		}
+		for(int i = 0 ; i < lastShootingShape.size() ; i++)
+		{
+			lastShootingShape.get(i).setStyle("-fx-stroke: blue; -fx-stroke-dash-array: 3 5 3 5 3 5; -fx-stroke-width: 3;\n" + 
+					"    -fx-stroke-dash-offset: 6;\n" + 
+					"    -fx-stroke-line-cap: butt;");
+			if(!paneArena.getChildren().contains(lastShootingShape.get(i)))
+			paneArena.getChildren().add(lastShootingShape.get(i)) ; 
 		}
 		
 	}
@@ -224,7 +223,7 @@ class util {
 		Tower tower  = GreenBoxes.targetGetTower(target)  ; 
 		TowerInformation ti = tower.getInfo() ; 
 		String result = "" ; 
-		result += tower.getInfo().name + "\n"; 
+		result += ti.name + "\n"; 
 		result += "attack power: " + ti.attack_power + "\n" ; 
 		result += "building cost: " +ti.building_cost + "\n"  ;
 		result += "upgrade cost: " + ti.upgrade_cost +"\n" ; 
