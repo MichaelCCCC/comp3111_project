@@ -125,7 +125,8 @@ class util {
 			Tower tower = towers.get(i);
 			List<Monster> monsterShooted  = null ; 
 			
-			monsterShooted = tower.shoot() ; 
+			if (tower.getTargetedMonster() != null )
+				monsterShooted = tower.shoot() ; 
 			if(monsterShooted == null) //the tower hit nothing
 				continue ; 
 			
@@ -134,20 +135,19 @@ class util {
 				Monster monster = monsters.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
 				System.out.println( tower.name + "@(" + gb.getTowerX() + "," + gb.getTowerY() + ") -> " + monster.name + "@(" + monster.getX() + "," + monster.getY()+")");
-				lastShootingShape.add(lineToMonsterShooted(gb, false )) ; 
+				if(lineToMonsterShooted(gb, false ) != null)
+					lastShootingShape.add(lineToMonsterShooted(gb, false )) ; 
 				//the number of line to monsters shooted should be the same as monster shooted
 			} 
 			
-			
-		
-			for(int j = 0 ; j < lastShootingShape.size() ; j++)
-			{
-				lastShootingShape.get(i).setStyle("-fx-stroke: blue; -fx-stroke-dash-array: 3 5 3 5 3 5; -fx-stroke-width: 3;\n" + 
-						"    -fx-stroke-dash-offset: 6;\n" + 
-						"    -fx-stroke-line-cap: butt;");
-				if(!paneArena.getChildren().contains(lastShootingShape.get(i)))
-				paneArena.getChildren().add(lastShootingShape.get(i)) ; 
-			}
+		}
+		for(int i = 0 ; i < lastShootingShape.size() ; i++)
+		{
+			lastShootingShape.get(i).setStyle("-fx-stroke: blue; -fx-stroke-dash-array: 3 5 3 5 3 5; -fx-stroke-width: 3;\n" + 
+					"    -fx-stroke-dash-offset: 6;\n" + 
+					"    -fx-stroke-line-cap: butt;");
+			if(!paneArena.getChildren().contains(lastShootingShape.get(i)))
+			paneArena.getChildren().add(lastShootingShape.get(i)) ; 
 		}
 		
 	}
@@ -200,7 +200,7 @@ class util {
 	 */
 	static String getTowerTooltipString(TowerInformation towerInformation ) {
 		String result = "" ; 
-		result += towerInformation.name ; 
+		result += towerInformation.name + "\n" ; 
 		result += "attack power: " + towerInformation.attack_power + "\n" ; 
 		result += "building cost: " + towerInformation.building_cost + "\n"  ;
 		result += "upgrade cost: " + towerInformation.upgrade_cost +"\n" ; 
@@ -219,20 +219,22 @@ class util {
 	 */
 	static String getTowerTooltipString(TowerInformation towerInformation, Object target) {
 		Class<? extends Tower> temp = GreenBoxes.targetGetTower(target).getClass() ; 
+		Tower tower  = GreenBoxes.targetGetTower(target)  ; 
+		TowerInformation ti = tower.getInfo() ; 
 		String result = "" ; 
-		result += towerInformation.name ; 
-		result += "attack power: " + towerInformation.attack_power + "\n" ; 
-		result += "building cost: " + towerInformation.building_cost + "\n"  ;
-		result += "upgrade cost: " + towerInformation.upgrade_cost +"\n" ; 
+		result += ti.name + "\n"; 
+		result += "attack power: " + ti.attack_power + "\n" ; 
+		result += "building cost: " +ti.building_cost + "\n"  ;
+		result += "upgrade cost: " + ti.upgrade_cost +"\n" ; 
 		if( temp  == tower.LaserTower.class)
-			result += "attack cost: " + ((tower.LaserTower)GreenBoxes.targetGetTower(target)).getAttackCost() + "\n" ; 
+			result += "attack cost: " + ((tower.LaserTower)tower).getAttackCost() + "\n" ; 
 		if (temp == tower.Tower.class || temp == tower.IceTower.class)
-			result += "shooting range: " + towerInformation.shooting_range + "\n"  ; 
+			result += "shooting range: " + ti.shooting_range + "\n"  ; 
 		if  (temp == tower.Catapult.class)
-			result += "shooting range: " + ((tower.Catapult)GreenBoxes.targetGetTower(target)).shortDistance + " to " + ((tower.Catapult)GreenBoxes.targetGetTower(target)).shortDistance + "\n"; 
-		result += "upgrade difference: " + towerInformation.upgrade_diff + "\n" ; 
-		result += "tier: " + towerInformation.tier + "\n" ; 
-		result += "note: " + towerInformation.comment + "\n" ; 
+			result += "shooting range: " + ((tower.Catapult)tower).shortDistance + " to " + ((tower.Catapult)tower).shortDistance + "\n"; 
+		result += "upgrade difference: " + ti.upgrade_diff + "\n" ; 
+		result += "tier: " + ti.tier + "\n" ; 
+		result += "note: " + ti.comment + "\n" ; 
 		return result ; 
 	}
 	
@@ -251,10 +253,16 @@ class util {
 		return getTowerTooltipString(towerInformation[towerType]) ; 
 }
 	
-	static Shape lineToFirstMonster(GreenBox gb) {
-		if(MyController.monsters.size() != 0 )
+	static Shape lineToFirstMonsterAlive(GreenBox gb) {
+		if(MyController.monsters.size() > 0  )
 		{
-			Monster monster = MyController.monsters.get(0) ; 
+			Monster monster = null ; 
+			for(int i = 0 ; i < MyController.monsters.size() ; i++)
+				if(MyController.monsters.get(i).getStatus() == Status.ALIVE ) 
+				{
+					monster = MyController.monsters.get(i); 
+					break  ; 
+				}
 			return new Line(gb.getTowerX(), gb.getTowerY() , monster.getX(),monster.getY()) ; 
 		}
 		return null ; 
@@ -265,10 +273,13 @@ class util {
 	 * @return a line to monster shooted
 	 */
 	static Shape lineToMonsterShooted(GreenBox gb, boolean infinite) {
-		Monster monster  = gb.towerInBox.findClosestEnemy() ; 
+		Monster monster  = gb.towerInBox.findClosestEnemy()  ; 
 		
-		if(monster == null )
+		if(monster == null)
 			return null; 
+		if(monster.getStatus() == Status.DEAD)
+			return null ; 
+		
 		double x = gb.getTowerX() ; 
 		double y = gb.getTowerY() ; 
 		double xp = (monster.getX()) ; 

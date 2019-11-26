@@ -54,7 +54,7 @@ public class Tower {
 	
 	//	Get Tower Information
 	public TowerInformation getInfo() {
-		return new TowerInformation(NAME,attack_power, building_cost, upgrade_cost, shooting_range, upgrade_diff, tier, comment);
+		return new TowerInformation(name,attack_power, building_cost, upgrade_cost, shooting_range, upgrade_diff, tier, comment);
 	}
 	
 	//	Set Tower Attack Power

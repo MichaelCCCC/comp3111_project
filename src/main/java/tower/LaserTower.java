@@ -11,7 +11,7 @@ public class LaserTower extends Tower{
 	public static final String NAME = "Laser Tower";
 	int attack_cost;
 	
-	public static TowerInformation LaserTowerInit = new TowerInformation(NAME,10, 100, 100, 15, 10, 1, "This is Laser Tower");
+	public static TowerInformation LaserTowerInit = new TowerInformation(NAME,4, 300, 100, 1000, 10, 1, "This is Laser Tower");
 	
 	//	Constructor with default parameters
 	public LaserTower(int x, int y) {
