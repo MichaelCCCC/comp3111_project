@@ -21,9 +21,9 @@ class GreenBox{
 	Shape shootingRange = null ; 
 	
 	/**
-	 * @param label
-	 * @param v
-	 * @param h
+	 * @param the label of the box
+	 * @param the v of the grid array
+	 * @param the h of the grid array
 	 */
 	GreenBox(Label label, int v, int h){
 		this.gbLabel = label; 
@@ -32,7 +32,8 @@ class GreenBox{
 	}
 	
 	/**
-	 * @return
+	 * remove the tower in this green box 
+	 * @return  a boolean of whether removal is successful
 	 */
 	boolean destroyTower() {
 		if(towerInBox != null) {
@@ -48,7 +49,8 @@ class GreenBox{
 	}
 	
 	/**
-	 * @return
+	 * make a copy of the green box label 
+	 * @return a label which is a copy of green box label
 	 */
 	Label copyOfLabel() {
 		Label copy = new Label () ; 

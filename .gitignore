@@ -1,3 +1,8 @@
 /bin/
 /.gradle/
 /build/
+
+.classpath
+.gradle
+.settings
+build/classes/java/main/sample
