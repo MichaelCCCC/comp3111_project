@@ -3,6 +3,7 @@ import java.lang.Math;
 import java.lang.String;
 import java.util.List;
 import monster.Monster;
+import monster.Monster.Status;
 import sample.MyController;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class Tower {
 	
 	
 	public TowerInformation getInfo() {
-		return new TowerInformation(name,attack_power,building_cost, upgrade_cost,shooting_range,upgrade_diff,tier,comment) ;
+		return new TowerInformation(name,attack_power, building_cost, upgrade_cost, shooting_range, upgrade_diff, tier, comment);
 	}
 	
 	//	Set Tower Attack Power
@@ -114,17 +115,19 @@ public class Tower {
 		double closestEnemyDistance = Double.MAX_VALUE;
 		for(int i=0; i<MyController.monsters.size(); ++i) {
 			double dist = distance(MyController.monsters.get(i));
-			if(dist < closestEnemyDistance) {
-				closestEnemyDistance = distance(MyController.monsters.get(i));
-				closestEnemy = MyController.monsters.get(i);
-			}
-			else if(dist == closestEnemyDistance) {
-				if(MyController.monsters.get(i).getX() > closestEnemy.getX()) {
+			if(MyController.monsters.get(i).getStatus() == Status.ALIVE) {				
+				if(dist < closestEnemyDistance) {
+					closestEnemyDistance = distance(MyController.monsters.get(i));
 					closestEnemy = MyController.monsters.get(i);
 				}
-				else if(MyController.monsters.get(i).getX() == closestEnemy.getX()) {
-					if(MyController.monsters.get(i).getY() < closestEnemy.getY()) {
+				else if(dist == closestEnemyDistance) {
+					if(MyController.monsters.get(i).getX() > closestEnemy.getX()) {
 						closestEnemy = MyController.monsters.get(i);
+					}
+					else if(MyController.monsters.get(i).getX() == closestEnemy.getX()) {
+						if(MyController.monsters.get(i).getY() < closestEnemy.getY()) {
+							closestEnemy = MyController.monsters.get(i);
+						}
 					}
 				}
 			}

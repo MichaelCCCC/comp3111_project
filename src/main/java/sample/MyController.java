@@ -91,7 +91,7 @@ public class MyController {
     /*
      * current money amount of player
      */
-    static Integer money = INIT_MONEY ; 
+    public static Integer money = INIT_MONEY ; 
     
     /*
      * current number of frame
@@ -435,13 +435,16 @@ public class MyController {
 	}
 
 	/**
+	 * when 
 	 * @param target
 	 * @return shape of shooting range
 	 */
 	protected Shape addShootingRangeToPaneArena(Object target) { 
 		//for laser tower, shooting range need to be set every time
-		if(GreenBoxes.targetGetTower(target).getClass() == tower.LaserTower.class)
+		if(GreenBoxes.targetGetTower(target).getClass() == tower.LaserTower.class) {
 			GreenBoxes.targetGetGreenBox(target).setupShootingRange(GreenBoxes.targetGetTower(target), tower.LaserTower.class);
+			System.out.println("set up successful") ; 
+		}
 		Shape shootingRange = GreenBoxes.targetGetGreenBox(target).shootingRange; 
 		if(shootingRange == null ) 
 		{

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import monster.Monster;
+import monster.Monster.Status;
 import sample.MyController;
 
 public class Catapult extends Tower{
@@ -25,18 +26,20 @@ public class Catapult extends Tower{
 		Monster closestEnemy = null;
 		double closestEnemyDistance = Double.MAX_VALUE;
 		for(int i=0; i<MyController.monsters.size(); ++i) {
-			double dist = distance(MyController.monsters.get(i));
-			if(dist < closestEnemyDistance && dist > shortDistance && dist < longDistance) {
-				closestEnemyDistance = dist;
-				closestEnemy = MyController.monsters.get(i);
-			}
-			else if(dist == closestEnemyDistance) {
-				if(MyController.monsters.get(i).getX() > closestEnemy.getX()) {
+			if(MyController.monsters.get(i).getStatus() == Status.ALIVE) {				
+				double dist = distance(MyController.monsters.get(i));
+				if(dist < closestEnemyDistance && dist > shortDistance && dist < longDistance) {
+					closestEnemyDistance = dist;
 					closestEnemy = MyController.monsters.get(i);
 				}
-				else if(MyController.monsters.get(i).getX() == closestEnemy.getX()) {
-					if(MyController.monsters.get(i).getY() < closestEnemy.getY()) {
+				else if(dist == closestEnemyDistance) {
+					if(MyController.monsters.get(i).getX() > closestEnemy.getX()) {
 						closestEnemy = MyController.monsters.get(i);
+					}
+					else if(MyController.monsters.get(i).getX() == closestEnemy.getX()) {
+						if(MyController.monsters.get(i).getY() < closestEnemy.getY()) {
+							closestEnemy = MyController.monsters.get(i);
+						}
 					}
 				}
 			}
