@@ -76,15 +76,21 @@ public class LaserTower extends Tower{
 			int x_diff2 = current.getX() - x;
 			int y_diff2 = current.getY() - y;
 			
-			if(y_diff2/x_diff2 == y_diff/x_diff) {
+			if(x_diff == 0 || x_diff2 == 0) {
+				if(((x_diff == 0 && x_diff2 == 0) && (y_diff < 0 && y_diff2 < 0) || (y_diff > 0 && y_diff2 > 0))) {
+					if(pointToLine(closestEnemy,current) <= 3) {
+						targetedMonster.add(current);
+					}
+				}
+			}
+			else if(y_diff2/x_diff2 == y_diff/x_diff) {
 				if((x_diff < 0 && x_diff2 <0) || (x_diff > 0 && x_diff2 >0)) {
-					if((y_diff < 0 && y_diff2 <0) || (y_diff > 0 && y_diff2 >0)) {
+					if((y_diff < 0 && y_diff2 < 0) || (y_diff > 0 && y_diff2 > 0) || (y_diff == 0 && y_diff2 == 0)) {
 						if(pointToLine(closestEnemy,current) <= 3) {
 							targetedMonster.add(current);
 						}
 					}
-				}
-				
+				}	
 			}
 		}
 		return targetedMonster;
@@ -92,6 +98,7 @@ public class LaserTower extends Tower{
 	
 
 	public List<Monster> shoot() {
+		System.out.println("--LASER SHOOT++");
 		List<Monster> targetedMonster = getTargetedMonster();
 		for(int i=0; i<targetedMonster.size(); ++i) {
 			targetedMonster.get(i).damage(attack_power) ; 
