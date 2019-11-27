@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-
+import monster.Fox;
 import monster.Monster;
 import monster.Monster.Status;
 import sample.MyController;
@@ -49,23 +49,23 @@ public class LaserTest extends ApplicationTest{
 		
 		assertEquals(t.getTargetedMonster(), null);
 		
-		MyController.monsters.add(new Monster("m1",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(0).move(5, 5);
 		
-		MyController.monsters.add(new Monster("m2",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(1).move(10, 10);
 		
-		MyController.monsters.add(new Monster("m3",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(2).move(15, 15);
 		
 		assertEquals(t.getTargetedMonster().get(0), MyController.monsters.get(0));
 		assertEquals(t.getTargetedMonster().get(1), MyController.monsters.get(1));
 		assertEquals(t.getTargetedMonster().get(2), MyController.monsters.get(2));
 		
-		MyController.monsters.add(new Monster("m4",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(3).move(-5, -5);
 		
-		MyController.monsters.add(new Monster("m5",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(4).move(-5, 5);
 
 		assertEquals(t.getTargetedMonster().get(0), MyController.monsters.get(0));
@@ -76,10 +76,10 @@ public class LaserTest extends ApplicationTest{
 		
 		MyController.monsters.clear();
 		
-		MyController.monsters.add(new Monster("m1",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(0).move(0, 2);
 		
-		MyController.monsters.add(new Monster("m2",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(1).move(0, 5);
 		
 		assertEquals(t.getTargetedMonster().get(0), MyController.monsters.get(0));
@@ -89,13 +89,13 @@ public class LaserTest extends ApplicationTest{
 		
 		MyController.monsters.clear();
 		
-		MyController.monsters.add(new Monster("m1",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(0).move(0, -2);
 		
-		MyController.monsters.add(new Monster("m2",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(1).move(0, -5);
 		
-		MyController.monsters.add(new Monster("m3",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(2).move(0, -5);
 		MyController.monsters.get(2).setStatus(Status.DEAD);
 		
@@ -111,13 +111,13 @@ public class LaserTest extends ApplicationTest{
 		
 		assertEquals(t.shoot(), null); // No Target
 		
-		MyController.monsters.add(new Monster("m1",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(0).move(5, 5);
 		
-		MyController.monsters.add(new Monster("m2",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(1).move(10, 10);
 		
-		MyController.monsters.add(new Monster("m3",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(2).move(15, 15);
 		
 		int prevHP1 = MyController.monsters.get(0).getHP();

@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-
+import monster.Fox;
 import monster.Monster;
 import monster.Monster.Status;
 import sample.MyController;
@@ -93,21 +93,21 @@ public class TowerTest extends ApplicationTest{
 		Label lbl = new Label("L");
 		
 		MyController.monsters.clear();
-		MyController.monsters.add(new Monster("m1",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(0).move(8, 15);
 		assertEquals(t.findClosestEnemy(), MyController.monsters.get(0));
 		
-		MyController.monsters.add(new Monster("m2", 10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(1).move(5, 12);
 		assertEquals(MyController.monsters.get(1).getX(), 5);
 		assertEquals(MyController.monsters.get(1).getY(), 12);
 		assertEquals(t.findClosestEnemy(), MyController.monsters.get(1));
 		
-		MyController.monsters.add(new Monster("m3", 10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(2).move(7, 24);
 		assertEquals(t.findClosestEnemy(), MyController.monsters.get(1));
 		
-		MyController.monsters.add(new Monster("m4", 10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(3).move(13, 0);
 		assertEquals(t.findClosestEnemy(), MyController.monsters.get(3));
 		
@@ -125,7 +125,7 @@ public class TowerTest extends ApplicationTest{
 		
 		assertEquals(t.getTargetedMonster(), null);
 		
-		MyController.monsters.add(new Monster("m1",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(0).move(8, 15);
 		t.setShootingRange(100);
 		assertEquals(t.getTargetedMonster().get(0), MyController.monsters.get(0));
@@ -142,7 +142,7 @@ public class TowerTest extends ApplicationTest{
 		
 		assertEquals(t.shoot(), null);
 		
-		MyController.monsters.add(new Monster("m1",10, 2, lbl));
+		MyController.monsters.add(new Fox(lbl,0));
 		MyController.monsters.get(0).move(8, 15);
 		int prevHP = MyController.monsters.get(0).getHP();
 		t.setShootingRange(100);
