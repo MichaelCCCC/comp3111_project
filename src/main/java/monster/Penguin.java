@@ -20,6 +20,7 @@ public class Penguin extends Monster {
 			heal(DEDAULT_PENGUIN_HEAL);			
 		}
 	}
+	@Override
 	public void heal(int heal) {
 		this.HP += heal;
 	}

@@ -85,5 +85,8 @@ public class Monster {
 			return true ; 
 		return false;
 	}
+	public void heal(int heal) {
+		
+	}
 }
 
