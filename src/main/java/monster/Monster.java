@@ -21,9 +21,9 @@ public class Monster {
 	private Status status;
 	public String name = null ; 
 	
-	public Monster(String id,int _HP, int _speed, Label _label) {
+	public Monster(String id,int _HP, int _speed, Label _label, int num_frame) {
 		name = id ; 
-		HP = _HP;
+		HP = _HP + num_frame/5;
 		speed = _speed;
 		x = DEFAULT_X;
 		y = DEFAULT_Y;
@@ -84,6 +84,9 @@ public class Monster {
 		if(x >= MyController.zones.get(1).getLayoutX())
 			return true ; 
 		return false;
+	}
+	public void heal(int heal) {
+		
 	}
 }
 

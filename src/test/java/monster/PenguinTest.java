@@ -3,7 +3,7 @@
  * You might want to uncomment the following code to learn testFX. Sorry, no tutorial session on this.
  * 
  */
-package sample;
+package monster;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,10 +15,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sample.ImageFunction;
+import sample.MyController;
 import javafx.fxml.FXMLLoader;
  
 
-public class FxTest extends ApplicationTest {
+public class PenguinTest extends ApplicationTest {
 
 	private Scene s;
 
@@ -31,20 +33,32 @@ public class FxTest extends ApplicationTest {
         primaryStage.setScene(s);
         primaryStage.show();
         MyController appController = (MyController)loader.getController();
-        appController.createArena();   		
+        appController.createArena();   	
+      
+	}
+	
+	@Test
+	public void testPenguinMove() {
+		double gridX = 1/4  ;
+		double gridY = 1/4 ; 
+		Label monsterLabel = ImageFunction.setImageToLabel("Penguin", gridX, gridY) ;
+			
+		Penguin monster = new Penguin(monsterLabel, 0);
+		monster.damage(2);
+		monster.move(20, 40);
+		Assert.assertEquals(monster.getHP(),10);
+	}
+	
+	@Test
+	public void testPenguinHeal() {
+		double gridX = 1/4  ;
+		double gridY = 1/4 ; 
+		Label monsterLabel = ImageFunction.setImageToLabel("Penguin", gridX, gridY) ;
+			
+		Penguin monster = new Penguin(monsterLabel, 0);
+		monster.heal(2);
+		Assert.assertEquals(monster.getHP(),12);
 	}
 
-	
-//	@Test
-//	public void testNextFrameButton() {
-//		clickOn("#buttonNextFrame");
-//		AnchorPane b = (AnchorPane)s.lookup("#paneArena");
-//		for (javafx.scene.Node i : b.getChildren()) {
-//			if (i.getClass().getName().equals("javafx.scene.control.Label")) {
-//				Label h = (Label)i;
-//				if (h.getLayoutX() == 0 && h.getLayoutY() == 0)
-//					Assert.assertEquals(h.getText(), "M");
-//			}
-//		}
-//	}
+
 }

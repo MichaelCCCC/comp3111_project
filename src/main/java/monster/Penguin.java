@@ -7,8 +7,8 @@ public class Penguin extends Monster {
 	public static final int DEFAULT_PENGUIN_SPEED = 20;
 	public static final int DEDAULT_PENGUIN_HEAL = 2;
 	public static final String NAME = "Penguin" ; 
-	public Penguin(Label label) {
-		super(NAME, DEFAULT_PENGUIN_HP,DEFAULT_PENGUIN_HP,label);
+	public Penguin(Label label, int num_frame) {
+		super(NAME, DEFAULT_PENGUIN_HP,DEFAULT_PENGUIN_HP,label, num_frame);
 	}
 	@Override
 	public void move(int _x, int _y) {
@@ -20,6 +20,7 @@ public class Penguin extends Monster {
 			heal(DEDAULT_PENGUIN_HEAL);			
 		}
 	}
+	@Override
 	public void heal(int heal) {
 		this.HP += heal;
 	}
