@@ -154,7 +154,6 @@ class util {
 				continue ; 
 			
 			//if the tower hit somethings
-			//System.out.println("there are " + monstersShot.size() + "target monsters" );
 			for(int j = 0 ; j < monstersShot.size() ; j++) {
 				Monster monster = monstersShot.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 

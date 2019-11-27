@@ -218,6 +218,7 @@ public class MyController {
     	}
     	
     	setLabelFrame(num_frame) ; 
+    	setLabelMoney(money);
         
     }
     

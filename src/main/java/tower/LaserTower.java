@@ -9,7 +9,7 @@ import sample.MyController;
 
 public class LaserTower extends Tower{
 	public static final String NAME = "Laser Tower";
-	int attack_cost;
+	public int attack_cost;
 	
 	public static TowerInformation LaserTowerInit = new TowerInformation(NAME,4, 300, 100, 1000, 10, 1, "This is Laser Tower");
 	
@@ -27,7 +27,7 @@ public class LaserTower extends Tower{
 	}
 	
 	//	Update Cost of Shooting with Laser Tower
-	void setAttackCost(int attack_cost) {
+	public void setAttackCost(int attack_cost) {
 		this.attack_cost = attack_cost;
 	}
 	
@@ -40,69 +40,53 @@ public class LaserTower extends Tower{
 		return (int) (distance(point) * Math.sin(Math.acos(cosine)));
 	}
 	
-	public Monster findClosestEnemy() {
-		Monster closestEnemy = null;
-		double closestEnemyDistance = Double.MAX_VALUE;
-		for(int i=0; i<MyController.monsters.size(); ++i) {
-			if(MyController.monsters.get(i).getStatus() == Status.ALIVE) {				
-				double dist = distance(MyController.monsters.get(i));
-				if(dist < closestEnemyDistance) {
-					closestEnemyDistance = dist;
-					closestEnemy = MyController.monsters.get(i);
-				}
-				else if(dist == closestEnemyDistance) {
-					if(MyController.monsters.get(i).getX() > closestEnemy.getX()) {
-						closestEnemy = MyController.monsters.get(i);
-					}
-					else if(MyController.monsters.get(i).getX() == closestEnemy.getX()) {
-						if(MyController.monsters.get(i).getY() < closestEnemy.getY()) {
-							closestEnemy = MyController.monsters.get(i);
-						}
-					}
-				}
-			}
-		}
-		return closestEnemy;
-	}
-	
 	public List<Monster> getTargetedMonster() {
 		List<Monster> targetedMonster = new ArrayList<Monster>();
 		Monster closestEnemy = findClosestEnemy();
+		if(closestEnemy == null) return null;		
 		int x_diff = closestEnemy.getX() - x;
 		int y_diff = closestEnemy.getY() - y;
-		
+
 		for(int i=0; i<MyController.monsters.size(); ++i) {	
 			Monster current = MyController.monsters.get(i);
 			int x_diff2 = current.getX() - x;
 			int y_diff2 = current.getY() - y;
 			
-			if(x_diff == 0 || x_diff2 == 0) {
-				if(((x_diff == 0 && x_diff2 == 0) && (y_diff < 0 && y_diff2 < 0) || (y_diff > 0 && y_diff2 > 0))) {
-					if(pointToLine(closestEnemy,current) <= 3) {
-						targetedMonster.add(current);
-					}
-				}
-			}
-			else if(y_diff2/x_diff2 == y_diff/x_diff) {
-				if((x_diff < 0 && x_diff2 <0) || (x_diff > 0 && x_diff2 >0)) {
-					if((y_diff < 0 && y_diff2 < 0) || (y_diff > 0 && y_diff2 > 0) || (y_diff == 0 && y_diff2 == 0)) {
+			if(MyController.monsters.get(i).getStatus() == Status.ALIVE) {					
+				if(x_diff == 0 || x_diff2 == 0) {
+					if((x_diff == 0 && x_diff2 == 0) && ((y_diff < 0 && y_diff2 < 0) || (y_diff > 0 && y_diff2 > 0))) {
 						if(pointToLine(closestEnemy,current) <= 3) {
 							targetedMonster.add(current);
 						}
 					}
-				}	
+				}
+				else if(y_diff2/x_diff2 == y_diff/x_diff) {
+					if((x_diff < 0 && x_diff2 <0) || (x_diff > 0 && x_diff2 >0)) {
+						if((y_diff < 0 && y_diff2 < 0) || (y_diff > 0 && y_diff2 > 0) || (y_diff == 0 && y_diff2 == 0)) {
+							if(pointToLine(closestEnemy,current) <= 3) {
+								targetedMonster.add(current);
+							}
+						}
+					}	
+				}
 			}
 		}
+		
+		
+		if(targetedMonster.size() == 0 )
+			targetedMonster = null ; 
+		
 		return targetedMonster;
 	}
 	
 
 	public List<Monster> shoot() {
-		System.out.println("--LASER SHOOT++");
 		List<Monster> targetedMonster = getTargetedMonster();
+		if(targetedMonster == null) return targetedMonster;
 		for(int i=0; i<targetedMonster.size(); ++i) {
 			targetedMonster.get(i).damage(attack_power) ; 
 		}
+		MyController.money -= attack_cost;
 		return targetedMonster; 
 	}
 
