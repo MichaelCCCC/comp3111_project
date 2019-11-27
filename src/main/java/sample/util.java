@@ -141,25 +141,34 @@ class util {
 		
 		for(int i = 0 ; i < towers.size() ; i++) {
 			Tower tower = towers.get(i);
-			List<Monster> monsterShooted  = null ; 
+			List<Monster> monstersShot  = null ; 
 			
 
-			if (tower.getTargetedMonster() != null )
-				monsterShooted = tower.shoot() ; 
-			if(monsterShooted == null) //the tower hit nothing
+			if (tower.getTargetedMonster() != null ) {
+				monstersShot = tower.shoot() ; 
+			}
+			else	System.out.println("no targeted monster");
+			if(monstersShot == null) //the tower hit nothing
 				continue ; 
 			
 			//if the tower hit somethings
-			for(int j = 0 ; j < monsterShooted.size() ; j++) {
-				Monster monster = monsters.get(j) ; 
+			for(int j = 0 ; j < monstersShot.size() ; j++) {
+				Monster monster = monstersShot.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
 				System.out.println( tower.name + "@(" + gb.getTowerX() + "," + gb.getTowerY() + ") -> " + monster.name + "@(" + monster.getX() + "," + monster.getY()+")");
-				if(lineToMonsterShot(gb, false ) != null)
-					lastShootingShape.add(lineToMonsterShot(gb, false )) ; 
+				if(lineToMonsterShot(gb, monster, false ) != null) {
+					lastShootingShape.add(lineToMonsterShot(gb, monster, false )) ; 
+					
+					System.out.println("add shape") ; 
+				}
+				// if(lineToFirstMonsterAlive(gb) != null) {
+				//lastShootingShape.add(lineToFirstMonsterAlive(gb)) ; 
+				//}
 				//the number of line to monsters shooted should be the same as monster shooted
 			} 
 			
 		}
+	
 		for(int i = 0 ; i < lastShootingShape.size() ; i++)
 		{
 			lastShootingShape.get(i).setStyle("-fx-stroke: blue; -fx-stroke-dash-array: 3 5 3 5 3 5; -fx-stroke-width: 3;\n" + 
@@ -297,6 +306,7 @@ class util {
 		return null ; 
 	}
 	
+	
 	/**
 	 * A monster to the closest enemy
 	 * @param green box that contain laser tower
@@ -304,11 +314,21 @@ class util {
 	 */
 	static Shape lineToMonsterShot(GreenBox gb, boolean infinite) {
 		Monster monster  = gb.towerInBox.findClosestEnemy()  ; //in fact, this should be monster targeted
+		return lineToMonsterShot(gb, monster, infinite)  ;
+	}
+	
+	/**
+	 * A monster to the closest enemy
+	 * @param green box that contain laser tower
+	 * @return a line to monster shooted
+	 */
+	static Shape lineToMonsterShot(GreenBox gb, Monster monster, boolean infinite) {
 		
-		if(monster == null)
+		if(monster == null || monster.getStatus() == Status.DEAD)
+		{
+			System.out.println("no monsters shot in lineToMonsterShot") ; 
 			return null; 
-		if(monster.getStatus() == Status.DEAD)
-			return null ; 
+		}
 		
 		double x = gb.getTowerX() ; 
 		double y = gb.getTowerY() ; 
@@ -366,7 +386,8 @@ class util {
 	public static void removeLastShooting(AnchorPane paneArena) {
 		for(int i = 0 ; i < lastShootingShape.size() ; i++)
 			paneArena.getChildren().remove(lastShootingShape.get(i)) ; 
-		lastShootingShape.clear(); ; 
+		lastShootingShape.clear(); 
+		System.out.println("clear shape");
 	}
 	
 	
