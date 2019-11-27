@@ -132,7 +132,7 @@ class util {
 			
 			//if the tower hit somethings
 			for(int j = 0 ; j < monsterShooted.size() ; j++) {
-				Monster monster = monsters.get(j) ; 
+				Monster monster = monsterShooted.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
 				System.out.println( tower.name + "@(" + gb.getTowerX() + "," + gb.getTowerY() + ") -> " + monster.name + "@(" + monster.getX() + "," + monster.getY()+")");
 				if(lineToMonsterShooted(gb, false ) != null)

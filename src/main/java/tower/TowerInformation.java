@@ -10,12 +10,12 @@ public class TowerInformation {
 	public int tier;
 	public String comment;
 	
-	TowerInformation(String name , int attack_power, int building_cost, int upgrade_cost, int shooting_range2, int upgrade_diff, int tier, String comment) {
+	TowerInformation(String name , int attack_power, int building_cost, int upgrade_cost, int shooting_range, int upgrade_diff, int tier, String comment) {
 		this.name = name ; 
 		this.attack_power = attack_power;
 		this.building_cost = building_cost;
 		this.upgrade_cost = upgrade_cost;
-		this.shooting_range = shooting_range2;
+		this.shooting_range = shooting_range;
 		this.upgrade_diff = upgrade_diff;
 		this.tier = tier;
 		this.comment = comment;

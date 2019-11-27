@@ -122,13 +122,15 @@ public class Tower {
 				}
 				else if(dist == closestEnemyDistance) {
 					if(MyController.monsters.get(i).getX() > closestEnemy.getX()) {
+						closestEnemyDistance = distance(MyController.monsters.get(i));
 						closestEnemy = MyController.monsters.get(i);
 					}
-					else if(MyController.monsters.get(i).getX() == closestEnemy.getX()) {
-						if(MyController.monsters.get(i).getY() < closestEnemy.getY()) {
-							closestEnemy = MyController.monsters.get(i);
-						}
-					}
+//					else if(MyController.monsters.get(i).getX() == closestEnemy.getX()) {
+//						if(MyController.monsters.get(i).getY() < closestEnemy.getY()) {
+//							closestEnemyDistance = distance(MyController.monsters.get(i));
+//							closestEnemy = MyController.monsters.get(i);
+//						}
+//					}
 				}
 			}
 		}
@@ -151,6 +153,7 @@ public class Tower {
 
 	public List<Monster> shoot() {
 		List<Monster> targetedMonster = getTargetedMonster();
+		if(targetedMonster == null) return targetedMonster;
 		for(int i=0; i<targetedMonster.size(); ++i) {
 			targetedMonster.get(i).damage(attack_power) ; 
 		}
