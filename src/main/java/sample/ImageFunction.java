@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView; 
 
-class ImageFunction {
+public class ImageFunction {
 
 	static final Image BTimage = new Image("/basicTower.png") ;  
     static final Image ITimage = new Image("/iceTower.png") ; 
@@ -109,7 +109,7 @@ class ImageFunction {
 		return setImageViewMultiple(size, idReturnImage(id) , Index) ; 
 	}
 	
-	static Label setImageToLabel(String id, double gridX, double gridY) {
+	public static Label setImageToLabel(String id, double gridX, double gridY) {
 		Label newLabel = new Label() ; 
 		newLabel.setGraphic(ImageFunction.setImageView(id)) ; 
 		newLabel.setId(id);
