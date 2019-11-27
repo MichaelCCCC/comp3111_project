@@ -144,14 +144,17 @@ class util {
 			List<Monster> monstersShot  = null ; 
 			
 
-			if (tower.getTargetedMonster() != null ) {
-				monstersShot = tower.shoot() ; 
+			if (tower.getTargetedMonster() != null && tower.getTargetedMonster().size() != 0 ) {
+				monstersShot = tower.getTargetedMonster() ; 
+				tower.shoot() ; 
+				System.out.println("have target monster") ; 
 			}
 			else	System.out.println("no targeted monster");
 			if(monstersShot == null) //the tower hit nothing
 				continue ; 
 			
 			//if the tower hit somethings
+			System.out.println("there are " + monstersShot.size() + "target monsters" );
 			for(int j = 0 ; j < monstersShot.size() ; j++) {
 				Monster monster = monstersShot.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
