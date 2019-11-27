@@ -83,38 +83,41 @@ public class MyController {
     static final int MAX_H_NUM_GRID = 12;
     static final int MAX_V_NUM_GRID = 12;
     
-    /*
+    /**
      * initial amount of money
      */
     static final int INIT_MONEY = 5000 ; 
     
-    /*
+    /**
      * current money amount of player
      */
     public static Integer money = INIT_MONEY ; 
     
-    /*
+    /**
      * current number of frame
      */
     private int num_frame = 0;
     private final int TEST_FRAME = 1 ;  // by default is 1 
     private final int SPEED = 4 ; 
     
-    /*
+    /**
      * by default is 1, greater than 1 will generate one monster per frame
      */
     private double MONSTER_GENERATION_RATE = 1 ; 
     
-    /*
+    /**
      * a list of monsters
      */
 	public static List<Monster> monsters = new ArrayList<> ()  ;
 	
-	/*
+	/**
 	 * a list of towers
 	 */
 	public static List<Tower> towers = new ArrayList<> ()  ;
 
+	/**
+	 * a list of zone
+	 */
 	public static List<Label> zones = new ArrayList<>() ; 
 	/*
 	 * grid of arena
@@ -177,7 +180,8 @@ public class MyController {
     }
 
     /**
-     * 
+     * A function that proceed the game, each click will move the game by
+     * a frame
      */
     @FXML
     private void nextFrame() {
@@ -442,8 +446,8 @@ public class MyController {
 	protected Shape addShootingRangeToPaneArena(Object target) { 
 		//for laser tower, shooting range need to be set every time
 		if(GreenBoxes.targetGetTower(target).getClass() == tower.LaserTower.class) {
-			GreenBoxes.targetGetGreenBox(target).setupShootingRange(GreenBoxes.targetGetTower(target), tower.LaserTower.class);
-			System.out.println("set up successful") ; 
+			GreenBoxes.targetGetGreenBox(target).shootingRange = GreenBoxes.targetGetGreenBox(target).getShootingRangeShape(GreenBoxes.targetGetTower(target), tower.LaserTower.class);
+			//System.out.println("set up successful") ; 
 		}
 		Shape shootingRange = GreenBoxes.targetGetGreenBox(target).shootingRange; 
 		if(shootingRange == null ) 

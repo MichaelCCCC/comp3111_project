@@ -65,10 +65,17 @@ class GreenBox{
 		return copy  ;
 	}
 	
+	
+	/**
+	 * @return the x coordinate of the tower base on the green box grid x coordinate
+	 */
 	double getTowerX () {
 		return MyController.GRID_WIDTH * ((double)h + 0.5) ; 
 	}
 	
+	/**
+	 * @return the y coordinate of the tower base on the green box grid y coordinate
+	 */
 	double getTowerY () {
 		return MyController.GRID_WIDTH * ((double)v + 0.5); 
 	}
@@ -100,8 +107,8 @@ class GreenBox{
 			default : 
 			}
 	        
-	        if (setupShootingRange(towerInBox , towerInBox.getClass()) != null)
-	        		shootingRange = setupShootingRange(towerInBox , towerInBox.getClass()); 
+	        if (getShootingRangeShape(towerInBox , towerInBox.getClass()) != null)
+	        		shootingRange = getShootingRangeShape(towerInBox , towerInBox.getClass()); 
 	        
 	        if(towerInBox == null )
 	        {
@@ -123,7 +130,7 @@ class GreenBox{
 	 * @param tower
 	 * @param towerClass
 	 */
-	Shape setupShootingRange(Tower tower, Class<? extends Tower> towerClass) {
+	Shape getShootingRangeShape(Tower tower, Class<? extends Tower> towerClass) {
 		Shape shootingRange = null ; 
 		if(towerClass == Tower.class || towerClass == IceTower.class) {
 			Circle circle = new Circle () ; 
@@ -148,24 +155,17 @@ class GreenBox{
 		}
 		
 		if(towerClass == tower.LaserTower.class) { 
-			if(((tower.LaserTower)towerInBox).findClosestEnemy() == null )
-				return null ; 
-
-			if(util.lineToMonsterShooted(this, true) == null ) {
+			if(util.lineToMonsterShot(this, true) == null ) {
 				System.out.println("don't shoot any monster") ; 
 				return null ; 
 			}
 			
 			//shootingRange = util.lineToFirstMonsterAlive(this) ; 
-			shootingRange = util.lineToMonsterShooted(this, true);
+			shootingRange = util.lineToMonsterShot(this, true);
 			shootingRange.setStyle("-fx-stroke: red;");
 		}
-
-		this.shootingRange = shootingRange ;
 		return shootingRange; 
 		
 	}
 	
 }
-
-//add a comment
