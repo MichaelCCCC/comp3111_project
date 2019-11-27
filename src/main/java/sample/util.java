@@ -147,14 +147,14 @@ class util {
 			if (tower.getTargetedMonster() != null && tower.getTargetedMonster().size() != 0 ) {
 				monstersShot = tower.getTargetedMonster() ; 
 				tower.shoot() ; 
-				System.out.println("have target monster") ; 
+				//System.out.println("have target monster") ; 
 			}
-			else	System.out.println("no targeted monster");
+			//else	System.out.println("no targeted monster");
 			if(monstersShot == null) //the tower hit nothing
 				continue ; 
 			
 			//if the tower hit somethings
-			System.out.println("there are " + monstersShot.size() + "target monsters" );
+			//System.out.println("there are " + monstersShot.size() + "target monsters" );
 			for(int j = 0 ; j < monstersShot.size() ; j++) {
 				Monster monster = monstersShot.get(j) ; 
 				GreenBox gb = GreenBoxes.towerGetGreenBox(tower) ; 
@@ -162,7 +162,7 @@ class util {
 				if(lineToMonsterShot(gb, monster, false ) != null) {
 					lastShootingShape.add(lineToMonsterShot(gb, monster, false )) ; 
 					
-					System.out.println("add shape") ; 
+					//System.out.println("add shape") ; 
 				}
 				// if(lineToFirstMonsterAlive(gb) != null) {
 				//lastShootingShape.add(lineToFirstMonsterAlive(gb)) ; 
@@ -329,7 +329,7 @@ class util {
 		
 		if(monster == null || monster.getStatus() == Status.DEAD)
 		{
-			System.out.println("no monsters shot in lineToMonsterShot") ; 
+			//System.out.println("no monsters shot in lineToMonsterShot") ; 
 			return null; 
 		}
 		
@@ -390,7 +390,7 @@ class util {
 		for(int i = 0 ; i < lastShootingShape.size() ; i++)
 			paneArena.getChildren().remove(lastShootingShape.get(i)) ; 
 		lastShootingShape.clear(); 
-		System.out.println("clear shape");
+		//System.out.println("clear shape");
 	}
 	
 	

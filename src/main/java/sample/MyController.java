@@ -39,9 +39,6 @@ public class MyController {
     private Button buttonSimulate;
 
     @FXML
-    private Button buttonPlay;
-
-    @FXML
     private AnchorPane paneArena;
 
     @FXML 
@@ -224,10 +221,6 @@ public class MyController {
         
     }
     
-    @FXML
-    private void play() {
-    	
-    }
      
     /**
      * @param i
