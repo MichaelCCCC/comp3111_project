@@ -198,8 +198,8 @@ public class MyController {
             util.towersAttack(monsters, towers, paneArena) ; 
             
             //generate monster
-            if(new Random().nextInt((int)(1/MONSTER_GENERATION_RATE) + 1)==0)     	
-            	util.generateMonsters(paneArena) ; 
+            if(num_frame%2 == 0)     	
+            	util.generateMonsters(paneArena,num_frame) ; 
             
             util.checkMonsterDead();
             //show all object 

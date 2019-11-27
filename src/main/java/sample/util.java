@@ -155,7 +155,7 @@ class util {
 	/**
 	 * @param paneArena
 	 */
-	static void generateMonsters(AnchorPane paneArena) {
+	static void generateMonsters(AnchorPane paneArena, int num_frame) {
 		int i = (int)(Math.random()*((2)+1));
 		String type[] = {"Fox","Unicorn","Penguin"};
 		double gridX = 1/4  ;
@@ -168,13 +168,13 @@ class util {
 	     Monster monster = null;
 	     switch(i) {
 	     	case 0:
-	     		monster = new Fox(monsterLabel);
+	     		monster = new Fox(monsterLabel, num_frame);
 	     		break;
 	     	case 1:
-	     		monster = new Unicorn(monsterLabel);
+	     		monster = new Unicorn(monsterLabel, num_frame);
 	     		break;
 	     	case 2:
-	     		monster = new Penguin(monsterLabel);
+	     		monster = new Penguin(monsterLabel, num_frame);
 			
 	     }
 	    MyController.monsters.add(monster);
