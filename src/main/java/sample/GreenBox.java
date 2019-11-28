@@ -77,7 +77,7 @@ class GreenBox{
 	 * @return the y coordinate of the tower base on the green box grid y coordinate
 	 */
 	double getTowerY () {
-		return MyController.GRID_WIDTH * ((double)v + 0.5); 
+		return MyController.GRID_HEIGHT * ((double)v + 0.5); 
 	}
 	
 	/**
@@ -86,10 +86,6 @@ class GreenBox{
 	 */
 	Tower buildTower(String id) {
 		if(towerInBox == null) {
-			this.id = id ; 
-			ImageView iv = ImageFunction.setImageView(id) ; 
-	        gbLabel.setGraphic(iv);
-	        gbLabel.setId(id) ; 
 	        switch(id)
 			{
 			case "Basic Tower" : 
@@ -104,18 +100,20 @@ class GreenBox{
 			case "Laser Tower":
 				towerInBox = new LaserTower((int)getTowerX(),(int)getTowerY()) ;
 					break ; 
-			default : 
+			default :
+		        	Alert alert = new Alert(AlertType.ERROR, "tower is not successfully built") ;  
+		        	alert.showAndWait();
+		        	return null; 
 			}
+	        
+	        this.id = id ; 
+			ImageView iv = ImageFunction.setImageView(id) ; 
+	        gbLabel.setGraphic(iv);
+	        gbLabel.setId(id) ; 
 	        
 	        if (getShootingRangeShape(towerInBox , towerInBox.getClass()) != null)
 	        		shootingRange = getShootingRangeShape(towerInBox , towerInBox.getClass()); 
-	        
-	        if(towerInBox == null )
-	        {
-	        	Alert alert = new Alert(AlertType.ERROR, "tower is not successfully built") ;  
-	        	alert.showAndWait();
-	        	return null; 
-	        }	        
+	            
 	        //install tooltip after add towerBoxes
 	        MyController.towers.add(towerInBox ) ; 
 	        Tooltip.install(gbLabel, new Tooltip(util.getTowerTooltipString(towerInBox.getInfo())) ) ;
