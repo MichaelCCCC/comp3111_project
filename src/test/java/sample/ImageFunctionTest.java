@@ -39,10 +39,6 @@ public class ImageFunctionTest extends ApplicationTest{
 		Assert.assertNotNull(ImageFunction.idReturnImage("Unicorn")) ; 
 		Assert.assertNotNull(ImageFunction.idReturnImage("Collision"));
 		Assert.assertNull(ImageFunction.idReturnImage("ABC")) ; 
-	}
-	
-	@Test
-	public void testSetImageView() {
 		Assert.assertNotNull(ImageFunction.idReturnImage("Fox"));
 		Assert.assertNotNull(ImageFunction.idReturnImage("Penguin"));
 		Assert.assertNotNull(ImageFunction.idReturnImage("Unicorn"));

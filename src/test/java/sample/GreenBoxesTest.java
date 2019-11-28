@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tower.Catapult;
 import tower.LaserTower;
@@ -46,56 +47,28 @@ public class GreenBoxesTest extends ApplicationTest {
 	}
 	
 	@Test
-	public void testTargetGetIndex() {
-		//GreenBoxes gbs = new GreenBoxes() ; 
+	public void testTargetGetIndex() { 
+		AnchorPane paneArena = new AnchorPane()  ;
 		Assert.assertNull(GreenBoxes.targetGetIndex(null) ); 
-	}
-	
-	@Test
-	public void testTargetGetGreenBox() {
+		GreenBoxes.gbs.clear(); 
+		GreenBox gb = new GreenBox(new Label() , 0,0 )  ; 
+		GreenBoxes.gbs.add(gb) ;
+		gb.buildTower("Ice Tower") ; 
+		MyController.towers.add(gb.towerInBox)  ;
+		util.showAllObjects(MyController.monsters, MyController.towers, paneArena);
+		Assert.assertNotNull(GreenBoxes.targetGetIndex(gb.gbLabel))  ;
+		Assert.assertNotNull(GreenBoxes.targetGetGreenBox(gb.gbLabel));
+		Assert.assertTrue(GreenBoxes.targetHasTower(gb.gbLabel));
+		Assert.assertTrue(GreenBoxes.targetDestroyTower(gb.gbLabel)) ; 
+		Assert.assertFalse(GreenBoxes.targetHasTower(gb.gbLabel))  ;
+		GreenBoxes.targetV(gb.gbLabel) ; 
+		GreenBoxes.targetH(gb.gbLabel);
+		Assert.assertNotNull(GreenBoxes.targetBuildTower(gb.gbLabel, "Basic Tower"));
+		Assert.assertTrue(GreenBoxes.targetUpgradeTower(gb.gbLabel)) ; 
+		Assert.assertNotNull(GreenBoxes.targetGetTower(gb.gbLabel)) ; 
 		
 	}
 	
-	@Test
-	public void testTargetHasTower() {
-		
-	}
-	
-	@Test
-	public void testTargetVH() {
-		
-		
-	}
-	
-	@Test
-	public void testTargetUpgradeTower() {
-		
-	}
-	
-	@Test
-	public void testGreenBoxBuildTower() {
-//		GreenBox gb = generateGB() ; 
-//		GreenBoxes.gbs.add(gb)  ;
-//		Assert.assertNotNull(gb.buildTower("Basic Tower"));
-//		Assert.assertNotNull(gb.towerInBox)  ; 
-//		Assert.assertNotNull(gb.id)  ;
-//		gb.destroyTower() ; 
-//		Assert.assertNotNull(gb.buildTower("Ice Tower")) ; 
-//		Assert.assertNotNull(gb.towerInBox)  ; 
-//		Assert.assertNotNull(gb.id)  ;
-//		gb.destroyTower() ; 
-//		Assert.assertNotNull(gb.buildTower("Catapult")) ; 
-//		Assert.assertNotNull(gb.towerInBox)  ; 
-//		Assert.assertNotNull(gb.id)  ;
-//		gb.destroyTower() ;
-//		Assert.assertNotNull(gb.buildTower("Laser Tower")) ; 
-//		Assert.assertNotNull(gb.towerInBox)  ; 
-//		Assert.assertNotNull(gb.id)  ;
-//		Assert.assertNull(gb.buildTower("Basic Tower"));
-//		gb.destroyTower()  ;
-//		Assert.assertNull(gb.buildTower("ABC"));
-		
-	}
 	
 	@Test
 	public void testTowerGetGreenBox() {

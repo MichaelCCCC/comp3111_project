@@ -35,7 +35,7 @@ public class FxTest extends ApplicationTest {
         primaryStage.show();
         MyController appController = (MyController)loader.getController();
         appController.createArena();   		
-        appController.createArena();   		
+        appController.createArena(); 
 	}
 
 	
@@ -60,6 +60,13 @@ public class FxTest extends ApplicationTest {
 
 		
 	}
+	
+	@Test
+	public void testSetLabelMoney() {
+		MyController.money  = 100; 
+	}
+	
+	
 	
 	
 	
