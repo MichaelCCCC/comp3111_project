@@ -32,19 +32,7 @@ public class UtilTest extends ApplicationTest {
         primaryStage.show();
         MyController appController = (MyController)loader.getController();
         appController.createArena(); 
-        
 	}
 	
-	@Test
-	public void testMonsterChangeDirection() {
-		for(int i = 0 ; i < 5 ; i++)
-			clickOn("#buttonNextFrame");
-		Monster monster =  MyController.monsters.get(0)  ;
-		Direction org_direction = monster.getDirection();
-		while(org_direction == monster.getDirection()) {
-			clickOn("#buttonNextFrame");
-		}
-		Assert.assertEquals(Direction.RIGHT, monster.getDirection());
 
-	}
 }

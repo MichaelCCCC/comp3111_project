@@ -419,8 +419,8 @@ public class MyController {
     }
     
     /**
-     * @param tower target
-     * @return tower label
+     * @param target the target to add label
+     * @return label	the label just added
      */
     protected Label addLastLabel(Object target) {
     	//System.out.println("add temp label " ) ; 
@@ -434,7 +434,7 @@ public class MyController {
 
 	/**
 	 * when 
-	 * @param target
+	 * @param target the target object
 	 * @return shape of shooting range
 	 */
 	protected Shape addShootingRangeToPaneArena(Object target) { 
