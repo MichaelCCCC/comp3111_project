@@ -34,7 +34,7 @@ public class FxTest extends ApplicationTest {
         primaryStage.show();
         MyController appController = (MyController)loader.getController();
         appController.createArena();   		
-        appController.createArena();   		
+        appController.createArena(); 
 	}
 
 	
@@ -50,6 +50,13 @@ public class FxTest extends ApplicationTest {
 //		Assert.assertNotEquals(y,MyController.monsters.get(0).getY());
 		
 	}
+	
+	@Test
+	public void testSetLabelMoney() {
+		MyController.money  = 100; 
+	}
+	
+	
 	
 	
 	

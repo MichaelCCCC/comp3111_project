@@ -69,6 +69,9 @@ public class UtilTest extends ApplicationTest {
 		Assert.assertEquals(10, MyController.monsters.size())  ;
 		for(int i = 0 ; i < 10 ; i++)
 			Assert.assertTrue(util.moveMonsters(MyController.monsters)) ;
+		MyController.monsters.get(0).setDirection(null);  ; 
+		//Assert.assertTrue(util.moveMonsters(MyController.monsters)) ;
+		
 	}
 	
 	@Test 
@@ -106,8 +109,15 @@ public class UtilTest extends ApplicationTest {
 		
 		//MyController.towers.add(null) ; 
 		util.showAllObjects(MyController.monsters, MyController.towers, paneArena);
+		Tower tempT = new Tower(0,0 ) ; 
+		MyController.towers.add(tempT) ; 
+		util.showAllObjects(MyController.monsters, MyController.towers, paneArena);
 		
-	}
+		tempT = null  ;
+		if(!MyController.towers.contains(tempT)) 
+			tempT = new Tower(0,0 )  ; 
+		util.showAllObjects(MyController.monsters, MyController.towers, paneArena);
+  	}
 	
 	@Test
 	public void testTowerAttack() {
@@ -118,13 +128,22 @@ public class UtilTest extends ApplicationTest {
 		AnchorPane paneArena = new AnchorPane ()  ;
 		util.towersAttack(monsters, towers, paneArena);
 		GreenBoxes.gbs.clear() ; 
-		GreenBoxes.gbs.add(new GreenBox(new Label(), 0 ,0 )); 
-		GreenBoxes.gbs.get(0).buildTower("Laser Tower") ; 
-		towers.add(GreenBoxes.gbs.get(0).towerInBox)  ;
+		for(int i = 0 ; i < 4 ; i++ )
+			GreenBoxes.gbs.add(new GreenBox(new Label(), 0 ,0 )); 
+		GreenBoxes.gbs.get(0).buildTower("Basic Tower") ; 
+		GreenBoxes.gbs.get(1).buildTower("Ice Tower") ; 
+		GreenBoxes.gbs.get(2).buildTower("Catapult") ; 
+		GreenBoxes.gbs.get(3).buildTower("Laser Tower") ; 
+		for(int i =  0 ; i < 4 ; i++ ) 
+				towers.add(GreenBoxes.gbs.get(0).towerInBox)  ;
+		
 		util.towersAttack(monsters, towers, paneArena);
-		Fox temp = new Fox(new Label() ,0) ; 
-		monsters.add(temp)  ;
-		util.towersAttack(monsters, towers, paneArena);
+		for(int i = 0 ; i < 10 ; i++)
+			util.generateMonsters(paneArena, 0);
+		for(int i = 0 ; i < 10 ; i++) {
+			util.moveMonsters(monsters)  ;
+			util.towersAttack(monsters, towers, paneArena);
+		}
 		
 		
 		
@@ -149,7 +168,20 @@ public class UtilTest extends ApplicationTest {
 	
 	@Test
 	public void testGetTowerTooltipString() {
-		
+		GreenBox gb = new GreenBox(new Label() , 0 ,  0)  ;
+		GreenBoxes.gbs.clear();  
+		GreenBoxes.gbs.add(gb); 
+		gb.buildTower("Basic Tower") ; 
+		Assert.assertNotNull(util.getTowerTooltipString(gb.towerInBox.getInfo(), gb.gbLabel));
+		gb.destroyTower() ; 
+		gb.buildTower("Ice Tower") ; 
+		Assert.assertNotNull(util.getTowerTooltipString(gb.towerInBox.getInfo(), gb.gbLabel));
+		gb.destroyTower() ; 
+		gb.buildTower("Catapult") ;
+		Assert.assertNotNull(util.getTowerTooltipString(gb.towerInBox.getInfo(), gb.gbLabel));
+		gb.destroyTower() ; 
+		gb.buildTower("Laser Tower") ; 
+		Assert.assertNotNull(util.getTowerTooltipString(gb.towerInBox.getInfo(), gb.gbLabel));
 	}
 	
 	
