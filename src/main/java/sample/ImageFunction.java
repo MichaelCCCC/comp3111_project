@@ -81,34 +81,6 @@ public class ImageFunction {
 		return setImageView(idReturnImage(id)) ; 
 	}
 	
-	/*
-	 * return an image view when there is multiple objects in a box
-	 */
-	static ImageView setImageViewMultiple(int size, Image image, int Index) {
-		if(size == 0 || image == null || Index <= 0 || Index >= size )
-			return null ; 
-		
-		ImageView iv = new ImageView(image) ; 
-		if(image != null) {
-			int k = (int)Math.ceil(Math.pow(size, 0.5)); //k can never be 0
-			iv.setFitWidth(TOWER_IMAGE_WIDTH / k );
-			double smallBoxWidth = (double)BOX_WIDTH / k ; 
-			iv.setX(smallBoxWidth * (Index % k) );
-			iv.setY(smallBoxWidth * (Index / k) );
-			iv.setPreserveRatio(true) ;
-    		iv.setSmooth(true);
-            iv.setCache(true);
-		}
-		return iv ;
-	}
-	
-	/*
-	 * return an image view when there is multiple objects in a box
-	 */
-	static ImageView setImageViewMultiple(int size, String id , int Index) {
-		return setImageViewMultiple(size, idReturnImage(id) , Index) ; 
-	}
-	
 	public static Label setImageToLabel(String id, double gridX, double gridY) {
 		Label newLabel = new Label() ; 
 		newLabel.setGraphic(ImageFunction.setImageView(id)) ; 

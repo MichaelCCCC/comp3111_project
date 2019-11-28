@@ -16,10 +16,11 @@ import monster.Monster.Direction;
 public class UtilTest extends ApplicationTest {
 	
 	private Scene s;
-	
+
 	@FXML
 	private AnchorPane paneArena;
 	
+
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -30,20 +31,20 @@ public class UtilTest extends ApplicationTest {
         primaryStage.setScene(s);
         primaryStage.show();
         MyController appController = (MyController)loader.getController();
-        appController.createArena();
+        appController.createArena(); 
         
 	}
 	
 	@Test
 	public void testMonsterChangeDirection() {
-		clickOn("#buttonNextFrame");
-		Monster monster = MyController.monsters.get(0);
+		for(int i = 0 ; i < 5 ; i++)
+			clickOn("#buttonNextFrame");
+		Monster monster =  MyController.monsters.get(0)  ;
 		Direction org_direction = monster.getDirection();
 		while(org_direction == monster.getDirection()) {
 			clickOn("#buttonNextFrame");
 		}
 		Assert.assertEquals(Direction.RIGHT, monster.getDirection());
 
-		
 	}
 }

@@ -58,7 +58,7 @@ public class GreenBoxTest extends ApplicationTest{
 	public void testBuildTowerAndGetTowerXY() {
 		Label newLabel = new Label() ; 
 		GreenBox gb = new GreenBox(newLabel, 0, 0)  ; 
-		Assert.assertNotNull(gb.buildTower("Tower") ); 
+		Assert.assertNotNull(gb.buildTower("Basic Tower") ); 
 		Assert.assertEquals( MyController.GRID_WIDTH * ((double)0 + 0.5), gb.getTowerX(), 1);
 		Assert.assertEquals( MyController.GRID_HEIGHT * ((double)0 + 0.5), gb.getTowerY(), 1);
 	}
@@ -84,7 +84,6 @@ public class GreenBoxTest extends ApplicationTest{
 		Assert.assertNotNull(gb.id)  ;
 		Assert.assertNull(gb.buildTower("Basic Tower"));
 		gb.destroyTower()  ;
-		Assert.assertNull("ABC");
 	}
 	
 	@Test

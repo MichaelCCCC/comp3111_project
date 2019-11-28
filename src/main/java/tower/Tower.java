@@ -38,12 +38,12 @@ public class Tower {
 	//	Getter Functions
 	
 	//	Get Tower X-Coordinate
-	int getX() {
+	public int getX() {
 		return x;
 	}
 	
 	//	Get Tower Y-Coordinate
-	int getY() {
+	public int getY() {
 		return y;
 	}
 	
