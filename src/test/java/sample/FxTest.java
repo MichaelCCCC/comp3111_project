@@ -55,8 +55,11 @@ public class FxTest extends ApplicationTest {
 			clickOn("#buttonNextFrame");
 		}
 		Assert.assertEquals(Direction.RIGHT, monster.getDirection());
+
 		
 	}
+	
+	
 	
 	
 }

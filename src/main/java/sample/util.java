@@ -296,15 +296,12 @@ class util {
 	 */
 	static Shape lineToFirstMonsterAlive(GreenBox gb) {
 		if(MyController.monsters.size() > 0  )
-		{
-			Monster monster = null ; 
+		{ 
 			for(int i = 0 ; i < MyController.monsters.size() ; i++)
 				if(MyController.monsters.get(i).getStatus() == Status.ALIVE ) 
-				{
-					monster = MyController.monsters.get(i); 
-					break  ; 
+				{ 
+					return new Line(gb.getTowerX(), gb.getTowerY() , MyController.monsters.get(i).getX(),MyController.monsters.get(i).getY()) ;
 				}
-			return new Line(gb.getTowerX(), gb.getTowerY() , monster.getX(),monster.getY()) ; 
 		}
 		return null ; 
 	}
@@ -371,8 +368,7 @@ class util {
 	 * @param paneArena
 	 */
 	static void removeDeadMonster(AnchorPane paneArena) {
-		for(int 
-				i = 0; i<MyController.monsters.size(); i++) {
+		for(int i = 0; i<MyController.monsters.size(); i++) {
 			Monster monster = MyController.monsters.get(i);
 			if(monster.getStatus() == Status.DEAD) {
 				paneArena.getChildren().remove(monster.getLabel());
@@ -386,7 +382,7 @@ class util {
 	 * A function to remove last shooting shape from arena and then clear the list of shooting shape as well
 	 * @param paneArena
 	 */
-	public static void removeLastShooting(AnchorPane paneArena) {
+	static void removeLastShooting(AnchorPane paneArena) {
 		for(int i = 0 ; i < lastShootingShape.size() ; i++)
 			paneArena.getChildren().remove(lastShootingShape.get(i)) ; 
 		lastShootingShape.clear(); 
