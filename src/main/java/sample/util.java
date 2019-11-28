@@ -371,8 +371,7 @@ class util {
 	 * @param paneArena
 	 */
 	static void removeDeadMonster(AnchorPane paneArena) {
-		for(int 
-				i = 0; i<MyController.monsters.size(); i++) {
+		for(int i = 0; i<MyController.monsters.size(); i++) {
 			Monster monster = MyController.monsters.get(i);
 			if(monster.getStatus() == Status.DEAD) {
 				paneArena.getChildren().remove(monster.getLabel());
@@ -386,7 +385,7 @@ class util {
 	 * A function to remove last shooting shape from arena and then clear the list of shooting shape as well
 	 * @param paneArena
 	 */
-	public static void removeLastShooting(AnchorPane paneArena) {
+	static void removeLastShooting(AnchorPane paneArena) {
 		for(int i = 0 ; i < lastShootingShape.size() ; i++)
 			paneArena.getChildren().remove(lastShootingShape.get(i)) ; 
 		lastShootingShape.clear(); 
