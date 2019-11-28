@@ -185,6 +185,7 @@ class util {
 	/**
 	 * A function to generate a monster randomly, and then show it on Arena
 	 * @param paneArena
+	 * @param num_frame
 	 */
 	static void generateMonsters(AnchorPane paneArena, int num_frame) {
 		int i = (int)(Math.random()*((2)+1));
