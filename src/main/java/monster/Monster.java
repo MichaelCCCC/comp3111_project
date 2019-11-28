@@ -1,3 +1,6 @@
+/**
+ * monster package is a group of monster types
+ */
 package monster;
 
 import javafx.scene.control.Label;
@@ -5,9 +8,9 @@ import sample.MyController;
 
 /**
  * 
+ * This is Monster class. It is used to store all the information of a monster
  * @author Michael
  * 
- * This is Monster class. It is used to store all the information of a monster
  *
  */
 
@@ -17,9 +20,46 @@ public class Monster {
 	 * The {@link DEFAULT_X} is the starting x coordinate of monster.
 	 */
 	static final int DEFAULT_X = 20;
+	/**
+	 * The {@link DEFAULT_Y} is the starting y corrdinate of monster.
+	 */
 	static final int DEFAULT_Y = 20;
-	static public enum Direction {UP, DOWN, RIGHT,LEFT};
-	static public enum Status{ALIVE,DEAD};
+	/**
+	 * enum type to defnie directions of monsters
+	 * @author Michael
+	 *
+	 */
+	static public enum Direction {
+		/**
+		 * move up
+		 */
+		UP, 
+		/**
+		 * move down
+		 */
+		DOWN, 
+		/**
+		 * move right
+		 */
+		RIGHT,
+		/**
+		 * move left
+		 */
+		LEFT};
+	/**
+	 * enum type to define status of monsters
+	 * @author Michael
+	 *
+	 */
+	static public enum Status{
+		/**
+		 * Alive
+		 */
+		ALIVE,
+		/**
+		 * Dead
+		 */
+		DEAD};
 	//private data member
 	/**
 	 * The {@link HP} is the health of monster.
