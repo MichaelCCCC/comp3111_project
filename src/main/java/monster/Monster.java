@@ -18,7 +18,7 @@ public class Monster {
 	 */
 	static final int DEFAULT_X = 20;
 	static final int DEFAULT_Y = 20;
-	static public enum Direction {UP, DOWN, RIGHT};
+	static public enum Direction {UP, DOWN, RIGHT,LEFT};
 	static public enum Status{ALIVE,DEAD};
 	//private data member
 	/**
