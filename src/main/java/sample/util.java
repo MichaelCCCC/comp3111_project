@@ -296,15 +296,12 @@ class util {
 	 */
 	static Shape lineToFirstMonsterAlive(GreenBox gb) {
 		if(MyController.monsters.size() > 0  )
-		{
-			Monster monster = null ; 
+		{ 
 			for(int i = 0 ; i < MyController.monsters.size() ; i++)
 				if(MyController.monsters.get(i).getStatus() == Status.ALIVE ) 
-				{
-					monster = MyController.monsters.get(i); 
-					break  ; 
+				{ 
+					return new Line(gb.getTowerX(), gb.getTowerY() , MyController.monsters.get(i).getX(),MyController.monsters.get(i).getY()) ;
 				}
-			return new Line(gb.getTowerX(), gb.getTowerY() , monster.getX(),monster.getY()) ; 
 		}
 		return null ; 
 	}

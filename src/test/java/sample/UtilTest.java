@@ -1,6 +1,9 @@
 package sample;
 
 import org.junit.Test;
+
+import java.util.List;
+
 import org.junit.Assert;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -108,6 +111,22 @@ public class UtilTest extends ApplicationTest {
 	
 	@Test
 	public void testTowerAttack() {
+		MyController.monsters.clear();  
+		MyController.towers.clear();  
+		List<Monster> monsters = MyController.monsters; 
+		List<Tower> towers = MyController.towers;
+		AnchorPane paneArena = new AnchorPane ()  ;
+		util.towersAttack(monsters, towers, paneArena);
+		GreenBoxes.gbs.clear() ; 
+		GreenBoxes.gbs.add(new GreenBox(new Label(), 0 ,0 )); 
+		GreenBoxes.gbs.get(0).buildTower("Laser Tower") ; 
+		towers.add(GreenBoxes.gbs.get(0).towerInBox)  ;
+		util.towersAttack(monsters, towers, paneArena);
+		Fox temp = new Fox(new Label() ,0) ; 
+		monsters.add(temp)  ;
+		util.towersAttack(monsters, towers, paneArena);
+		
+		
 		
 	}
 	
@@ -121,6 +140,7 @@ public class UtilTest extends ApplicationTest {
 	@Test 
 	public void testEndGame() { 
 		MyController.monsters.clear();  
+		Assert.assertFalse(util.decideEndGame());
 		MyController.monsters.add(new Fox(new Label(), 0));
 		MyController.monsters.get(0).move((int)(MyController.zones.get(1).getLayoutX() + 100), 300);
 		
@@ -135,26 +155,50 @@ public class UtilTest extends ApplicationTest {
 	
 	@Test
 	public void testLineToFirstMonsterAlive() {
-		
+		MyController.monsters.clear();  
+		GreenBox gb = new GreenBox(new Label() , 0 , 0) ; 
+		Fox temp = new Fox( new Label() ,  0 )  ;
+		MyController.monsters.add(temp ); 
+		Assert.assertNotNull(util.lineToFirstMonsterAlive(gb)) ; 
+		temp.setStatus(Status.DEAD);
+		Assert.assertNull(util.lineToFirstMonsterAlive(gb));
+		MyController.monsters.remove(temp )  ;
+		Assert.assertNull(util.lineToFirstMonsterAlive(gb));
 	}
 	
 	@Test 
 	public void testLineToMonsterShot() {
+		GreenBox gb = new GreenBox(new Label() , 0 , 0) ; 
+		Fox temp = new Fox( new Label() ,  0 )  ;
+		Assert.assertNull(util.lineToMonsterShot(gb, null, true)) ;
+		Assert.assertNull(util.lineToMonsterShot(gb, null, false)) ; 
+		Assert.assertNotNull(util.lineToMonsterShot(gb, temp, true)); 
+		Assert.assertNotNull(util.lineToMonsterShot(gb, temp, false)) ; 
+		temp.setStatus(Status.DEAD);
+		Assert.assertNull(util.lineToMonsterShot(gb, temp, true)) ;
+		Assert.assertNull(util.lineToMonsterShot(gb, temp, false));
 		
 	}
 	
 	@Test 
 	public void testCheckMonsterDead() {
-		
+		MyController.monsters.clear()  ; 
+		Fox temp = new Fox(new Label() , 0);
+		MyController.monsters.add(temp ); 
+		util.checkMonsterDead();
+		temp.damage(100);
+		util.checkMonsterDead(); 
+		util.checkMonsterDead();
 	}
 	
 	@Test
 	public void testRemoveDeadMonster() {
 		AnchorPane paneArena = new AnchorPane()  ;
 		Fox temp = new Fox(new Label(), 0)  ;
-		temp.setStatus(Status.DEAD);
 		MyController.monsters.clear();  
 		MyController.monsters.add(temp); 
+		util.removeDeadMonster(paneArena);
+		temp.setStatus(Status.DEAD);
 		paneArena.getChildren().add(temp.getLabel())  ;
 		util.removeDeadMonster(paneArena);
 	}
