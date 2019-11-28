@@ -37,9 +37,9 @@ public class UtilTest extends ApplicationTest {
         primaryStage.show();
         MyController appController = (MyController)loader.getController();
         appController.createArena(); 
-        
 	}
 	
+
 //	@Test
 //	public void testMonsterChangeDirection() {
 //		for(int i = 0 ; i < 5 ; i++)
@@ -213,4 +213,5 @@ public class UtilTest extends ApplicationTest {
 	}
 	
 	
+
 }

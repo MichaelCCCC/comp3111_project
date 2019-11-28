@@ -209,6 +209,7 @@ public class MyController {
             //detected where monster cross the final line
             //if yes, notify the play the game is over
             if (util.decideEndGame()) {
+            	System.out.println("Gameover");
             	Alert alert = new Alert(AlertType.INFORMATION, "The game is over" )  ;
             	alert.showAndWait() ; 
             	System.exit(0);
@@ -419,8 +420,8 @@ public class MyController {
     }
     
     /**
-     * @param tower target
-     * @return tower label
+     * @param target the target to add label
+     * @return label	the label just added
      */
     protected Label addLastLabel(Object target) {
     	//System.out.println("add temp label " ) ; 
@@ -434,7 +435,7 @@ public class MyController {
 
 	/**
 	 * when 
-	 * @param target
+	 * @param target the target object
 	 * @return shape of shooting range
 	 */
 	protected Shape addShootingRangeToPaneArena(Object target) { 

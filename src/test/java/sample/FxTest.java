@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import monster.Monster;
 import monster.Penguin;
+import monster.Monster.Direction;
 import javafx.fxml.FXMLLoader;
  
 
@@ -40,14 +41,21 @@ public class FxTest extends ApplicationTest {
 	
 	@Test
 	public void testNextFrameButton() {
-		for(int i = 0 ; i < 10 ; i++ )
+				
+		clickOn("#buttonNextFrame");
+		Assert.assertEquals(1,MyController.monsters.size());
+		int y = MyController.monsters.get(0).getY();
+		//Test monster move
+		clickOn("#buttonNextFrame");
+		Assert.assertNotEquals(y,MyController.monsters.get(0).getY());
+		//Test Check direction
+		Monster monster =  MyController.monsters.get(0)  ;
+		Direction org_direction = monster.getDirection();
+		while(org_direction == monster.getDirection()) {
 			clickOn("#buttonNextFrame");
-//		AnchorPane b = (AnchorPane)s.lookup("#paneArena");
-//		Assert.assertEquals(1,MyController.monsters.size());
-//		int y = MyController.monsters.get(0).getY();
-//		//Test monster move
-//		clickOn("#buttonNextFrame");
-//		Assert.assertNotEquals(y,MyController.monsters.get(0).getY());
+		}
+		Assert.assertEquals(Direction.RIGHT, monster.getDirection());
+
 		
 	}
 	
