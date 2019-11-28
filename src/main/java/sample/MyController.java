@@ -209,6 +209,7 @@ public class MyController {
             //detected where monster cross the final line
             //if yes, notify the play the game is over
             if (util.decideEndGame()) {
+            	System.out.println("Gameover");
             	Alert alert = new Alert(AlertType.INFORMATION, "The game is over" )  ;
             	alert.showAndWait() ; 
             	System.exit(0);
