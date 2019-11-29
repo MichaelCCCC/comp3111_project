@@ -46,28 +46,28 @@ public class GreenBoxesTest extends ApplicationTest {
 		Assert.assertNotNull(gbs);
 	}
 	
-	@Test
-	public void testTargetGetIndex() { 
-		AnchorPane paneArena = new AnchorPane()  ;
-		Assert.assertNull(GreenBoxes.targetGetIndex(null) ); 
-		GreenBoxes.gbs.clear(); 
-		GreenBox gb = new GreenBox(new Label() , 0,0 )  ; 
-		GreenBoxes.gbs.add(gb) ;
-		gb.buildTower("Ice Tower") ; 
-		MyController.towers.add(gb.towerInBox)  ;
-		util.showAllObjects(MyController.monsters, MyController.towers, paneArena);
-		Assert.assertNotNull(GreenBoxes.targetGetIndex(gb.gbLabel))  ;
-		Assert.assertNotNull(GreenBoxes.targetGetGreenBox(gb.gbLabel));
-		Assert.assertTrue(GreenBoxes.targetHasTower(gb.gbLabel));
-		Assert.assertTrue(GreenBoxes.targetDestroyTower(gb.gbLabel)) ; 
-		Assert.assertFalse(GreenBoxes.targetHasTower(gb.gbLabel))  ;
-		GreenBoxes.targetV(gb.gbLabel) ; 
-		GreenBoxes.targetH(gb.gbLabel);
-		Assert.assertNotNull(GreenBoxes.targetBuildTower(gb.gbLabel, "Basic Tower"));
-		Assert.assertTrue(GreenBoxes.targetUpgradeTower(gb.gbLabel)) ; 
-		Assert.assertNotNull(GreenBoxes.targetGetTower(gb.gbLabel)) ; 
-		
-	}
+//	@Test
+//	public void testTargetGetIndex() { 
+//		AnchorPane paneArena = new AnchorPane()  ;
+//		Assert.assertNull(GreenBoxes.targetGetIndex(null) ); 
+//		GreenBoxes.gbs.clear(); 
+//		GreenBox gb = new GreenBox(new Label() , 0,0 )  ; 
+//		GreenBoxes.gbs.add(gb) ;
+//		gb.buildTower("Ice Tower") ; 
+//		MyController.towers.add(gb.towerInBox)  ;
+//		util.showAllObjects(MyController.monsters, MyController.towers, paneArena);
+//		Assert.assertNotNull(GreenBoxes.targetGetIndex(gb.gbLabel))  ;
+//		Assert.assertNotNull(GreenBoxes.targetGetGreenBox(gb.gbLabel));
+//		Assert.assertTrue(GreenBoxes.targetHasTower(gb.gbLabel));
+//		Assert.assertTrue(GreenBoxes.targetDestroyTower(gb.gbLabel)) ; 
+//		Assert.assertFalse(GreenBoxes.targetHasTower(gb.gbLabel))  ;
+//		GreenBoxes.targetV(gb.gbLabel) ; 
+//		GreenBoxes.targetH(gb.gbLabel);
+//		Assert.assertNotNull(GreenBoxes.targetBuildTower(gb.gbLabel, "Basic Tower"));
+//		Assert.assertTrue(GreenBoxes.targetUpgradeTower(gb.gbLabel)) ; 
+//		Assert.assertNotNull(GreenBoxes.targetGetTower(gb.gbLabel)) ; 
+//		
+//	}
 	
 	
 	@Test
