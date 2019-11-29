@@ -2,9 +2,9 @@
 Created by: #36 - USTJailBreaker
 
 # Team members and task assigned :
-** Cheung Yat Wing (MichaelCCCC) : Task 3 Monter
-** Riwandy (riwandy) : Task 2 Tower
-** Yeung, Man Lung Ken (HananoshikaYomaru) : Task 1 Arena
+* Cheung Yat Wing (MichaelCCCC) : Task 3 Monter
+* Riwandy (riwandy) : Task 2 Tower
+* Yeung, Man Lung Ken (HananoshikaYomaru) : Task 1 Arena
 
 ## Project Problem Statement and Activities
  
