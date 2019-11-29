@@ -27,6 +27,7 @@ import monster.Monster;
 
 
 /**
+ * The Controller of the game
  * @author Yomaru
  *
  */
@@ -355,10 +356,14 @@ public class MyController {
         }) ; 
     }
     
-    /*
+    /**
      * record the last label that the cursor is at
      */
     protected Label lastLabel = null ;
+    
+    /**
+     * record the last shooting Range of a tower
+     */
     protected Shape lastShootingRange = null ; 
     
     private void setMouseAction3(Shape lastShootingRange2 ) {
@@ -423,7 +428,7 @@ public class MyController {
      * @param target the target to add label
      * @return label	the label just added
      */
-    protected Label addLastLabel(Object target) {
+    Label addLastLabel(Object target) {
     	//System.out.println("add temp label " ) ; 
     	Label tempLabel = GreenBoxes.targetGetGreenBox(target).copyOfLabel()  ; 
     	Tooltip.install(tempLabel, new Tooltip(util.getTowerTooltipString(GreenBoxes.targetGetTower(target).getInfo(), target)));
@@ -438,7 +443,7 @@ public class MyController {
 	 * @param target the target object
 	 * @return shape of shooting range
 	 */
-	protected Shape addShootingRangeToPaneArena(Object target) { 
+	Shape addShootingRangeToPaneArena(Object target) { 
 		//for laser tower, shooting range need to be set every time
 		if(GreenBoxes.targetGetTower(target).getClass() == tower.LaserTower.class) {
 			GreenBoxes.targetGetGreenBox(target).shootingRange = GreenBoxes.targetGetGreenBox(target).getShootingRangeShape(GreenBoxes.targetGetTower(target), tower.LaserTower.class);

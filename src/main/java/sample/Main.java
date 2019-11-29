@@ -6,8 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Main Class of the game
+ */
 public class Main extends Application {
 
+	
+    /**
+     *The Start function to generate a game 
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample.fxml"));
@@ -21,6 +28,10 @@ public class Main extends Application {
     }
 
 
+    /**
+     * the main function of the game
+     * @param args the argument 
+     */
     public static void main(String[] args) {
         launch(args);
     }

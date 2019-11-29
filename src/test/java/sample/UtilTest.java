@@ -244,6 +244,12 @@ public class UtilTest extends ApplicationTest {
 		util.removeLastShooting(paneArena);
 	}
 	
+	@Test
+	public void testMain() {
+		Main temp = new Main() ; 
+		Assert.assertNotNull(temp)  ;
+		//Main.main(null);
+	}
 	
 
 }

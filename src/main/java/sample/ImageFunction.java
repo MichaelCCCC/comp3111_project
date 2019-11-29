@@ -4,6 +4,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView; 
 
+
+/**
+ * A class to help getting Image and set ImageView
+ * @author Yomaru
+ *
+ */
 public class ImageFunction {
 
 	static final Image BTimage = new Image("/basicTower.png") ;  
@@ -20,6 +26,11 @@ public class ImageFunction {
     static final int MONSTER_WIDTH = 20;
     static final int BOX_WIDTH = 40 ; 
     
+    /**
+     * return the image given the id 
+     * @param id
+     * @return
+     */
     static Image idReturnImage(String id) {
 		switch(id)
 		{
@@ -50,7 +61,7 @@ public class ImageFunction {
     
     
     
-    /*
+    /**
      * return an image view when there is only one object in a box
      */
     static ImageView setImageView(Image image) {
@@ -74,13 +85,20 @@ public class ImageFunction {
 		return iv ; 
 	}
 	
-    /*
+    /**
      * return an image view when there is only one object in a box
      */
 	static ImageView setImageView (String id) {
 		return setImageView(idReturnImage(id)) ; 
 	}
 	
+	/**
+	 * given an image id and the location on grid, return a label to that location
+	 * @param id id of the image
+	 * @param gridX X coordinate on grid
+	 * @param gridY Y coordinate of grid
+	 * @return Label
+	 */
 	public static Label setImageToLabel(String id, double gridX, double gridY) {
 		Label newLabel = new Label() ; 
 		newLabel.setGraphic(ImageFunction.setImageView(id)) ; 
