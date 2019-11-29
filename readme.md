@@ -6,6 +6,9 @@ Created by: #36 - USTJailBreaker
 * Riwandy (riwandy) : Task 2 Tower
 * Yeung, Man Lung Ken (HananoshikaYomaru) : Task 1 Arena
 
+# Remarks
+* stronger in monster means more HP
+
 ## Project Problem Statement and Activities
  
  ### [Project Sign Up](https://docs.google.com/spreadsheets/d/1fGQYkAsdawLWlxSNlFxJr192ZFOIowbVIUD1EoVWuYc/edit#gid=0)
