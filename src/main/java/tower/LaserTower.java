@@ -7,13 +7,30 @@ import monster.Monster;
 import monster.Monster.Status;
 import sample.MyController;
 
+/**
+ * Laser Tower
+ */
 public class LaserTower extends Tower{
+	/**
+	 * {@link NAME} is the default name for laser tower
+	 */
 	public static final String NAME = "Laser Tower";
+	
+	/**
+	 * Cost for an attack
+	 */
 	public int attack_cost;
 	
+	/**
+	 * {@link LaserTowerInit} is the default value for tower information
+	 */
 	public static TowerInformation LaserTowerInit = new TowerInformation(NAME,4, 300, 100, 1000, 10, 1, "This is Laser Tower");
 	
-	//	Constructor with default parameters
+	/**
+	 * Laser Tower constructor
+	 * @param x	X coordinate of the tower
+	 * @param y	Y coordinate of the tower
+	 */
 	public LaserTower(int x, int y) {
 		super(NAME,x,y);
 		setAttributes(LaserTowerInit.attack_power, LaserTowerInit.building_cost, LaserTowerInit.upgrade_cost, LaserTowerInit.shooting_range, LaserTowerInit.upgrade_diff, LaserTowerInit.tier, LaserTowerInit.comment);
@@ -21,25 +38,44 @@ public class LaserTower extends Tower{
 	}
 	
 
-	//	Get Cost of Shooting with Laser Tower
+	/**
+	 * Get attack cost of the laser tower
+	 * @return attack_cost	attack cost of the laser tower
+	 */
 	public int getAttackCost() {
 		return attack_cost;
 	}
 	
-	//	Update Cost of Shooting with Laser Tower
+	/**
+	 * Set attack cost of the laser tower
+	 * @param attack_cost	new attack cost of the laser tower
+	 */
 	public void setAttackCost(int attack_cost) {
 		this.attack_cost = attack_cost;
 	}
 	
+	/**
+	 * Unify vector
+	 * @param m	Monster
+	 */
 	private double len(Monster m) {
 		return Math.sqrt(Math.pow(m.getX(), 2) + Math.pow(m.getY(), 2));
 	}
 	
+	/**
+	 * Find the distance from point to line
+	 * @param line	Monster which x and y are used to form a line
+	 * @param point	Monster which the distance from the line is queried
+	 */
 	private int pointToLine(Monster line, Monster point) {
 		double cosine = (line.getX()*point.getX() + line.getY()*point.getY()) / (len(line) + len(point));
 		return (int) (distance(point) * Math.sin(Math.acos(cosine)));
 	}
 	
+	/**
+	 * Find monsters to be targeted
+	 * @return targetedMonster	The list of the targeted monsters
+	 */
 	public List<Monster> getTargetedMonster() {
 		List<Monster> targetedMonster = new ArrayList<Monster>();
 		Monster closestEnemy = findClosestEnemy();
@@ -79,7 +115,10 @@ public class LaserTower extends Tower{
 		return targetedMonster;
 	}
 	
-
+	/**
+	 * Shoot targeted monsters
+	 * @return targetedMonster	The list of the monsters shot
+	 */
 	public List<Monster> shoot() {
 		List<Monster> targetedMonster = getTargetedMonster();
 		if(targetedMonster == null) return targetedMonster;
