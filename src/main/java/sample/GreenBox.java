@@ -13,8 +13,20 @@ import tower.LaserTower;
 import tower.Tower;
 
 class GreenBox{ 
+	
+	/**
+	 * the label of this green box
+	 */
 	Label gbLabel ;
+	
+	/**
+	 * the vertical coordinate of the grid
+	 */
 	final int v ; 
+	
+	/**
+	 * the horizontal coordinate of the grid
+	 */
 	final int h;  
 	Tower towerInBox = null ; 
 	String id = null;

@@ -98,6 +98,13 @@ public class MyController {
     private final int TEST_FRAME = 1 ;  // by default is 1 
     private final int SPEED = 4 ; 
     
+    /** 
+     * default constructor that basically do nothing
+     */
+    public MyController() {
+    	
+    }
+    
     /**
      * by default is 1, greater than 1 will generate one monster per frame
      */
@@ -117,7 +124,7 @@ public class MyController {
 	 * a list of zone
 	 */
 	public static List<Label> zones = new ArrayList<>() ; 
-	/*
+	/**
 	 * grid of arena
 	 */
     private Label grids[][] = new Label[MAX_V_NUM_GRID][MAX_H_NUM_GRID]; //the grids on arena

@@ -11,6 +11,14 @@ import javafx.scene.image.ImageView;
  *
  */
 public class ImageFunction {
+	
+	/**
+	 * default constructor
+	 * do nothing 
+	 */
+	public ImageFunction(){
+		
+	}
 
 	static final Image BTimage = new Image("/basicTower.png") ;  
     static final Image ITimage = new Image("/iceTower.png") ; 
@@ -97,7 +105,7 @@ public class ImageFunction {
 	 * @param id id of the image
 	 * @param gridX X coordinate on grid
 	 * @param gridY Y coordinate of grid
-	 * @return Label
+	 * @return Label a label showing the image
 	 */
 	public static Label setImageToLabel(String id, double gridX, double gridY) {
 		Label newLabel = new Label() ; 

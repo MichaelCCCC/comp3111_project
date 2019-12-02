@@ -11,6 +11,13 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
+	/**
+	 * default constructor basically do nothing 
+	 */
+	public Main() {
+		
+	}
+	
 	
     /**
      *The Start function to generate a game 
